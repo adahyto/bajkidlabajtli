@@ -1,7 +1,7 @@
 import { getChannel } from '$lib/server/youtube';
 import type { RequestHandler } from './$types';
 
-/** The home page, every song, short and playlist of the channel, and /prywatnosc */
+/** The home page, every song, short and playlist of the channel, /dla-rodzicow and /prywatnosc */
 export const GET: RequestHandler = async ({ url }) => {
 	const channel = await getChannel();
 	const day = (iso: string) => iso.slice(0, 10);
@@ -13,6 +13,7 @@ export const GET: RequestHandler = async ({ url }) => {
 			lastmod: day(v.published)
 		})),
 		...channel.playlists.map((p) => ({ path: `/playlista/${p.slug}` })),
+		{ path: '/dla-rodzicow', lastmod: newest && day(newest) },
 		{ path: '/prywatnosc' }
 	];
 	return new Response(

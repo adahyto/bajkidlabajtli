@@ -19,6 +19,7 @@ for (const path of [
 	'/piosenka/niespodzianka-tak-sekret-nie',
 	'/krotka/stoj-jak-drzewo',
 	'/playlista/bezpieczny-pikselek',
+	'/dla-rodzicow',
 	'/prywatnosc',
 	'/nie-ma-takiej-strony'
 ]) {

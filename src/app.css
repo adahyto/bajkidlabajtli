@@ -231,3 +231,25 @@ img {
 		animation: none !important;
 	}
 }
+
+/* Printed pages (the rules and questions of /dla-rodzicow): no menu, buttons or footer, black on white */
+@media print {
+	html,
+	body {
+		background: #fff;
+		color: #000;
+		font-size: 13px;
+	}
+
+	.skip,
+	.header,
+	.footer,
+	.no-print {
+		display: none !important;
+	}
+
+	main {
+		gap: 20px !important;
+		padding: 0 !important;
+	}
+}

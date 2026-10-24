@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import { pathOf, thumbOf, type Card } from '$lib/cards';
 	import { clock } from '$lib/format';
+	import { videoLd } from '$lib/jsonld';
 	import { SITE } from '$lib/site';
 	import type { SongExtra } from '$lib/songs';
 	import type { Parents } from '$lib/types';
@@ -46,6 +48,7 @@
 	{description}
 	image={thumbOf(video.id, video.short ? 's' : 'l')}
 	type="video.other"
+	jsonld={videoLd(page.url.origin, video, description, pathOf(video))}
 />
 
 <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- a part of the resolved home page -->
