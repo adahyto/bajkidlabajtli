@@ -100,7 +100,9 @@
 		border-radius: 10px;
 	}
 
+	/* Cards in a row are as tall as the tallest; the topic stays in one place under a title of one or two lines */
 	.card__text {
+		flex: 1;
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
@@ -109,6 +111,7 @@
 	}
 
 	.card__title {
+		min-height: calc(2em * 1.15);
 		font-family: var(--display);
 		font-weight: 700;
 		font-size: 23px;
