@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
+	import { guidesForSong } from '$lib/guides';
 	import { breadcrumbLd } from '$lib/jsonld';
 	import { pathOf, thumbOf } from '$lib/cards';
 	import { clock } from '$lib/format';
@@ -106,6 +107,11 @@
 							>: {song.card.title}</span
 						></a
 					>
+					{#each guidesForSong(song.card.id) as guide (guide.slug)}
+						<a class="song__guide no-print" href={resolve('/poradnik/[slug]', { slug: guide.slug })}
+							>Poradnik: {guide.title}</a
+						>
+					{/each}
 				</div>
 			</div>
 
@@ -406,6 +412,10 @@
 		align-items: center;
 		gap: 8px;
 		min-height: 44px;
+		font-weight: 800;
+	}
+
+	.song__guide {
 		font-weight: 800;
 	}
 

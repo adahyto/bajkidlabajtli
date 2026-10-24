@@ -1,3 +1,4 @@
+import { GUIDES } from '$lib/guides';
 import { mkdir, readdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { env } from '$env/dynamic/private';
@@ -11,8 +12,8 @@ import type { Channel } from '$lib/types';
  * DATA_DIR/stats/<YYYY-MM>.json (a Docker volume); months older than 13 are deleted once a day. /prywatnosc says the
  * same.
  *
- * Keys: view:<path> for the home page, /dla-rodzicow, /dziecko, /prywatnosc and each song, short and playlist of the
- * channel, src:<kind>.
+ * Keys: view:<path> for the home page, /dla-rodzicow, /dziecko, /poradnik, /prywatnosc, each guide and each song,
+ * short and playlist of the channel, src:<kind>.
  * Our own checks and load tests are not visitors: their counts go to test:<key> instead (isTest), as on urlhub.
  */
 
@@ -135,8 +136,8 @@ export function isTest(request: Request, address: () => string): boolean {
 	}
 }
 
-const FIXED = new Set(['/', '/dla-rodzicow', '/dziecko', '/prywatnosc']);
-const ROUTE = /^\/(piosenka|krotka|playlista)\/([a-z0-9-]{1,90})$/;
+const FIXED = new Set(['/', '/dla-rodzicow', '/dziecko', '/poradnik', '/prywatnosc']);
+const ROUTE = /^\/(piosenka|krotka|playlista|poradnik)\/([a-z0-9-]{1,90})$/;
 
 /** The page an address is, as a key (each song and playlist apart), or null for what is not counted */
 export function viewKey(pathname: string, channel: Channel): string | null {
@@ -145,9 +146,11 @@ export function viewKey(pathname: string, channel: Channel): string | null {
 	const m = ROUTE.exec(path);
 	if (!m) return null;
 	const known =
-		m[1] === 'playlista'
-			? channel.playlists.some((p) => p.slug === m[2])
-			: channel.videos.some((v) => v.slug === m[2] && v.short === (m[1] === 'krotka'));
+		m[1] === 'poradnik'
+			? GUIDES.some((g) => g.slug === m[2])
+			: m[1] === 'playlista'
+				? channel.playlists.some((p) => p.slug === m[2])
+				: channel.videos.some((v) => v.slug === m[2] && v.short === (m[1] === 'krotka'));
 	return known ? `view:${path}` : null;
 }
 

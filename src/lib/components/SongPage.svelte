@@ -3,6 +3,7 @@
 	import { page } from '$app/state';
 	import { pathOf, thumbOf, type Card } from '$lib/cards';
 	import { clock } from '$lib/format';
+	import { guidesForSong } from '$lib/guides';
 	import { breadcrumbLd, videoLd } from '$lib/jsonld';
 	import { songDescription, songTitle } from '$lib/seo';
 	import { SITE } from '$lib/site';
@@ -36,6 +37,8 @@
 	const hasParents = $derived(
 		!!(data.parents.rules.length || data.parents.tips.length || data.extra.questions?.length)
 	);
+	// Guides for parents about what the song teaches (a short: its full song's)
+	const guides = $derived(guidesForSong(data.full?.id ?? video.id));
 	// For search results: short, about what the song teaches (lib/seo.ts)
 	const summary = $derived(
 		songDescription({
@@ -158,6 +161,15 @@
 		{#if hasParents}
 			<ParentsCard parents={data.parents} extra={data.extra} />
 		{/if}
+		{#each guides as guide (guide.slug)}
+			<a class="other other--guide" href={resolve('/poradnik/[slug]', { slug: guide.slug })}>
+				<span>
+					<span class="other__label">PORADNIK DLA RODZICÓW</span>
+					<span class="other__title">{guide.title}</span>
+					<span>Plan dla dziecka i rodzica, jak to przećwiczyć</span>
+				</span>
+			</a>
+		{/each}
 		{#if data.short}
 			<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- pathOf gives the page of the song -->
 			<a class="other" href={pathOf(data.short)}>
@@ -358,6 +370,11 @@
 
 	.other:hover {
 		color: var(--ink);
+	}
+
+	.other--guide {
+		padding: 18px 22px;
+		background: var(--sun);
 	}
 
 	.other img {

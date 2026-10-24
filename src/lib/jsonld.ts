@@ -3,8 +3,8 @@ import { SITE } from './site.ts';
 
 /*
  * What search engines read about a page besides its text (schema.org as JSON-LD, put in by components/Head.svelte):
- * the site and the channel on the home page, a video on the page of a song, the songs in order on a playlist, and
- * where a page is in the site (breadcrumbs).
+ * the site and the channel on the home page, a video on the page of a song, the songs in order on a playlist, a
+ * guide for parents, and where a page is in the site (breadcrumbs).
  * Addresses are whole, with the site's origin. No imports beyond site.ts and types: tests/unit runs this file in
  * plain Node.
  */
@@ -80,6 +80,26 @@ export const breadcrumbLd = (origin: string, items: { name: string; path: string
 		name: item.name,
 		item: `${origin}${item.path}`
 	}))
+});
+
+/** A guide for parents (lib/guides.ts), written by the site */
+export const articleLd = (
+	origin: string,
+	guide: { title: string; description: string; published: string; updated: string },
+	path: string,
+	image: string
+): JsonLd => ({
+	'@context': 'https://schema.org',
+	'@type': 'Article',
+	headline: guide.title,
+	description: guide.description,
+	datePublished: guide.published,
+	dateModified: guide.updated,
+	inLanguage: 'pl',
+	image: `${origin}${image}`,
+	mainEntityOfPage: `${origin}${path}`,
+	author: channelOf(origin),
+	publisher: channelOf(origin)
 });
 
 /** A playlist: its songs in order, each by the address of its page here */

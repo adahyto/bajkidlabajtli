@@ -176,7 +176,7 @@ test('every page has a description that fits in search results', async ({ page, 
 	const paths = [...xml.matchAll(/<loc>http:\/\/127\.0\.0\.1:4173([^<]*)<\/loc>/g)].map(
 		(m) => m[1]
 	);
-	expect(paths.length).toBe(9);
+	expect(paths.length).toBe(11);
 	for (const path of paths) {
 		await page.goto(path);
 		const description =
@@ -185,6 +185,51 @@ test('every page has a description that fits in search results', async ({ page, 
 		expect(description.length, path).toBeLessThanOrEqual(160);
 		expect((await page.title()).length, path).toBeLessThanOrEqual(80);
 	}
+});
+
+test('a guide for parents: the plan, the song with its questions, the sources; linked from the song', async ({
+	page
+}) => {
+	await page.goto('/piosenka/gdy-sie-zgubie');
+	await page.getByRole('link', { name: /PORADNIK DLA RODZICÓW/ }).click();
+	await expect(page).toHaveURL(/\/poradnik\/co-zrobic-gdy-dziecko-zgubi-sie-w-sklepie$/);
+	await expect(page).toHaveTitle('Co zrobić, gdy dziecko zgubi się w sklepie?');
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+		'Co zrobić, gdy dziecko zgubi się w sklepie?'
+	);
+	await expect(page.getByRole('heading', { name: 'Plan dla dziecka: pięć kroków' })).toBeVisible();
+	await expect(page.getByText('Stój jak drzewo.')).toBeVisible();
+	await expect(page.getByText(/116 000, Telefon w Sprawie Zaginionego Dziecka/)).toBeVisible();
+	await expect(page.getByRole('button', { name: 'Włącz: Gdy się zgubię' })).toBeVisible();
+	await expect(page.getByText('Kogo w sklepie możesz poprosić o pomoc?')).toBeVisible();
+	const sources = page.getByRole('region', { name: 'Źródła' }).getByRole('link');
+	await expect(sources).toHaveCount(4);
+	const article = await page
+		.locator('script[type="application/ld+json"]')
+		.evaluateAll((all) =>
+			all.map((s) => JSON.parse(s.textContent ?? '')).find((b) => b['@type'] === 'Article')
+		);
+	expect(article).toMatchObject({
+		headline: 'Co zrobić, gdy dziecko zgubi się w sklepie?',
+		datePublished: '2026-10-24',
+		inLanguage: 'pl'
+	});
+	// The list of guides, from the footer
+	await page.getByRole('contentinfo').getByRole('link', { name: 'Poradniki' }).click();
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Poradniki dla rodziców');
+	await expect(
+		page.getByRole('link', { name: /Co zrobić, gdy dziecko zgubi się w sklepie/ })
+	).toBeVisible();
+	// And from the page for parents, beside its song
+	await page.goto('/dla-rodzicow');
+	await expect(
+		page.getByRole('link', { name: 'Poradnik: Co zrobić, gdy dziecko zgubi się w sklepie?' })
+	).toBeVisible();
+});
+
+test('an unknown guide is a 404', async ({ page }) => {
+	const res = await page.goto('/poradnik/nie-ma-takiego');
+	expect(res?.status()).toBe(404);
 });
 
 test('the footer: © doner.cloud, no e-mail', async ({ page }) => {

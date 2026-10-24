@@ -1,3 +1,4 @@
+import { GUIDES } from '$lib/guides';
 import { firstSentence } from '$lib/seo';
 import { SITE } from '$lib/site';
 import { SONGS } from '$lib/songs';
@@ -41,6 +42,10 @@ parents.
   call for help in Poland (116 111 for children, 112 in danger).
 - [Mode for a child](${at('/dziecko')}): the songs as big pictures, full screen; out only by holding a button 3 s.
 ${channel.playlists.map((p) => `- [Playlist: ${p.title}](${at(`/playlista/${p.slug}`)}): ${p.videoIds.length} songs one after another.`).join('\n')}
+
+## Guides for parents
+
+${GUIDES.map((g) => `- [${g.title}](${at(`/poradnik/${g.slug}`)}): ${g.description}`).join('\n')}
 
 ## Songs
 
