@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { env } from '$env/dynamic/private';
 import type { Channel, Playlist, Video } from '$lib/types';
 import { fullIdOf, isShort, parseDescription, seconds, slugify, splitTitle } from './description';
+import { newPages, tellSearchEngines } from './indexnow';
 
 /*
  * The channel's videos and playlists, read from YouTube on the server, so that a new song shows on the site by itself.
@@ -219,7 +220,11 @@ async function read(): Promise<Channel | null> {
 	lastTry = Date.now();
 	try {
 		const channel = env.YOUTUBE_API_KEY ? await fromApi() : await fromRss();
+		const before = current;
 		current = channel;
+		// A new song: search engines that read IndexNow hear of it now (lib/server/indexnow.ts)
+		if (env.INDEXING === '1' && env.ORIGIN?.startsWith('https://'))
+			tellSearchEngines(env.ORIGIN, newPages(before, channel));
 		lastError = '';
 		await save(channel).catch((e) => console.error('channel.json not written', e));
 		console.log(

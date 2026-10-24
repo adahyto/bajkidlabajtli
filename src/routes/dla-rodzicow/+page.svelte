@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
+	import { breadcrumbLd } from '$lib/jsonld';
 	import { pathOf, thumbOf } from '$lib/cards';
 	import { clock } from '$lib/format';
 	import { SITE } from '$lib/site';
@@ -18,8 +20,12 @@
 </script>
 
 <Head
-	title={`Dla rodziców — zasady z piosenek i pytania do rozmowy | ${SITE.name}`}
-	description="Zasady ze wszystkich piosenek z Pikselkiem, pytania do rozmowy z dzieckiem po piosence i wskazówki dla rodziców: bezpieczny internet, zgubienie się w sklepie, zakupy w grach, dobre i złe sekrety."
+	title="Jak rozmawiać z dzieckiem o bezpieczeństwie – piosenki i pytania dla rodziców"
+	description="Zasady z piosenek z Pikselkiem i pytania do rozmowy z dzieckiem: bezpieczny internet, zgubienie się w sklepie, zakupy w grach, dobre i złe sekrety."
+	jsonld={breadcrumbLd(page.url.origin, [
+		{ name: SITE.name, path: '/' },
+		{ name: 'Dla rodziców', path: '/dla-rodzicow' }
+	])}
 />
 
 <section class="intro" aria-labelledby="rodzice-h">

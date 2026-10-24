@@ -3,7 +3,8 @@
 	import { page } from '$app/state';
 	import { pathOf, thumbOf, type Card } from '$lib/cards';
 	import { clock } from '$lib/format';
-	import { videoLd } from '$lib/jsonld';
+	import { breadcrumbLd, videoLd } from '$lib/jsonld';
+	import { songDescription, songTitle } from '$lib/seo';
 	import { SITE } from '$lib/site';
 	import type { SongExtra } from '$lib/songs';
 	import type { Parents } from '$lib/types';
@@ -22,6 +23,7 @@
 			parents: Parents;
 			extra: SongExtra;
 			full: Card | null;
+			canonical: string | null;
 			short: Card | null;
 			playlist: { title: string; slug: string; position: number; count: number } | null;
 			prev: Card | null;
@@ -34,6 +36,16 @@
 	const hasParents = $derived(
 		!!(data.parents.rules.length || data.parents.tips.length || data.extra.questions?.length)
 	);
+	// For search results: short, about what the song teaches (lib/seo.ts)
+	const summary = $derived(
+		songDescription({
+			subtitle: video.subtitle,
+			intro: data.parents.intro || video.intro,
+			short: video.short,
+			forParents: hasParents
+		})
+	);
+	// For the video in lib/jsonld.ts: longer
 	const description = $derived(
 		[video.subtitle || 'Piosenka dla dzieci z Pikselkiem', data.parents.intro || video.intro]
 			.filter(Boolean)
@@ -44,11 +56,20 @@
 </script>
 
 <Head
-	title={`${video.title} — ${video.short ? 'krótka piosenka' : 'piosenka'} | ${SITE.name}`}
-	{description}
+	title={songTitle(video)}
+	description={summary}
 	image={thumbOf(video.id, video.short ? 's' : 'l')}
 	type="video.other"
-	jsonld={videoLd(page.url.origin, video, description, pathOf(video))}
+	canonical={data.canonical ?? undefined}
+	jsonld={data.canonical
+		? undefined
+		: [
+				videoLd(page.url.origin, video, description, pathOf(video)),
+				breadcrumbLd(page.url.origin, [
+					{ name: SITE.name, path: '/' },
+					{ name: video.title, path: pathOf(video) }
+				])
+			]}
 />
 
 <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- a part of the resolved home page -->
