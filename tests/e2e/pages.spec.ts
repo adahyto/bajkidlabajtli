@@ -1,4 +1,11 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
+
+// The menu, opened first on a phone, where it hides behind the "Menu" button
+const menu = async (page: Page) => {
+	const toggle = page.getByRole('button', { name: 'Menu' });
+	if (await toggle.isVisible()) await toggle.click();
+	return page.getByRole('navigation', { name: 'Menu' });
+};
 
 test('the home page shows the songs, shorts, playlist and the part for parents', async ({
 	page
@@ -77,10 +84,7 @@ test('for parents: every song with its rules and questions, the numbers for help
 	page
 }) => {
 	await page.goto('/');
-	await page
-		.getByRole('navigation', { name: 'Menu' })
-		.getByRole('link', { name: 'Dla rodziców' })
-		.click();
+	await (await menu(page)).getByRole('link', { name: 'Dla rodziców' }).click();
 	await expect(page).toHaveURL(/\/dla-rodzicow$/);
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Piosenka, a potem rozmowa');
 	await expect(page.locator('article.song')).toHaveCount(4);
@@ -286,6 +290,68 @@ test('an unknown guide is a 404', async ({ page }) => {
 	expect(res?.status()).toBe(404);
 });
 
+test('the menu: four places, the one of the page marked, also under it', async ({ page }) => {
+	await page.goto('/poradnik/jak-nauczyc-dziecko-dzwonic-pod-112');
+	const nav = await menu(page);
+	await expect(nav.getByRole('link')).toHaveText([
+		'Piosenki',
+		'Dla rodziców',
+		'Dla przedszkoli',
+		'Poradniki'
+	]);
+	await expect(nav.getByRole('link', { name: 'Poradniki' })).toHaveAttribute(
+		'aria-current',
+		'true'
+	);
+	await nav.getByRole('link', { name: 'Dla przedszkoli' }).click();
+	await expect(page).toHaveURL(/\/dla-przedszkoli$/);
+	await expect((await menu(page)).getByRole('link', { name: 'Dla przedszkoli' })).toHaveAttribute(
+		'aria-current',
+		'page'
+	);
+	await page.goto('/piosenka/gdy-sie-zgubie');
+	await expect((await menu(page)).getByRole('link', { name: 'Piosenki' })).toHaveAttribute(
+		'aria-current',
+		'true'
+	);
+	await expect(page.getByRole('banner').getByRole('link', { name: /YouTube/ })).toHaveAttribute(
+		'href',
+		/sub_confirmation=1$/
+	);
+});
+
+test('the header stays one row, without sideways scrolling', async ({ page }) => {
+	for (const path of ['/', '/dla-rodzicow', '/dla-przedszkoli', '/poradnik']) {
+		await page.goto(path);
+		expect((await page.getByRole('banner').boundingBox())?.height).toBeLessThan(90);
+		expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+			true
+		);
+	}
+});
+
+test('on a phone the menu opens with its button and closes with Esc or a page', async ({
+	page,
+	isMobile
+}) => {
+	test.skip(!isMobile, 'a computer shows the menu at once');
+	await page.goto('/');
+	const toggle = page.getByRole('button', { name: 'Menu' });
+	const nav = page.getByRole('navigation', { name: 'Menu' });
+	await expect(nav).toBeHidden();
+	await toggle.click();
+	await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+	await expect(nav).toBeVisible();
+	await page.keyboard.press('Escape');
+	await expect(nav).toBeHidden();
+	await expect(toggle).toBeFocused();
+	await toggle.click();
+	await nav.getByRole('link', { name: 'Poradniki' }).click();
+	await expect(page).toHaveURL(/\/poradnik$/);
+	await expect(nav).toBeHidden();
+	await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+});
+
 test('the footer: © doner.cloud, no e-mail', async ({ page }) => {
 	await page.goto('/');
 	const footer = page.getByRole('contentinfo');
@@ -295,6 +361,8 @@ test('the footer: © doner.cloud, no e-mail', async ({ page }) => {
 	);
 	await expect(footer).toContainText(`© ${new Date().getFullYear()} doner.cloud`);
 	await expect(footer.getByRole('link', { name: 'Kontakt' })).toHaveCount(0);
+	for (const name of ['Tryb dla dziecka', 'Dla rodziców', 'Dla przedszkoli', 'Poradniki'])
+		await expect(footer.getByRole('link', { name })).toBeVisible();
 });
 
 test('the privacy page names who is responsible', async ({ page }) => {
