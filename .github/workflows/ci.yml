@@ -1,0 +1,94 @@
+# Runs on every pull request and on pushes to main: lint, types, unit tests and production build, the Docker image
+# started as on the server with a quick check that it answers, and end-to-end tests in a browser.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# A new push to the same branch or PR cancels the run still in progress
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-and-build:
+    name: Lint, types and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint (Prettier and ESLint)
+        run: npm run lint
+
+      - name: Types (svelte-check)
+        run: npm run check
+
+      - name: Titles and descriptions of the channel (unit tests)
+        run: npm run test:unit
+
+      - name: Production build
+        run: npm run build
+
+  # Without a YouTube API key here: the image reads the channel's RSS feed. Scratch files go to $RUNNER_TEMP
+  docker:
+    name: Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Start it as on the server
+        run: docker compose up -d --build
+
+      - name: The pages answer
+        run: |
+          for _ in $(seq 1 60); do curl -sf -o "$RUNNER_TEMP/health.json" http://localhost:3016/health && break; sleep 1; done
+          grep -q '"status":"ok"' "$RUNNER_TEMP/health.json"
+          curl -sf -o "$RUNNER_TEMP/page.html" http://localhost:3016/
+          grep -q '<title>Bajki dla Bajtli' "$RUNNER_TEMP/page.html"
+          curl -sf http://localhost:3016/robots.txt | grep -q '^Disallow: /$'
+
+      - name: Logs
+        if: failure()
+        run: docker compose logs
+
+  # The pages in a real browser (Chromium), on a desktop and a phone screen, with accessibility checks; the channel
+  # from tests/fixtures and a stand-in for YouTube's player
+  e2e:
+    name: End-to-end (Playwright)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Chromium only, with the system libraries it needs
+      - run: npx playwright install --with-deps chromium
+
+      - run: npm run test:e2e
+
+      # What the browser saw when a test failed: open with `npx playwright show-report`
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

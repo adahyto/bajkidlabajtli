@@ -1,0 +1,41 @@
+# Docker keeps container logs until the container is removed; cap them by size
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: '10m'
+    max-file: '3'
+
+services:
+  nodeserver:
+    # Caps so that one runaway container cannot take the whole server down
+    mem_limit: 256m
+    pids_limit: 256
+    restart: always
+    logging: *logging
+    build:
+      context: ./
+    environment:
+      # The public address, for canonical links and the sitemap
+      - ORIGIN=https://bajkidlabajtli.pl
+      # Search engines are kept out (robots.txt and X-Robots-Tag) until the site is ready to be found; set
+      # INDEXING=1 in .env at launch
+      - INDEXING=${INDEXING:-0}
+      # The YouTube Data API key (lib/server/youtube.ts), in .env; without it the channel's RSS feed is read
+      - YOUTUBE_API_KEY=${YOUTUBE_API_KEY:-}
+      # Apache in front (Cloudflare → Apache → here) puts the visitor's address last in X-Forwarded-For; the limit of
+      # counted pages per address (lib/server/stats.ts) needs it. Only Apache can reach the port (127.0.0.1 below),
+      # so nobody can send a made-up header past it
+      - ADDRESS_HEADER=X-Forwarded-For
+      - XFF_DEPTH=1
+      # This server's own addresses: our checks from here through the domain arrive with them, and are counted apart
+      # from visitors (test:<key> in the statistics, lib/server/stats.ts)
+      - TEST_ADDRESSES=51.75.116.68,2001:41d0:303:8344::1,2001:41d0:303:8344::6697
+    # The last read of the channel, pictures and statistics, kept across deploys
+    volumes:
+      - data:/data
+    # Only on this host: visitors come through Apache (bajkidlabajtli.pl)
+    ports:
+      - '127.0.0.1:3016:3000'
+
+volumes:
+  data:
