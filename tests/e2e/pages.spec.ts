@@ -343,11 +343,23 @@ test('for kindergartens: a lesson plan for every song, its colouring page to pri
 	]);
 	await expect(page.locator('.lessons > li').first()).toContainText('Numer 112');
 	await expect(page.getByText('Bezpłatnie')).toBeVisible();
+	// The days with their exact dates, not "w lutym" (the dates themselves: tests/unit/lessons.test.ts)
+	// (after the last date in lib/days.ts: where to look it up)
+	await expect(
+		page.getByText(/(, \d{1,2} lutego \d{4}|saferinternet\.pl\)) – Dzień Bezpiecznego Internetu/)
+	).toBeVisible();
+	await expect(
+		page
+			.locator('.lessons')
+			.getByText(/^Dzień Bezpiecznego Internetu – ([a-zśęą]+, \d{1,2} lutego \d{4}|w lutym.*)$/)
+	).toBeVisible();
 	await page.getByRole('link', { name: /^Scenariusz\s*: Jeden, jeden, dwa\b/ }).click();
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText(
 		'Jeden, jeden, dwa: numer alarmowy 112'
 	);
-	await expect(page.getByText('11 lutego: Europejski Dzień Numeru Alarmowego 112')).toBeVisible();
+	await expect(
+		page.getByText(/Europejski Dzień Numeru Alarmowego 112 – [a-zśęą]+, 11 lutego \d{4}/)
+	).toBeVisible();
 	await expect(page.locator('.step')).toHaveCount(6);
 	await page.getByRole('link', { name: 'Kolorowanka do druku' }).click();
 	await expect(page).toHaveURL(/\/kolorowanka\/jeden-jeden-dwa$/);

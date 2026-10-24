@@ -6,6 +6,8 @@
  * No imports beyond types: tests/unit checks these in plain Node.
  */
 
+import type { DayId } from './days';
+
 /** What Pikselek holds or stands by on the colouring page */
 export type Scene = 'drzewo' | 'prezent' | 'monetki' | 'tablet' | 'telefon';
 
@@ -23,8 +25,8 @@ export type Lesson = {
 	goals: string[];
 	materials: string[];
 	steps: { title: string; minutes: number; text: string }[];
-	/** A day of the year the lesson fits */
-	day?: string;
+	/** A day of the year the lesson fits, shown with its next date (lib/days.ts) */
+	day?: DayId;
 	coloring: { scene: Scene; caption: string };
 };
 
@@ -243,7 +245,7 @@ export const LESSONS: Lesson[] = [
 				text: 'Dzieci kończą zdanie: „Gdy w internecie zobaczę coś dziwnego, to…”. Rodzicom przekazujemy adres bajkidlabajtli.pl/dla-rodzicow z poradnikiem o bezpiecznym internecie dla przedszkolaka.'
 			}
 		],
-		day: 'luty: Dzień Bezpiecznego Internetu',
+		day: 'bezpieczny-internet',
 		coloring: {
 			scene: 'tablet',
 			caption: 'W internecie nie mówię, kim jestem. Gdy czegoś nie wiem, pytam mamę albo tatę.'
@@ -295,7 +297,7 @@ export const LESSONS: Lesson[] = [
 				text: 'Dzieci razem mówią: „Dzwonię pod 112, mówię, co się stało i gdzie, i nie rozłączam się”. Rodzicom przekazujemy adres bajkidlabajtli.pl/dla-rodzicow z poradnikiem, jak ćwiczyć 112 w domu i jak nauczyć dziecko adresu.'
 			}
 		],
-		day: '11 lutego: Europejski Dzień Numeru Alarmowego 112',
+		day: '112',
 		coloring: {
 			scene: 'telefon',
 			caption: 'Dzwonię pod 112. Mówię, co się stało i gdzie, i nie rozłączam się.'

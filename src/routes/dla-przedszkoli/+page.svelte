@@ -2,6 +2,7 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { thumbOf } from '$lib/cards';
+	import { dayText, longDate, nextDate } from '$lib/days';
 	import { breadcrumbLd } from '$lib/jsonld';
 	import { LESSONS, minutesOf } from '$lib/lessons';
 	import { SITE } from '$lib/site';
@@ -25,6 +26,7 @@
 	const minutes = LESSONS.map(minutesOf);
 	const shortest = Math.floor(Math.min(...minutes) / 5) * 5;
 	const longest = Math.ceil(Math.max(...minutes) / 5) * 5;
+	const saferInternet = nextDate('bezpieczny-internet');
 </script>
 
 <Head
@@ -57,8 +59,10 @@
 		</li>
 	</ul>
 	<p>
-		Dobre okazje: <strong>11 lutego</strong> (Europejski Dzień Numeru Alarmowego 112) i
-		<strong>Dzień Bezpiecznego Internetu</strong> w lutym.
+		Dobre okazje:
+		{#if saferInternet}<strong>{longDate(saferInternet)}</strong>{:else}<strong>luty</strong> (co roku
+			innego dnia, data na saferinternet.pl){/if} – Dzień Bezpiecznego Internetu i
+		<strong>{longDate(nextDate('112')!)}</strong> – Europejski Dzień Numeru Alarmowego 112.
 	</p>
 </section>
 
@@ -79,7 +83,7 @@
 				{#if SONGS[lesson.songId]?.topic}<span class="chip">{SONGS[lesson.songId].topic}</span>{/if}
 				<h2>{lesson.song}</h2>
 				<p class="card__topic">{lesson.topic} · około {minutesOf(lesson)} minut</p>
-				{#if lesson.day}<p class="card__day">{lesson.day}</p>{/if}
+				{#if lesson.day}<p class="card__day">{dayText(lesson.day)}</p>{/if}
 				<div class="card__links">
 					<a class="btn btn--blue" href={resolve('/dla-przedszkoli/[slug]', { slug: lesson.slug })}
 						><span class="btn__name"
