@@ -1,4 +1,5 @@
 import { GUIDES } from '$lib/guides';
+import { LESSONS } from '$lib/lessons';
 import { firstSentence } from '$lib/seo';
 import { SITE } from '$lib/site';
 import { SONGS } from '$lib/songs';
@@ -46,6 +47,13 @@ ${channel.playlists.map((p) => `- [Playlist: ${p.title}](${at(`/playlista/${p.sl
 ## Guides for parents
 
 ${GUIDES.map((g) => `- [${g.title}](${at(`/poradnik/${g.slug}`)}): ${g.description}`).join('\n')}
+
+## For kindergartens and schools
+
+Free lesson plans (about 40 minutes: a talk, the song, a game, a colouring page) and printable colouring pages with
+Pikselek, for children aged 3–6 and the first school years: ${at('/dla-przedszkoli')}
+
+${LESSONS.map((l) => `- [${l.song}: ${l.topic}](${at(`/dla-przedszkoli/${l.slug}`)}), [colouring page](${at(`/kolorowanka/${l.slug}`)})`).join('\n')}
 
 ## Songs
 

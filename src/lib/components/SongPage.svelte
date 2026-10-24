@@ -4,6 +4,7 @@
 	import { pathOf, thumbOf, type Card } from '$lib/cards';
 	import { clock } from '$lib/format';
 	import { guidesForSong } from '$lib/guides';
+	import { lessonForSong } from '$lib/lessons';
 	import { breadcrumbLd, videoLd } from '$lib/jsonld';
 	import { songDescription, songTitle } from '$lib/seo';
 	import { SITE } from '$lib/site';
@@ -39,6 +40,8 @@
 	);
 	// Guides for parents about what the song teaches (a short: its full song's)
 	const guides = $derived(guidesForSong(data.full?.id ?? video.id));
+	// The lesson plan for kindergartens: of this video, or of a short's full song
+	const lesson = $derived(lessonForSong(video.id) ?? lessonForSong(data.full?.id ?? ''));
 	// For search results: short, about what the song teaches (lib/seo.ts)
 	const summary = $derived(
 		songDescription({
@@ -170,6 +173,14 @@
 				</span>
 			</a>
 		{/each}
+		{#if lesson}
+			<p class="teachers">
+				Dla przedszkoli i szkół:
+				<a href={resolve('/dla-przedszkoli/[slug]', { slug: lesson.slug })}>scenariusz zajęć</a>
+				i
+				<a href={resolve('/kolorowanka/[slug]', { slug: lesson.slug })}>kolorowanka do druku</a>
+			</p>
+		{/if}
 		{#if data.short}
 			<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- pathOf gives the page of the song -->
 			<a class="other" href={pathOf(data.short)}>
@@ -370,6 +381,11 @@
 
 	.other:hover {
 		color: var(--ink);
+	}
+
+	.teachers {
+		padding: 0 6px;
+		font-weight: 700;
 	}
 
 	.other--guide {

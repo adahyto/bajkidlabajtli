@@ -24,7 +24,9 @@ test('the sitemap lists the songs with their videos, the playlist, not the short
 	expect(xml).toContain('/poradnik/co-zrobic-gdy-dziecko-zgubi-sie-w-sklepie</loc><lastmod>');
 	expect(xml).toContain('/poradnik/dobry-i-zly-sekret-jak-rozmawiac-z-dzieckiem</loc>');
 	expect(xml).toContain('/poradnik/jak-zablokowac-zakupy-w-grach-na-telefonie-dziecka</loc>');
-	expect(xml.match(/<url>/g)).toHaveLength(13);
+	expect(xml).toContain('/dla-przedszkoli/jeden-jeden-dwa</loc>');
+	expect(xml).toContain('/kolorowanka/gdy-sie-zgubie</loc>');
+	expect(xml.match(/<url>/g)).toHaveLength(26);
 	// Google's video sitemap: one video for each song and the short of its own
 	expect(xml.match(/<video:video>/g)).toHaveLength(5);
 	expect(xml).toContain(
@@ -82,6 +84,8 @@ test('a page seen is counted, an unknown one is not an error', async ({ request 
 		'/dla-rodzicow',
 		'/dziecko',
 		'/poradnik/co-zrobic-gdy-dziecko-zgubi-sie-w-sklepie',
+		'/dla-przedszkoli/zlote-monetki',
+		'/kolorowanka/zlote-monetki',
 		'/piosenka/nie-ma'
 	]) {
 		const res = await request.post('/api/stats', { data: { event: 'view', path } });

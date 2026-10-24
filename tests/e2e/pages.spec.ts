@@ -176,7 +176,7 @@ test('every page has a description that fits in search results', async ({ page, 
 	const paths = [...xml.matchAll(/<loc>http:\/\/127\.0\.0\.1:4173([^<]*)<\/loc>/g)].map(
 		(m) => m[1]
 	);
-	expect(paths.length).toBe(13);
+	expect(paths.length).toBe(26);
 	for (const path of paths) {
 		await page.goto(path);
 		const description =
@@ -246,7 +246,39 @@ test('the guides beside their songs: secrets, purchases in games', async ({ page
 		page.getByText('Ustawienia → Czas przed ekranem → Aplikacje i witryny.')
 	).toBeVisible();
 	await page.goto('/poradnik');
-	await expect(page.locator('a.guide')).toHaveCount(3);
+	await expect(page.locator('a.guide')).toHaveCount(5);
+});
+
+test('for kindergartens: a lesson plan for every song, its colouring page to print', async ({
+	page
+}) => {
+	await page.goto('/');
+	await page.getByRole('contentinfo').getByRole('link', { name: 'Dla przedszkoli' }).click();
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+		'Zajęcia o bezpieczeństwie z Pikselkiem'
+	);
+	await expect(page.locator('.lessons > li')).toHaveCount(5);
+	await page.getByRole('link', { name: /^Scenariusz\s*: Jeden, jeden, dwa!$/ }).click();
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+		'Jeden, jeden, dwa!: numer alarmowy 112'
+	);
+	await expect(page.getByText('11 lutego: Europejski Dzień Numeru Alarmowego 112')).toBeVisible();
+	await expect(page.locator('.step')).toHaveCount(6);
+	await page.getByRole('link', { name: 'Kolorowanka do druku' }).click();
+	await expect(page).toHaveURL(/\/kolorowanka\/jeden-jeden-dwa$/);
+	await expect(page.getByRole('img', { name: /Pikselek do pokolorowania/ })).toBeVisible();
+	await expect(page.getByText('Dzwonię pod 112. Mówię, co się stało i gdzie')).toBeVisible();
+	// On paper: only the sheet
+	await page.emulateMedia({ media: 'print' });
+	await expect(page.getByRole('button', { name: /Drukuj/ })).toBeHidden();
+	await expect(page.getByRole('img', { name: /Pikselek do pokolorowania/ })).toBeVisible();
+	// From a song's page too
+	await page.emulateMedia({ media: 'screen' });
+	await page.goto('/piosenka/gdy-sie-zgubie');
+	await expect(page.getByRole('link', { name: 'scenariusz zajęć' })).toHaveAttribute(
+		'href',
+		/dla-przedszkoli\/gdy-sie-zgubie$/
+	);
 });
 
 test('an unknown guide is a 404', async ({ page }) => {
