@@ -15,6 +15,7 @@ import type { Parents } from '../types.ts';
  *   ♥️♥️♥️  SUBSKRYBUJ  ♥️♥️♥️
  *
  * and a short: "Refren piosenki „Gdy się zgubię” – …" with "Cały teledysk: https://www.youtube.com/watch?v=<id>".
+ * A line with this site's address (🌐 https://bajkidlabajtli.pl, anywhere) is left out.
  * A part the description does not have stays empty, so a video described otherwise still shows, only without the
  * card for parents. No imports beyond types: tests/unit runs this file in plain Node.
  */
@@ -113,6 +114,8 @@ export function parseDescription(description: string, fullTitle = ''): Parents {
 		for (const [index, line] of lines.entries()) {
 			if (!line.replace(HASHTAG, '').trim()) continue;
 			if (/^Cały teledysk/i.test(line)) continue;
+			// A link to this site, wherever the channel puts it, is not about the song
+			if (/bajkidlabajtli\.pl/i.test(line)) continue;
 			if (/^Śpiewaj razem/i.test(line)) {
 				parents.singAlong = /tekst/i.test(line);
 				continue;

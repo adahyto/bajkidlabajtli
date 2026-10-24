@@ -82,3 +82,22 @@ test('a short: its first line, nothing else', () => {
 	assert.equal(p.tips.length, 0);
 	assert.equal(parse('Uo1OsJlukhM').intro.slice(0, 33), 'Refren piosenki „Jeden, jeden, dw');
 });
+
+test('a link to the site anywhere in a description changes nothing', () => {
+	for (const id of ['nvQ1vsDZJds', 'x9ulnPUktvw', '9-2NMQcT1N4']) {
+		const { description, fullTitle } = video(id);
+		const before = parseDescription(description, fullTitle);
+		const link = '🌐 Strona dla rodziców i tryb dla dziecka: https://bajkidlabajtli.pl';
+		const paragraphs = description.split('\n\n');
+		for (const at of [1, Math.floor(paragraphs.length / 2), paragraphs.length]) {
+			const changed = [...paragraphs.slice(0, at), link, ...paragraphs.slice(at)].join('\n\n');
+			assert.deepEqual(parseDescription(changed, fullTitle), before, `${id} at ${at}`);
+		}
+		// On its own line inside a paragraph too
+		assert.deepEqual(
+			parseDescription(description.replace('\n', `\n${link}\n`), fullTitle),
+			before,
+			`${id} inside`
+		);
+	}
+});
