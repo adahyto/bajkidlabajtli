@@ -3,15 +3,18 @@
 	import { page } from '$app/state';
 	import { pathOf, thumbOf } from '$lib/cards';
 	import { clock, songs } from '$lib/format';
+	import { enterFullscreen } from '$lib/fullscreen';
 	import { siteLd } from '$lib/jsonld';
 	import { SITE } from '$lib/site';
 	import Head from '$lib/components/Head.svelte';
 	import Icon from '$lib/components/Icon.svelte';
-	import InstallApp from '$lib/components/InstallApp.svelte';
-	import KidModeLink from '$lib/components/KidModeLink.svelte';
 	import VideoCard from '$lib/components/VideoCard.svelte';
+	import { songGrid } from '$lib/grid';
 
 	let { data } = $props();
+
+	// The grid of songs without a half-empty last row (lib/grid.ts)
+	const grid = $derived(songGrid(data.songs.length));
 </script>
 
 <Head
@@ -20,21 +23,15 @@
 />
 
 {#if data.hero}
-	<section class="hero">
+	<section class="hero" aria-labelledby="hero-h">
 		<div class="hero__text">
-			<span class="badge">NOWA PIOSENKA</span>
-			<h1>
+			<h1 id="hero-h">
 				Śpiewaj z Pikselkiem! <span class="hero__about">Piosenki dla dzieci o bezpieczeństwie</span>
 			</h1>
 			<p>
 				Krótkie piosenki dla dzieci 3–8 lat. W każdej jedna prosta zasada, zaśpiewana tak, żeby
 				została w głowie.
 			</p>
-			<div class="hero__buttons">
-				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- pathOf gives the page of the song -->
-				<a class="btn btn--blue" href={pathOf(data.hero)}><Icon name="play" /> Włącz najnowszą</a>
-				<a class="btn btn--white" href="#piosenki">Wszystkie piosenki</a>
-			</div>
 		</div>
 		<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- pathOf gives the page of the song -->
 		<a class="hero__video" href={pathOf(data.hero)}>
@@ -46,10 +43,65 @@
 				fetchpriority="high"
 			/>
 			<span class="hero__play"><Icon name="play" size={44} /></span>
-			<span class="hero__title"><span class="visually-hidden">Włącz: </span>{data.hero.title}</span>
+			<span class="hero__title"
+				><span class="visually-hidden">Włącz: </span><span class="hero__new"
+					>{data.heroNew ? 'Nowa' : 'Najnowsza'}<span class="visually-hidden">
+						piosenka:</span
+					></span
+				>
+				{data.hero.title}</span
+			>
 			{#if data.hero.seconds}<span class="hero__time">{clock(data.hero.seconds)}</span>{/if}
 		</a>
+		<!-- Three ways in, one for each who comes: a child with a parent, a parent, a teacher -->
+		<ul class="paths" aria-label="Dla kogo">
+			<li>
+				<a class="path path--kid" href={resolve('/dziecko')} onclick={enterFullscreen}>
+					<span class="path__icon"><Icon name="play" size={26} /></span>
+					<span class="path__text">
+						<span class="path__name">Włącz dziecku</span>
+						<span class="path__about">Same piosenki, bez menu i linków</span>
+					</span>
+				</a>
+			</li>
+			<li>
+				<a class="path" href={resolve('/dla-rodzicow')}>
+					<span class="path__icon"><Icon name="heart" size={26} /></span>
+					<span class="path__text">
+						<span class="path__name">Dla rodziców</span>
+						<span class="path__about">Zasady i pytania do rozmowy</span>
+					</span>
+				</a>
+			</li>
+			<li>
+				<a class="path" href={resolve('/dla-przedszkoli')}>
+					<span class="path__icon"><Icon name="book" size={26} /></span>
+					<span class="path__text">
+						<span class="path__name">Dla przedszkoli</span>
+						<span class="path__about">Scenariusze zajęć i kolorowanki</span>
+					</span>
+				</a>
+			</li>
+		</ul>
 	</section>
+
+	<ul class="trust" aria-label="Jak strona chroni dziecko">
+		<li>
+			<Icon name="shield" size={28} />
+			<p>
+				<strong>YouTube dopiero po kliknięciu.</strong> Do tego czasu strona nie łączy się z
+				YouTube.
+				<a href={resolve('/prywatnosc')}>Więcej o prywatności</a>
+			</p>
+		</li>
+		<li>
+			<Icon name="again" size={28} />
+			<p>
+				<strong>Po piosence bez obcych filmów.</strong> Zamiast podpowiedzi YouTube tylko „Jeszcze raz”
+				i „Następna”.
+			</p>
+		</li>
+	</ul>
 {:else}
 	<section class="hero">
 		<div class="hero__text">
@@ -67,9 +119,9 @@
 			<h2 id="piosenki-h">Piosenki</h2>
 			<p>Od najnowszej. Nowa co tydzień.</p>
 		</div>
-		<div class="grid">
+		<div class="grid" style:--xl-cols={grid.xlCols}>
 			{#each data.songs as card, i (card.id)}
-				<VideoCard {card} eager={i < 4} />
+				<VideoCard {card} eager={i < 4} wide={grid.wide[i]} />
 			{/each}
 		</div>
 	</section>
@@ -81,11 +133,11 @@
 			<h2 id="krotkie-h">Krótkie piosenki</h2>
 			<p>Same refreny, do śpiewania razem</p>
 		</div>
-		<div class="grid grid--shorts">
+		<ul class="shorts" aria-label="Krótkie piosenki">
 			{#each data.shorts as card (card.id)}
-				<VideoCard {card} />
+				<li><VideoCard {card} /></li>
 			{/each}
-		</div>
+		</ul>
 	</section>
 {/if}
 
@@ -112,7 +164,7 @@
 						<h3>{list.title}</h3>
 						{#if list.summary}<p>{list.summary}</p>{/if}
 						<a class="btn btn--blue" href={resolve('/playlista/[slug]', { slug: list.slug })}>
-							<Icon name="play" /> Odtwórz wszystkie po kolei
+							<Icon name="play" /> Wszystkie po kolei
 						</a>
 					</div>
 				</article>
@@ -125,67 +177,28 @@
 	<div class="parents__intro">
 		<h2 id="rodzice-h">Dla rodziców</h2>
 		<p>
-			Każda piosenka to jedna prosta zasada: jak bezpiecznie klikać w internecie, co zrobić, gdy
-			dziecko się zgubi, czym niespodzianka różni się od sekretu. Wszystkie są autorskie, animacje
-			proste i kolorowe, bez krzyku i bez reklam zabawek. Po piosence łatwo zacząć rozmowę o trudnym
-			temacie bez trudnych słów.
+			Po piosence łatwo zacząć rozmowę o trudnym temacie bez trudnych słów. Piosenki są autorskie,
+			bez krzyku i bez reklam zabawek.
 		</p>
 	</div>
-
-	{#if data.rules.length}
-		<div class="table">
-			<table>
-				<thead>
-					<tr>
-						<th scope="col">Piosenka</th>
-						<th scope="col">O czym jest</th>
-						<th scope="col">Pierwsza zasada</th>
-					</tr>
-				</thead>
-				<tbody>
-					{#each data.rules as row (row.card.id)}
-						<tr>
-							<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- pathOf gives the page of the song -->
-							<th scope="row"><a href={pathOf(row.card)}>{row.card.title}</a></th>
-							<td>{row.about}</td>
-							<td class="table__rule"
-								><span aria-hidden="true">{row.rule.icon}</span> {row.rule.text}</td
-							>
-						</tr>
-					{/each}
-				</tbody>
-			</table>
-		</div>
-		<div class="parents__more">
-			<p>
-				Przy każdej piosence są wszystkie jej zasady, pytania do rozmowy z dzieckiem i wskazówki dla
-				rodziców. Wszystkie razem, także do wydruku:
-			</p>
-			<div class="parents__buttons">
-				<a class="btn btn--blue" href={resolve('/dla-rodzicow')}>Wszystko dla rodziców</a>
-				<KidModeLink white />
-				<InstallApp white />
-			</div>
-		</div>
-	{/if}
-
-	<div class="facts">
-		<div class="fact">
-			<Icon name="shield" size={32} />
-			<h3>YouTube dopiero po kliknięciu</h3>
-			<p>
-				Do tego czasu strona nie łączy się z YouTube. Odtwarzacz działa w trybie rozszerzonej
-				prywatności. <a href={resolve('/prywatnosc')}>Więcej o prywatności</a>
-			</p>
-		</div>
-		<div class="fact">
-			<Icon name="again" size={32} />
-			<h3>Po piosence bez obcych filmów</h3>
-			<p>
-				Zamiast podpowiedzi YouTube dziecko widzi dwa duże przyciski: „Jeszcze raz” i „Następna”.
-			</p>
-		</div>
-	</div>
+	<ol class="steps">
+		<li>
+			<span class="steps__n" aria-hidden="true">1</span>
+			<h3>Obejrzyjcie</h3>
+			<p>Piosenka trwa około dwóch minut, a tekst jest na ekranie.</p>
+		</li>
+		<li>
+			<span class="steps__n" aria-hidden="true">2</span>
+			<h3>Porozmawiajcie</h3>
+			<p>Przy każdej piosence są trzy krótkie pytania do dziecka.</p>
+		</li>
+		<li>
+			<span class="steps__n" aria-hidden="true">3</span>
+			<h3>Przećwiczcie</h3>
+			<p>Zabawa w „stój jak drzewo” albo numer mamy na pamięć.</p>
+		</li>
+	</ol>
+	<a class="btn btn--blue" href={resolve('/dla-rodzicow')}>Zasady i pytania do rozmowy</a>
 </section>
 
 <style>
@@ -223,13 +236,6 @@
 	.hero__text p {
 		font-size: 20px;
 		max-width: 32ch;
-	}
-
-	.hero__buttons {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 14px;
-		padding-top: 4px;
 	}
 
 	.hero__video {
@@ -287,6 +293,142 @@
 		line-height: 1.25;
 	}
 
+	.hero__new {
+		display: inline-block;
+		margin-right: 4px;
+		padding: 1px 8px;
+		border-radius: 999px;
+		background: var(--ink);
+		color: var(--sun);
+		font-size: 13px;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		vertical-align: 2px;
+	}
+
+	/* Three equal ways in under the text and the video, in a row; on a phone one under another */
+	.paths {
+		flex-basis: 100%;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 16px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.path {
+		height: 100%;
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		min-height: 76px;
+		padding: 14px 18px;
+		border-radius: 22px;
+		background: #fff;
+		color: var(--ink);
+		text-decoration: none;
+		box-shadow: 0 6px 0 var(--sun-edge);
+		transition: transform 0.08s;
+	}
+
+	.path:hover {
+		color: var(--ink);
+	}
+
+	.path:active {
+		transform: translateY(3px);
+	}
+
+	.path__icon {
+		flex: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		background: var(--chip);
+		color: var(--blue);
+	}
+
+	.path__text {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.path__name {
+		font-weight: 800;
+		font-size: 20px;
+		line-height: 1.2;
+	}
+
+	.path__about {
+		color: var(--muted);
+		font-weight: 600;
+		font-size: 15px;
+		line-height: 1.3;
+	}
+
+	.path--kid {
+		background: var(--blue);
+		color: #fff;
+		box-shadow: 0 6px 0 var(--blue-edge);
+	}
+
+	.path--kid:hover {
+		color: #fff;
+	}
+
+	.path--kid .path__icon {
+		background: #fff;
+	}
+
+	.path--kid .path__about {
+		color: #e3eeff;
+	}
+
+	@media (max-width: 899px) {
+		.paths {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 14px;
+		}
+	}
+
+	/* How the site keeps the child away from the rest of YouTube, right under the first view */
+	.trust {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+		gap: 12px 28px;
+		margin: -40px 0 0;
+		padding: 0 8px;
+		list-style: none;
+		color: var(--blue);
+	}
+
+	.trust li {
+		display: flex;
+		align-items: flex-start;
+		gap: 12px;
+	}
+
+	.trust :global(svg) {
+		flex: none;
+		margin-top: 2px;
+	}
+
+	.trust p {
+		color: var(--ink);
+		font-size: 17px;
+	}
+
+	@media (max-width: 600px) {
+		.trust {
+			margin-top: -24px;
+			padding: 0;
+		}
+	}
+
 	.hero__time {
 		right: 16px;
 		background: rgb(31 42 68 / 0.88);
@@ -312,45 +454,90 @@
 			height: 76px;
 		}
 
-		/* Only for screen readers: the name of the link */
-		.hero__title {
-			width: 1px;
-			height: 1px;
-			padding: 0;
-			overflow: hidden;
-			clip-path: inset(50%);
-			white-space: nowrap;
+		.hero__title,
+		.hero__time {
+			bottom: 10px;
+			padding: 5px 10px;
+			border-radius: 12px;
 		}
 
-		.hero__buttons,
-		.hero__buttons .btn {
-			width: 100%;
+		.hero__title {
+			left: 10px;
+			max-width: calc(100% - 84px);
+			font-size: 15px;
+		}
+
+		.hero__time {
+			right: 10px;
+			font-size: 14px;
+		}
+
+		.hero__new {
+			font-size: 12px;
 		}
 	}
 
+	/* 1 column on a phone, 2, 3 and then 3 or 4 (--xl-cols); the wide cards in lib/grid.ts */
 	.grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+		grid-template-columns: minmax(0, 1fr);
 		gap: 24px;
 	}
 
-	.grid--shorts {
-		grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-		gap: 20px;
+	@media (min-width: 640px) {
+		.grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
 	}
 
-	@media (max-width: 600px) {
-		.grid--shorts {
-			display: flex;
-			overflow-x: auto;
-			margin-inline: -16px;
-			padding: 0 16px 12px;
-			gap: 12px;
+	@media (min-width: 900px) {
+		.grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
 		}
+	}
 
-		.grid--shorts > :global(*) {
-			flex: none;
-			width: 160px;
+	@media (min-width: 1100px) {
+		.grid {
+			grid-template-columns: repeat(var(--xl-cols), minmax(0, 1fr));
+		}
+	}
+
+	/* The shorts in one row that moves sideways: five fit on a computer, more move in */
+	.shorts {
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: 160px;
+		gap: 12px;
+		margin: -8px -16px 0;
+		padding: 8px 16px 16px;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scroll-padding-inline: 16px;
+		list-style: none;
+	}
+
+	.shorts li {
+		display: flex;
+		scroll-snap-align: start;
+	}
+
+	.shorts li > :global(*) {
+		flex: 1;
+	}
+
+	@media (min-width: 640px) {
+		.shorts {
+			grid-auto-columns: calc((100% - 32px - 3 * 20px) / 3.4);
+			gap: 20px;
+		}
+	}
+
+	@media (min-width: 1100px) {
+		.shorts {
+			margin-inline: -8px;
+			padding-inline: 8px;
+			scroll-padding-inline: 8px;
+			grid-auto-columns: calc((100% - 16px - 4 * 20px) / 5);
 		}
 	}
 
@@ -446,95 +633,58 @@
 		font-size: 19px;
 	}
 
-	.parents__more {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 16px 24px;
-		margin-top: -12px;
-	}
-
-	.parents__more p {
-		flex: 1 1 360px;
-		color: var(--muted);
-	}
-
-	.parents__buttons {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 14px;
-	}
-
-	.parents__buttons :global(.btn--white) {
-		box-shadow:
-			inset 0 0 0 2px var(--line),
-			0 6px 0 var(--lift);
-	}
-
-	.table {
-		overflow-x: auto;
-		border-radius: 24px;
-		box-shadow: inset 0 0 0 2px var(--line);
-	}
-
-	table {
-		width: 100%;
-		min-width: 640px;
-		border-collapse: collapse;
-		font-size: 17px;
-		line-height: 1.45;
-	}
-
-	th,
-	td {
-		padding: 16px 20px;
-		text-align: left;
-		vertical-align: top;
-	}
-
-	thead tr {
-		background: var(--bg);
-	}
-
-	tbody tr {
-		border-top: 2px solid var(--line);
-	}
-
-	.table__rule {
-		font-weight: 700;
-	}
-
-	.facts {
+	.steps {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-		gap: 20px;
-		color: var(--blue);
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+		gap: 16px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
 	}
 
-	.fact {
+	.steps li {
 		display: flex;
 		flex-direction: column;
-		gap: 10px;
-		padding: 24px;
+		gap: 6px;
+		padding: 20px 22px;
 		border-radius: 24px;
 		background: var(--bg);
 	}
 
-	.fact h3 {
-		color: var(--ink);
-		font-family: 'Nunito', system-ui, sans-serif;
-		font-size: 20px;
+	.steps__n {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		margin-bottom: 4px;
+		border-radius: 50%;
+		background: var(--sun);
+		font-family: var(--display);
+		font-weight: 800;
+		font-size: 22px;
 	}
 
-	.fact p {
-		color: var(--ink);
+	.steps h3 {
+		font-size: 24px;
+	}
+
+	.steps p {
 		font-size: 17px;
+	}
+
+	.parents > .btn {
+		align-self: flex-start;
 	}
 
 	@media (max-width: 600px) {
 		.parents {
 			padding: 24px 18px;
 			border-radius: 28px;
+		}
+
+		.parents > .btn {
+			align-self: stretch;
 		}
 	}
 
