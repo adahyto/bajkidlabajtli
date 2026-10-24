@@ -22,6 +22,8 @@ for (const path of [
 	'/dla-rodzicow',
 	'/dziecko',
 	'/offline',
+	'/poradnik',
+	'/poradnik/co-zrobic-gdy-dziecko-zgubi-sie-w-sklepie',
 	'/prywatnosc',
 	'/nie-ma-takiej-strony'
 ]) {

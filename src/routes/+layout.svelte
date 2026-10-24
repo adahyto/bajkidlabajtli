@@ -80,6 +80,7 @@
 			<ul>
 				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- YouTube -->
 				<li><a href={SITE.channel}>Kanał na YouTube</a></li>
+				<li><a href={resolve('/poradnik')}>Poradniki</a></li>
 				<li><a href={resolve('/prywatnosc')}>Prywatność</a></li>
 				<li>
 					© {new Date().getFullYear()}

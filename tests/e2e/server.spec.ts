@@ -21,7 +21,8 @@ test('the sitemap lists the songs with their videos, the playlist, not the short
 	expect(xml).toContain('/playlista/bezpieczny-pikselek</loc>');
 	expect(xml).toContain('/dla-rodzicow</loc>');
 	expect(xml).not.toContain('/dziecko');
-	expect(xml.match(/<url>/g)).toHaveLength(9);
+	expect(xml).toContain('/poradnik/co-zrobic-gdy-dziecko-zgubi-sie-w-sklepie</loc><lastmod>');
+	expect(xml.match(/<url>/g)).toHaveLength(11);
 	// Google's video sitemap: one video for each song and the short of its own
 	expect(xml.match(/<video:video>/g)).toHaveLength(5);
 	expect(xml).toContain(
@@ -43,6 +44,9 @@ test('llms.txt tells AI assistants about the site and every song', async ({ requ
 	expect(text).toContain('Rules: Stój jak drzewo');
 	expect(text).toContain('[Jeden, jeden, dwa!](http://127.0.0.1:4173/krotka/jeden-jeden-dwa)');
 	expect(text).not.toContain('stoj-jak-drzewo');
+	expect(text).toContain(
+		'[Co zrobić, gdy dziecko zgubi się w sklepie?](http://127.0.0.1:4173/poradnik/co-zrobic-gdy-dziecko-zgubi-sie-w-sklepie)'
+	);
 });
 
 test('the IndexNow key is served as plain text', async ({ request }) => {
@@ -75,6 +79,7 @@ test('a page seen is counted, an unknown one is not an error', async ({ request 
 		'/piosenka/gdy-sie-zgubie',
 		'/dla-rodzicow',
 		'/dziecko',
+		'/poradnik/co-zrobic-gdy-dziecko-zgubi-sie-w-sklepie',
 		'/piosenka/nie-ma'
 	]) {
 		const res = await request.post('/api/stats', { data: { event: 'view', path } });
