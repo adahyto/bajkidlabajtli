@@ -268,7 +268,8 @@ export async function getChannel(): Promise<Channel> {
 		fromDisk = true;
 		const saved = await readFile(file(), 'utf8').catch(() => '');
 		try {
-			if (saved) current = JSON.parse(saved) as Channel;
+			// Again through finish(), so that what a new version links (a short to its song) shows at once
+			if (saved) current = finish(JSON.parse(saved) as Channel);
 		} catch {
 			console.error('channel.json is not valid JSON; reading YouTube again');
 		}
