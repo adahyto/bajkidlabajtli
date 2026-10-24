@@ -113,3 +113,34 @@ test('the icon on a phone opens the mode for a child', async ({ page, request })
 		/manifest\.webmanifest$/
 	);
 });
+
+test('the bar is one row at every width and does not move when the page starts', async ({
+	page
+}) => {
+	// "Cały ekran" is in the page from the server, hidden until the browser says it can
+	const html = await (await page.request.get('/dziecko')).text();
+	expect(html).toContain('Cały ekran');
+	for (const width of [320, 375, 412, 600, 1024]) {
+		await page.setViewportSize({ width, height: 800 });
+		await page.goto('/dziecko');
+		await expect(page.getByRole('button', { name: 'Cały ekran' })).toBeVisible();
+		const [name, full] = await Promise.all(
+			['.kid__name', '.kid__full'].map((s) => page.locator(s).boundingBox())
+		);
+		expect(
+			Math.abs(name!.y + name!.height / 2 - (full!.y + full!.height / 2)),
+			`${width}`
+		).toBeLessThan(4);
+	}
+	const shift = await page.evaluate(
+		() =>
+			new Promise<number>((done) => {
+				let sum = 0;
+				new PerformanceObserver((list) => {
+					for (const e of list.getEntries()) sum += (e as unknown as { value: number }).value;
+				}).observe({ type: 'layout-shift', buffered: true });
+				setTimeout(() => done(sum), 300);
+			})
+	);
+	expect(shift).toBeLessThan(0.05);
+});

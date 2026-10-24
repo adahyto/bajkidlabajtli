@@ -18,6 +18,8 @@
 			'<rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9v6l5-3z" fill="currentColor" stroke="none"/>',
 		menu: '<path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>',
 		close: '<path d="M6 6l12 12"/><path d="M18 6L6 18"/>',
+		expand:
+			'<path d="M4 9V4h5"/><path d="M15 4h5v5"/><path d="M20 15v5h-5"/><path d="M9 20H4v-5"/>',
 		heart:
 			'<path d="M12 20s-7.5-4.6-7.5-10.2A4.2 4.2 0 0 1 12 7.3a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/>',
 		book: '<path d="M4 19V5a2 2 0 0 1 2-2h14v14H6a2 2 0 0 0-2 2 2 2 0 0 0 2 2h14"/><path d="M9 8h7"/>',
