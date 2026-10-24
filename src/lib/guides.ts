@@ -146,6 +146,275 @@ export const GUIDES: Guide[] = [
 			},
 			{ name: 'Fundacja ITAKA: zaginieni.pl, telefon 116 000', url: 'https://zaginieni.pl/' }
 		]
+	},
+	{
+		slug: 'dobry-i-zly-sekret-jak-rozmawiac-z-dzieckiem',
+		title: 'Dobry i zły sekret – jak rozmawiać o tym z dzieckiem?',
+		short: 'Dobry i zły sekret',
+		description:
+			'Czym niespodzianka różni się od złego sekretu i jak powiedzieć to dziecku bez straszenia. Zasady, rozmowa, zabawa i co zrobić, gdy dziecko powie o sekrecie.',
+		songId: 'x9ulnPUktvw',
+		published: '2026-10-24',
+		updated: '2026-10-24',
+		lead: 'Dzieci uwielbiają sekrety, a dorośli często mówią „to nasz sekret” o prezencie czy niespodziance. Kłopot w tym, że tych samych słów używa ktoś, kto chce, żeby dziecko nie powiedziało o czymś, co je skrzywdziło. Dlatego warto nauczyć dziecko prostej różnicy: niespodzianka jest radosna i niedługo wszyscy się o niej dowiedzą, a sekret, przez który jest smutno albo dziwnie, trzeba powiedzieć zaufanemu dorosłemu. Da się o tym rozmawiać spokojnie, bez straszenia i bez trudnych słów.',
+		sections: [
+			{
+				heading: 'Niespodzianka czy sekret: prosta różnica',
+				blocks: [
+					{
+						kind: 'list',
+						items: [
+							'Niespodzianka to coś miłego dla kogoś innego: laurka dla taty, prezent dla babci, przyjęcie urodzinowe. Jest radosna i trwa krótko, bo niedługo wszyscy się o niej dowiedzą.',
+							'Zły sekret to coś, przez co jest smutno, dziwnie albo strasznie. W brzuszku coś ściska, a ktoś mówi: „Nikomu nie mów”, „To nasz mały sekret” albo obiecuje nagrodę za milczenie.',
+							'Zasada dla dziecka jest jedna: złego sekretu się nie trzyma. Mówi się o nim mamie, tacie albo innemu zaufanemu dorosłemu, i nikt nie będzie się za to złościł.'
+						]
+					},
+					{
+						kind: 'p',
+						text: 'Brytyjska organizacja NSPCC, która od lat uczy dzieci zasad bezpieczeństwa ciała, zwraca uwagę, że zdanie „to nasz mały sekret” to jeden ze sposobów, w jaki sprawca sprawia, że dziecko boi się mówić. Dziecko, które zna różnicę między niespodzianką a sekretem, łatwiej rozpozna, że coś jest nie tak.'
+					}
+				]
+			},
+			{
+				heading: 'Pięć zasad dla dziecka',
+				blocks: [
+					{
+						kind: 'steps',
+						items: [
+							{
+								title: 'Niespodzianka jest radosna',
+								text: 'I wkrótce wszyscy się o niej dowiedzą. Taką tajemnicę można trzymać.'
+							},
+							{
+								title: 'Zły sekret to ten, przez który jest smutno albo dziwnie',
+								text: 'Liczy się to, co dziecko czuje, a nie to, kto prosi o tajemnicę.'
+							},
+							{
+								title: 'Zły sekret mówię zaufanemu dorosłemu',
+								text: 'Mamie, tacie albo innej osobie, którą razem wybraliście: babci, pani w przedszkolu. Jeśli ktoś nie słucha, mówię następnej osobie.'
+							},
+							{
+								title: 'Za powiedzenie nie ma kary ani złości',
+								text: 'Nawet jeśli ktoś mówił, że będzie. To nigdy nie jest wina dziecka.'
+							},
+							{
+								title: 'Moje ciało jest moje',
+								text: 'Mogę powiedzieć „nie” dotykowi, którego nie chcę, także od bliskich osób, i moje „nie” jest ważne.'
+							}
+						]
+					}
+				]
+			},
+			{
+				heading: 'Jak o tym rozmawiać',
+				blocks: [
+					{
+						kind: 'list',
+						items: [
+							'Przy okazji, a nie na poważnej naradzie: po piosence, przy pakowaniu prezentu, przy czytaniu bajki. Kilka krótkich rozmów zostaje w głowie lepiej niż jedna długa.',
+							'Spokojnie i bez straszenia. Nie trzeba mówić o przemocy ani używać trudnych słów: wystarczą słowa „niespodzianka”, „zły sekret”, „smutno”, „dziwnie”.',
+							'W domu używajcie słowa „niespodzianka” zamiast „sekret” przy prezentach i miłych rzeczach. Wtedy „sekret” zostaje słowem na rzeczy, o których trzeba powiedzieć.',
+							'Razem wybierzcie kilku zaufanych dorosłych, do których dziecko może przyjść: rodzic, babcia, pani w przedszkolu. Dobrze, żeby nie wszyscy byli z najbliższej rodziny.',
+							'Szanujcie „nie” dziecka także w rodzinie. Jeśli nie chce całusa od cioci, wystarczy „cześć” albo przybicie piątki. Dziecko uczy się wtedy, że ma prawo do swojego ciała.',
+							'Powtarzajcie, że zawsze może Wam o wszystkim powiedzieć i nie będzie za to złości ani kary.'
+						]
+					}
+				]
+			},
+			{
+				heading: 'Gdy dziecko powie o złym sekrecie',
+				blocks: [
+					{
+						kind: 'steps',
+						items: [
+							{
+								title: 'Wysłuchaj spokojnie',
+								text: 'Nawet jeśli to, co słyszysz, budzi w Tobie złość albo strach. Dziecko patrzy na Twoją twarz i z niej odczytuje, czy dobrze zrobiło.'
+							},
+							{
+								title: 'Uwierz i podziękuj',
+								text: 'Powiedz: „Dobrze, że mi powiedziałeś. To nie jest twoja wina”. Nie wypytuj na siłę i nie dopytuj o szczegóły jak na przesłuchaniu.'
+							},
+							{
+								title: 'Nie obiecuj, że nikomu nie powiesz',
+								text: 'Możesz potrzebować pomocy innych dorosłych. Powiedz raczej: „Zrobię wszystko, żebyś był bezpieczny”.'
+							},
+							{
+								title: 'Poproś o radę',
+								text: 'Jeśli nie wiesz, co dalej, zadzwoń do specjalistów. Nie musisz mieć pewności, żeby zapytać.'
+							}
+						]
+					},
+					{
+						kind: 'note',
+						text: '800 100 100: bezpłatny i anonimowy telefon dla dorosłych w sprawie bezpieczeństwa dzieci (Fundacja Dajemy Dzieciom Siłę, w dni robocze). 116 111: Telefon Zaufania dla Dzieci i Młodzieży, całodobowy. W sytuacji zagrożenia: 112.'
+					}
+				]
+			},
+			{
+				heading: 'Zabawa: niespodzianka czy sekret?',
+				blocks: [
+					{
+						kind: 'p',
+						text: 'Podawajcie na zmianę krótkie sytuacje, a dziecko mówi, czy to niespodzianka, czy zły sekret. Laurka dla taty na urodziny? Niespodzianka. Kolega zabrał zabawkę i mówi: „Nie mów pani”? Zły sekret, trzeba powiedzieć. Ktoś daje cukierka i mówi: „To będzie nasz sekret”? Zły sekret. Prezent dla babci schowany w szafie? Niespodzianka. Pochwalcie każdą odpowiedź, w której dziecko mówi, komu by powiedziało.'
+					},
+					{
+						kind: 'p',
+						text: 'W piosence „Niespodzianka tak, sekret nie” Pikselek robi z mamą laurkę dla taty, a potem ktoś prosi go o sekret, przez który w brzuszku coś ściska. Posłuchajcie jej razem i porozmawiajcie: pytania są niżej.'
+					}
+				]
+			}
+		],
+		sources: [
+			{
+				name: 'NSPCC: Zasada bielizny (PANTS), m.in. „mów o sekretach, które cię martwią”',
+				url: 'https://www.thefa.com/football-rules-governance/safeguarding/pants---the-nspcc-underwear-rule'
+			},
+			{
+				name: 'Fundacja Dajemy Dzieciom Siłę: telefon 800 100 100 dla dorosłych',
+				url: 'https://800100100.pl/'
+			},
+			{ name: 'Telefon Zaufania dla Dzieci i Młodzieży 116 111', url: 'https://116111.pl/' }
+		]
+	},
+	{
+		slug: 'jak-zablokowac-zakupy-w-grach-na-telefonie-dziecka',
+		title: 'Jak zablokować zakupy w grach na telefonie dziecka?',
+		short: 'Blokada zakupów w grach',
+		description:
+			'Krok po kroku: blokada zakupów w aplikacjach na Androidzie (Google Play) i iPhonie (Czas przed ekranem) i co zrobić po przypadkowym zakupie dziecka.',
+		songId: 'Habi9u9igtI',
+		published: '2026-10-24',
+		updated: '2026-10-24',
+		lead: 'Wiele gier dla dzieci jest „za darmo”, bo zarabia na monetkach, diamentach i skrzynkach kupowanych w grze. Wystarczy kilka stuknięć, żeby z karty rodzica zeszły prawdziwe pieniądze. Na szczęście i Android, i iPhone mają ustawienie, które zatrzymuje zakup, dopóki nie zgodzi się na niego dorosły. To kilka minut pracy, a obok warto porozmawiać z dzieckiem o sztuczkach, którymi gry zachęcają do kupowania.',
+		sections: [
+			{
+				heading: 'Android: hasło przy każdym zakupie w Google Play',
+				blocks: [
+					{
+						kind: 'steps',
+						items: [
+							{
+								title: 'Otwórz aplikację Google Play',
+								text: 'Na telefonie lub tablecie, na którym gra dziecko.'
+							},
+							{
+								title: 'Stuknij swoje zdjęcie profilowe',
+								text: 'W prawym górnym rogu.'
+							},
+							{
+								title: 'Wybierz „Płatności i subskrypcje”',
+								text: 'Potem „Weryfikacja zakupów” i „Wymóg weryfikacji” (na niektórych telefonach: „Częstotliwość weryfikacji”).'
+							},
+							{
+								title: 'Ustaw „Zawsze”',
+								text: 'Wtedy każdy zakup przez Google Play, także w grze, wymaga hasła, odcisku palca albo twarzy właściciela konta. Unikaj opcji „Co 30 minut”: przez pół godziny po jednym zakupie kolejne przechodzą bez pytania. Na części urządzeń zamiast częstotliwości wybiera się formę płatności: wtedy wybierz „Wszystkie formy płatności”.'
+							}
+						]
+					},
+					{
+						kind: 'p',
+						text: 'To ustawienie działa na tym jednym urządzeniu i dla zakupów płaconych przez Google Play. Jeśli dziecko ma własne konto Google, prowadzone przez Was w aplikacji Family Link, możecie też włączyć zatwierdzanie zakupów: dziecko wysyła prośbę, a rodzic ją akceptuje albo odrzuca na swoim telefonie.'
+					}
+				]
+			},
+			{
+				heading: 'iPhone i iPad: blokada w Czasie przed ekranem',
+				blocks: [
+					{
+						kind: 'steps',
+						items: [
+							{
+								title: 'Włącz Czas przed ekranem',
+								text: 'W Ustawieniach. Bez niego zakupów nie da się zablokować. Ustaw kod Czasu przed ekranem, którego dziecko nie zna: inny niż kod do odblokowania telefonu.'
+							},
+							{
+								title: 'Wejdź w „Aplikacje i witryny”',
+								text: 'Ustawienia → Czas przed ekranem → Aplikacje i witryny.'
+							},
+							{
+								title: 'Wybierz „App Store”',
+								text: 'I przy zakupach w aplikacjach ustaw „Zablokowane”. W tym samym miejscu możesz wymagać hasła przy przyszłych zakupach.'
+							}
+						]
+					},
+					{
+						kind: 'p',
+						text: 'Na starszych wersjach systemu te same opcje są w Ustawienia → Czas przed ekranem → Ograniczenia zawartości i prywatności → Zakupy w iTunes i App Store → Zakupy w aplikacjach → Nie zezwalaj. Jeśli dziecko ma własne konto Apple w Chmurze rodzinnej, możecie zamiast blokady włączyć „Poproś o zakup”: każdy zakup czeka wtedy na zgodę rodzica.'
+					}
+				]
+			},
+			{
+				heading: 'Dwie pułapki',
+				blocks: [
+					{
+						kind: 'list',
+						items: [
+							'Odcisk palca albo twarz dziecka zapisane w telefonie rodzica. Jeśli zakupy zatwierdza się odciskiem palca, każdy zapisany w telefonie odcisk otworzy też płatność. Zostawcie w telefonie, na którym gra dziecko, tylko odciski i twarz dorosłych.',
+							'Hasło znane dziecku. Kod Czasu przed ekranem i hasło do konta Google lub Apple wpisujcie tak, żeby dziecko ich nie widziało, i nie zapisujcie ich na kartce przy telefonie.'
+						]
+					}
+				]
+			},
+			{
+				heading: 'Gdy zakup już się zdarzył',
+				blocks: [
+					{
+						kind: 'list',
+						items: [
+							'Google Play: zakup zrobiony przez pomyłkę, także przez dziecko, można zgłosić do zwrotu przez pomoc Google Play („Jak poprosić o zwrot środków”). Często najszybciej pomaga napisanie do twórcy gry. Zasady i terminy zwrotów zależą od tego, co i kiedy kupiono, więc nie zwlekajcie.',
+							'Apple: zakup zgłasza się na stronie reportaproblem.apple.com, logując się kontem Apple, z którego zapłacono.',
+							'Potem od razu włączcie blokadę z tego poradnika i porozmawiajcie z dzieckiem bez krzyku: ono najczęściej nie wiedziało, że to prawdziwe pieniądze.'
+						]
+					}
+				]
+			},
+			{
+				heading: 'Porozmawiajcie o sztuczkach gier',
+				blocks: [
+					{
+						kind: 'p',
+						text: 'Blokada zatrzyma zakup, ale nie nauczy dziecka, dlaczego gra tak bardzo chce, żeby kliknęło. Gry celowo kuszą pośpiechem i nagrodami, a dziecku łatwiej się oprzeć, gdy rozpozna te sztuczki. Warto nazwać je razem, przy grze:'
+					},
+					{
+						kind: 'list',
+						items: [
+							'„Tylko dziś!” i tykający zegar: żeby kliknąć szybko, zanim się pomyśli.',
+							'„Wszyscy mają!”: żeby było przykro, że się nie ma.',
+							'Monetki i diamenty zamiast złotówek: żeby nie było widać, że to prawdziwe pieniądze.',
+							'Skrzynki z niespodzianką: nie wiadomo, co się trafi, więc kusi, żeby spróbować jeszcze raz.'
+						]
+					},
+					{
+						kind: 'p',
+						text: 'Umówcie się na prostą zasadę: zanim coś kupię w grze, pytam mamę albo tatę. W piosence „Złote monetki” Pikselek gra w grę ze smokiem, a okienka wołają „Kup!”, „Tylko dziś!” i „Wszyscy mają!”. Posłuchajcie jej razem, a potem porozmawiajcie: pytania są niżej.'
+					}
+				]
+			}
+		],
+		sources: [
+			{
+				name: 'Pomoc Google Play: wymaganie weryfikacji przy zakupach',
+				url: 'https://support.google.com/googleplay/answer/1626831?hl=pl'
+			},
+			{
+				name: 'Pomoc Google Play: zatwierdzanie zakupów (Family Link)',
+				url: 'https://support.google.com/googleplay/answer/7039872?hl=pl'
+			},
+			{
+				name: 'Wsparcie Apple: wyłączanie zakupów w aplikacjach w Czasie przed ekranem',
+				url: 'https://support.apple.com/pl-pl/102470'
+			},
+			{
+				name: 'Wsparcie Apple: kontrola rodzicielska i „Poproś o zakup”',
+				url: 'https://support.apple.com/pl-pl/105121'
+			},
+			{
+				name: 'Pomoc Google Play: zwroty środków',
+				url: 'https://support.google.com/googleplay/answer/2479637?hl=pl'
+			},
+			{ name: 'Apple: zgłaszanie problemu z zakupem', url: 'https://reportaproblem.apple.com/' }
+		]
 	}
 ];
 

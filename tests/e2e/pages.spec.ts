@@ -176,7 +176,7 @@ test('every page has a description that fits in search results', async ({ page, 
 	const paths = [...xml.matchAll(/<loc>http:\/\/127\.0\.0\.1:4173([^<]*)<\/loc>/g)].map(
 		(m) => m[1]
 	);
-	expect(paths.length).toBe(11);
+	expect(paths.length).toBe(13);
 	for (const path of paths) {
 		await page.goto(path);
 		const description =
@@ -225,6 +225,28 @@ test('a guide for parents: the plan, the song with its questions, the sources; l
 	await expect(
 		page.getByRole('link', { name: 'Poradnik: Co zrobić, gdy dziecko zgubi się w sklepie?' })
 	).toBeVisible();
+});
+
+test('the guides beside their songs: secrets, purchases in games', async ({ page }) => {
+	for (const [song, guide] of [
+		[
+			'/piosenka/niespodzianka-tak-sekret-nie',
+			'Dobry i zły sekret – jak rozmawiać o tym z dzieckiem?'
+		],
+		['/piosenka/zlote-monetki', 'Jak zablokować zakupy w grach na telefonie dziecka?']
+	]) {
+		await page.goto(song);
+		await page.getByRole('link', { name: new RegExp(guide.replace(/[?]/g, '\\?')) }).click();
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText(guide);
+		await expect(
+			page.getByRole('region', { name: 'Źródła' }).getByRole('link').first()
+		).toBeVisible();
+	}
+	await expect(
+		page.getByText('Ustawienia → Czas przed ekranem → Aplikacje i witryny.')
+	).toBeVisible();
+	await page.goto('/poradnik');
+	await expect(page.locator('a.guide')).toHaveCount(3);
 });
 
 test('an unknown guide is a 404', async ({ page }) => {

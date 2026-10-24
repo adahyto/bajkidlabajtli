@@ -24,6 +24,8 @@ for (const path of [
 	'/offline',
 	'/poradnik',
 	'/poradnik/co-zrobic-gdy-dziecko-zgubi-sie-w-sklepie',
+	'/poradnik/dobry-i-zly-sekret-jak-rozmawiac-z-dzieckiem',
+	'/poradnik/jak-zablokowac-zakupy-w-grach-na-telefonie-dziecka',
 	'/prywatnosc',
 	'/nie-ma-takiej-strony'
 ]) {
