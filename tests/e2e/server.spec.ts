@@ -1,7 +1,13 @@
 import { expect, test } from '@playwright/test';
 
 test('until launch: robots.txt and the header keep search engines out', async ({ request }) => {
-	expect(await (await request.get('/robots.txt')).text()).toContain('Disallow: /');
+	const robots = await request.get('/robots.txt');
+	expect(await robots.text()).toContain('Disallow: /');
+	// Cloudflare may keep it five minutes, not hours: the launch shows soon
+	expect(robots.headers()['cache-control']).toBe('public, max-age=300');
+	expect((await request.get('/sitemap.xml')).headers()['cache-control']).toBe(
+		'public, max-age=300'
+	);
 	expect((await request.get('/')).headers()['x-robots-tag']).toBe('noindex');
 });
 
@@ -13,6 +19,12 @@ test('the sitemap lists the songs, shorts and playlist', async ({ request }) => 
 	expect(xml).toContain('/dla-rodzicow</loc>');
 	expect(xml).not.toContain('/dziecko');
 	expect(xml.match(/<url>/g)).toHaveLength(13);
+});
+
+test('the IndexNow key is served as plain text', async ({ request }) => {
+	const res = await request.get('/41105b3b4a3cc4831930e468c4056496.txt');
+	expect(res.status()).toBe(200);
+	expect(await res.text()).toBe('41105b3b4a3cc4831930e468c4056496');
 });
 
 test('pictures only of the channel’s videos', async ({ request }) => {

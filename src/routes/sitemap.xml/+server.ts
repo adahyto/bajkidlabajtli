@@ -27,6 +27,12 @@ ${pages
 	.join('\n')}
 </urlset>
 `,
-		{ headers: { 'content-type': 'application/xml; charset=utf-8' } }
+		// A new song shows in it within minutes, also through Cloudflare (as robots.txt)
+		{
+			headers: {
+				'content-type': 'application/xml; charset=utf-8',
+				'cache-control': 'public, max-age=300'
+			}
+		}
 	);
 };
