@@ -28,7 +28,7 @@
 
 <script lang="ts">
 	import { onDestroy, onMount, untrack } from 'svelte';
-	import { thumbOf } from '$lib/cards';
+	import { bigOf, thumbOf } from '$lib/cards';
 	import Icon from './Icon.svelte';
 
 	type Item = { id: string; title: string };
@@ -226,6 +226,8 @@
 		>
 			<img
 				src={thumbOf(item.id, vertical ? 's' : 'l')}
+				srcset={vertical ? undefined : bigOf(item.id)}
+				sizes="(max-width: 600px) 100vw, 900px"
 				alt=""
 				width={vertical ? 540 : 1280}
 				height={vertical ? 960 : 720}

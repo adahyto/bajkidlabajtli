@@ -36,4 +36,7 @@ export const pathOf = (v: { short: boolean; slug: string }) =>
 	`/${v.short ? 'krotka' : 'piosenka'}/${v.slug}` as const;
 
 /** The picture of a video from this server (routes/miniatura) */
-export const thumbOf = (id: string, size: 'm' | 'l' | 's') => `/miniatura/${id}-${size}.jpg`;
+export const thumbOf = (id: string, size: 'm' | 'h' | 'l' | 's') => `/miniatura/${id}-${size}.jpg`;
+
+/** A big picture: 960 px for a phone, 1280 px for the rest (srcset) */
+export const bigOf = (id: string) => `${thumbOf(id, 'h')} 960w, ${thumbOf(id, 'l')} 1280w`;

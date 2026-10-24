@@ -5,21 +5,27 @@ import sharp from 'sharp';
 
 /*
  * Pictures of the videos, fetched from YouTube by the server and kept in DATA_DIR/thumbs, so that the browser of a
- * visitor does not talk to YouTube before a video is played (/prywatnosc). Sizes: m for cards (640×360), l for the
- * big ones (1280×720), s for shorts (540×960, upright). A size YouTube does not have falls back to the next.
+ * visitor does not talk to YouTube before a video is played (/prywatnosc). Sizes: m for cards (640×360), h and l for
+ * the big ones (960×540 for a phone, 1280×720), s for shorts (540×960, upright). A size YouTube does not have falls back to the next.
  * YouTube's pictures are cut to that size here, once, when fetched: its m has bars above and below (640×480) and
  * its s is 1080×1920, about 150 KB for a card 270 px wide. Fetched again after a week, as the channel may change a
  * picture; when YouTube does not answer, the old one stays.
  */
 
-export type Size = 'm' | 'l' | 's';
+export type Size = 'm' | 'h' | 'l' | 's';
 
 const NAMES: Record<Size, string[]> = {
 	m: ['sddefault', 'hqdefault', 'mqdefault'],
+	h: ['maxresdefault', 'sddefault', 'hqdefault'],
 	l: ['maxresdefault', 'sddefault', 'hqdefault'],
 	s: ['oardefault', 'oar2', 'hqdefault']
 };
-const BOX: Record<Size, [number, number]> = { m: [640, 360], l: [1280, 720], s: [540, 960] };
+const BOX: Record<Size, [number, number]> = {
+	m: [640, 360],
+	h: [960, 540],
+	l: [1280, 720],
+	s: [540, 960]
+};
 const MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 
 const folder = () => join(env.DATA_DIR || '.data', 'thumbs');

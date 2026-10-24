@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import { pathOf, thumbOf } from '$lib/cards';
+	import { bigOf, pathOf, thumbOf } from '$lib/cards';
 	import { clock, songs } from '$lib/format';
 	import { enterFullscreen } from '$lib/fullscreen';
 	import { siteLd } from '$lib/jsonld';
@@ -37,6 +37,8 @@
 		<a class="hero__video" href={pathOf(data.hero)}>
 			<img
 				src={thumbOf(data.hero.id, data.hero.short ? 's' : 'l')}
+				srcset={data.hero.short ? undefined : bigOf(data.hero.id)}
+				sizes="(max-width: 600px) calc(100vw - 64px), 640px"
 				alt=""
 				width="1280"
 				height="720"
@@ -121,7 +123,7 @@
 		</div>
 		<div class="grid" style:--xl-cols={grid.xlCols}>
 			{#each data.songs as card, i (card.id)}
-				<VideoCard {card} eager={i < 4} wide={grid.wide[i]} />
+				<VideoCard {card} wide={grid.wide[i]} />
 			{/each}
 		</div>
 	</section>
