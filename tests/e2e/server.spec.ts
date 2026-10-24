@@ -22,7 +22,9 @@ test('the sitemap lists the songs with their videos, the playlist, not the short
 	expect(xml).toContain('/dla-rodzicow</loc>');
 	expect(xml).not.toContain('/dziecko');
 	expect(xml).toContain('/poradnik/co-zrobic-gdy-dziecko-zgubi-sie-w-sklepie</loc><lastmod>');
-	expect(xml.match(/<url>/g)).toHaveLength(11);
+	expect(xml).toContain('/poradnik/dobry-i-zly-sekret-jak-rozmawiac-z-dzieckiem</loc>');
+	expect(xml).toContain('/poradnik/jak-zablokowac-zakupy-w-grach-na-telefonie-dziecka</loc>');
+	expect(xml.match(/<url>/g)).toHaveLength(13);
 	// Google's video sitemap: one video for each song and the short of its own
 	expect(xml.match(/<video:video>/g)).toHaveLength(5);
 	expect(xml).toContain(
