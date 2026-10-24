@@ -20,7 +20,9 @@ export type Lesson = {
 	song: string;
 	/** What it is about, for the title: "co zrobić, gdy zgubię się w sklepie" */
 	topic: string;
-	/** ~155 characters, for search results */
+	/** For search results when the lesson is for a day people search for; else "Scenariusz zajęć: <song> – <topic>" */
+	title?: string;
+	/** ~155 characters, for search results; "{data}" is the next date of `day` (lib/days.ts withDate) */
 	description: string;
 	goals: string[];
 	materials: string[];
@@ -204,8 +206,10 @@ export const LESSONS: Lesson[] = [
 		songId: 'ALro8KR2sZw',
 		song: 'Klik z głową',
 		topic: 'bezpieczny internet',
+		// Teachers search for the day: "dzień bezpiecznego internetu przedszkole scenariusz"
+		title: 'Dzień Bezpiecznego Internetu w przedszkolu – scenariusz zajęć',
 		description:
-			'Scenariusz zajęć dla przedszkola o bezpiecznym internecie: piosenka, zabawa „Klikam czy pytam?”, zasady dla małych internautów i kolorowanka.',
+			'Scenariusz zajęć na Dzień Bezpiecznego Internetu ({data}) dla przedszkola: piosenka „Klik z głową”, zabawa „Klikam czy pytam?” i kolorowanka.',
 		goals: [
 			'Dziecko wie, że w internecie nie podaje adresu, imienia i nazwiska ani nazwy przedszkola.',
 			'Dziecko wie, że nie klika w okienka „Wygrałeś!” i nie wysyła zdjęć nieznajomym.',
@@ -256,8 +260,9 @@ export const LESSONS: Lesson[] = [
 		songId: 'i65ad55Mk14',
 		song: 'Jeden, jeden, dwa',
 		topic: 'numer alarmowy 112',
+		title: 'Dzień 112 w przedszkolu – scenariusz zajęć o numerze alarmowym',
 		description:
-			'Scenariusz zajęć dla przedszkola o numerze alarmowym 112: kiedy dzwonić, co powiedzieć, adres na pamięć. Piosenka, zabawa w telefon i kolorowanka.',
+			'Scenariusz zajęć na Dzień 112 ({data}) dla przedszkola: kiedy dzwonić, co powiedzieć, adres na pamięć. Piosenka, zabawa w telefon i kolorowanka.',
 		goals: [
 			'Dziecko zna numer alarmowy 112 i wie, kiedy się pod niego dzwoni.',
 			'Dziecko wie, co powiedzieć: co się stało i gdzie, i że nie rozłącza się.',

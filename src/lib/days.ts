@@ -30,6 +30,25 @@ export function nextDate(id: DayId, now = new Date()): string | null {
 	return SAFER_INTERNET.find((d) => d >= from) ?? null;
 }
 
+/** "9 lutego 2027" */
+export const shortDate = (date: string) =>
+	new Intl.DateTimeFormat('pl-PL', {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+		timeZone: 'Europe/Warsaw'
+	}).format(new Date(`${date}T12:00:00Z`));
+
+/**
+ * A text for search results with "{data}" for the day's next date: "…na Dzień 112 ({data})…" → "(11 lutego 2027)";
+ * "luty" when the date is not known yet
+ */
+export function withDate(text: string, id: DayId | undefined, now = new Date()): string {
+	if (!id) return text;
+	const date = nextDate(id, now);
+	return text.replace('{data}', date ? shortDate(date) : 'luty');
+}
+
 /** "wtorek, 9 lutego 2027" */
 export const longDate = (date: string) =>
 	new Intl.DateTimeFormat('pl-PL', {

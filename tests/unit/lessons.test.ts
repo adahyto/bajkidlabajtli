@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { LESSONS, lessonForSong, minutesOf } from '../../src/lib/lessons.ts';
+import { withDate } from '../../src/lib/days.ts';
 
 // The channel's videos as read from the YouTube API on 2026-10-24
 const channel = JSON.parse(
@@ -18,10 +19,13 @@ test('every lesson plan is complete, ~40 minutes, and fits in search results', (
 			channel.videos.some((v: { id: string }) => v.id === l.songId),
 			`${l.slug}: no song ${l.songId}`
 		);
-		assert.ok(
-			l.description.length >= 100 && l.description.length <= 158,
-			`${l.slug}: description ${l.description.length}`
-		);
+		// With the longest date there is ("11 lutego 2027") and with none ("luty")
+		for (const now of ['2026-10-24T10:00:00Z', '2030-03-01T10:00:00Z']) {
+			const d = withDate(l.description, l.day, new Date(now));
+			assert.ok(d.length >= 100 && d.length <= 158, `${l.slug}: description ${d.length}`);
+			assert.ok(!d.includes('{data}'), `${l.slug}: {data} without a day`);
+		}
+		if (l.title) assert.ok(l.title.length <= 70, `${l.slug}: title ${l.title.length}`);
 		assert.ok(l.goals.length >= 3 && l.materials.length >= 2 && l.steps.length >= 5);
 		const minutes = minutesOf(l);
 		assert.ok(minutes >= 30 && minutes <= 50, `${l.slug}: ${minutes} minutes`);
