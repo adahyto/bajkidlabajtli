@@ -16,8 +16,9 @@ test('the sitemap lists the songs with their videos, the playlist, not the short
 }) => {
 	const xml = await (await request.get('/sitemap.xml')).text();
 	expect(xml).toContain('/piosenka/gdy-sie-zgubie</loc>');
-	expect(xml).toContain('/krotka/jeden-jeden-dwa</loc>');
+	expect(xml).toContain('/piosenka/jeden-jeden-dwa</loc>');
 	expect(xml).not.toContain('/krotka/stoj-jak-drzewo');
+	expect(xml).not.toContain('/krotka/jeden-jeden-dwa');
 	expect(xml).toContain('/playlista/bezpieczny-pikselek</loc>');
 	expect(xml).toContain('/dla-rodzicow</loc>');
 	expect(xml).not.toContain('/dziecko');
@@ -46,7 +47,7 @@ test('llms.txt tells AI assistants about the site and every song', async ({ requ
 		'[Gdy się zgubię](http://127.0.0.1:4173/piosenka/gdy-sie-zgubie): Wesoła piosenka dla dzieci'
 	);
 	expect(text).toContain('Rules: Stój jak drzewo');
-	expect(text).toContain('[Jeden, jeden, dwa!](http://127.0.0.1:4173/krotka/jeden-jeden-dwa)');
+	expect(text).toContain('[Jeden, jeden, dwa](http://127.0.0.1:4173/piosenka/jeden-jeden-dwa)');
 	expect(text).not.toContain('stoj-jak-drzewo');
 	expect(text).toContain(
 		'[Co zrobić, gdy dziecko zgubi się w sklepie?](http://127.0.0.1:4173/poradnik/co-zrobic-gdy-dziecko-zgubi-sie-w-sklepie)'
@@ -75,7 +76,7 @@ test('the content security policy lets YouTube in only as a frame and its script
 test('health tells where the songs come from', async ({ request }) => {
 	const health = await (await request.get('/health')).json();
 	expect(health.status).toBe('ok');
-	expect(health.channel).toMatchObject({ source: 'fixture', videos: 9, playlists: 1 });
+	expect(health.channel).toMatchObject({ source: 'fixture', videos: 10, playlists: 1 });
 });
 
 test('a page seen is counted, an unknown one is not an error', async ({ request }) => {

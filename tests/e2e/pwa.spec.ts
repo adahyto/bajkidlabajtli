@@ -21,14 +21,14 @@ test('without the internet: the mode for a child with its pictures, the page for
 
 	await page.reload();
 	const songs = page.getByRole('list', { name: 'Piosenki', exact: true }).getByRole('button');
-	await expect(songs).toHaveCount(4);
+	await expect(songs).toHaveCount(5);
 	await expect
 		.poll(() =>
 			page
 				.locator('.tiles:not(.tiles--short) img')
 				.evaluateAll((imgs) => imgs.filter((i) => (i as HTMLImageElement).naturalWidth > 0).length)
 		)
-		.toBe(4);
+		.toBe(5);
 
 	// Kept from the start, never opened
 	await page.goto('/dla-rodzicow');

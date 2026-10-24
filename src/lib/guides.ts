@@ -421,8 +421,8 @@ export const GUIDES: Guide[] = [
 		title: 'Jak nauczyć dziecko dzwonić pod numer 112?',
 		short: 'Jak dzwonić pod 112',
 		description:
-			'Kiedy dzwonić pod 112, co powiedzieć i dlaczego się nie rozłączać. Jak przećwiczyć to z przedszkolakiem, z piosenką „Jeden, jeden, dwa!” i adresem na pamięć.',
-		songId: 'Uo1OsJlukhM',
+			'Kiedy dzwonić pod 112, co powiedzieć i dlaczego się nie rozłączać. Jak przećwiczyć to z przedszkolakiem, z piosenką „Jeden, jeden, dwa” i adresem na pamięć.',
+		songId: 'i65ad55Mk14',
 		published: '2026-10-24',
 		updated: '2026-10-24',
 		lead: 'Przedszkolak może być jedyną osobą obok, gdy babci zrobi się słabo albo w domu pojawi się dym. Zadzwonić pod 112 potrafi już trzylatek, trudniejsze jest co innego: wiedzieć, kiedy dzwonić, powiedzieć, co się stało i gdzie, i nie rozłączyć się ze strachu. Tego da się nauczyć zabawą, krok po kroku.',
@@ -520,7 +520,7 @@ export const GUIDES: Guide[] = [
 					},
 					{
 						kind: 'p',
-						text: 'W krótkiej piosence „Jeden, jeden, dwa!” Pikselek śpiewa refren, który dzieci szybko powtarzają: mówię, co się stało i gdzie, i nie rozłączam się. Posłuchajcie jej razem kilka razy, a potem przećwiczcie rozmowę.'
+						text: 'W piosence „Jeden, jeden, dwa” Pikselek dzwoni pod 112, gdy babci robi się słabo, a refren dzieci szybko powtarzają: mówię, co się stało i gdzie, i nie rozłączam się. Obejrzyjcie ją razem, a potem przećwiczcie rozmowę. Sam refren jest też w krótkiej wersji.'
 					}
 				]
 			}

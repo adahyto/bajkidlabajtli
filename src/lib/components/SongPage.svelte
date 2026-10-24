@@ -30,11 +30,14 @@
 			playlist: { title: string; slug: string; position: number; count: number } | null;
 			prev: Card | null;
 			next: Card | null;
+			again: boolean;
 			more: Card[];
 		};
 	} = $props();
 
 	const video = $derived(data.video);
+	// Once the video plays, "włączy się po kliknięciu" is not true any more
+	let started = $state(false);
 	const hasParents = $derived(
 		!!(data.parents.rules.length || data.parents.tips.length || data.extra.questions?.length)
 	);
@@ -90,11 +93,14 @@
 			queue={[{ id: video.id, title: video.title }]}
 			next={data.next ? { href: pathOf(data.next), title: data.next.title } : null}
 			vertical={video.short}
+			bind:started
 		/>
-		<p class="song__note">
-			Film z YouTube włączy się po kliknięciu.
-			{#if data.parents.singAlong}Tekst piosenki pojawia się na ekranie, śpiewajcie razem!{/if}
-		</p>
+		{#if !started || data.parents.singAlong}
+			<p class="song__note">
+				{#if !started}Film z YouTube włączy się po kliknięciu.{/if}
+				{#if data.parents.singAlong}Tekst piosenki pojawia się na ekranie, śpiewajcie razem!{/if}
+			</p>
+		{/if}
 
 		<div class="song__head">
 			<div class="song__chips">
@@ -142,7 +148,7 @@
 					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- pathOf gives the page of the song -->
 					<a class="step step--next" href={pathOf(data.next)}>
 						<span>
-							<span class="step__label">Następna</span>
+							<span class="step__label">{data.again ? 'Od początku' : 'Następna'}</span>
 							<span class="step__title">{data.next.title}</span>
 						</span>
 						<img
@@ -288,10 +294,15 @@
 		max-width: 60ch;
 	}
 
+	/* "Następna" on the right also when it is alone (the first song has no "Poprzednia") */
 	.steps {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 		gap: 16px;
+	}
+
+	.step--next {
+		grid-column-end: -1;
 	}
 
 	.step {

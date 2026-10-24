@@ -8,8 +8,11 @@ test('the player starts on a click, from youtube-nocookie, and ends with our two
 }) => {
 	await page.goto('/piosenka/gdy-sie-zgubie');
 	await expect(page.locator('iframe')).toHaveCount(0);
+	await expect(page.getByText('Film z YouTube włączy się po kliknięciu.')).toBeVisible();
 	await page.getByRole('button', { name: 'Włącz: Gdy się zgubię' }).click();
 	await expect(page.locator('iframe')).toHaveCount(1);
+	// Not true any more once it plays
+	await expect(page.getByText('Film z YouTube włączy się po kliknięciu.')).toHaveCount(0);
 	const created = await page.evaluate(
 		() => (window as unknown as { __yt: { created: string[] } }).__yt.created
 	);

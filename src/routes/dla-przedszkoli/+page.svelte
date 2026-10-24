@@ -5,10 +5,26 @@
 	import { breadcrumbLd } from '$lib/jsonld';
 	import { LESSONS, minutesOf } from '$lib/lessons';
 	import { SITE } from '$lib/site';
+	import { SONGS } from '$lib/songs';
 	import Head from '$lib/components/Head.svelte';
 
 	/** For teachers: every song's lesson plan and colouring page (lib/lessons.ts) */
 	let { data } = $props();
+
+	// In the order of the home page, the newest song first; a song not on the channel (yet) at the end
+	const lessons = $derived(
+		[...LESSONS].sort(
+			(a, b) => (data.songs[a.songId]?.at ?? Infinity) - (data.songs[b.songId]?.at ?? Infinity)
+		)
+	);
+	// Full rows: from 900 px three in a row and the last ones in halves (3 + 2, or 3 + 2 + 2 for 7); 640–899 px two
+	// in a row and an odd last one across the row, its picture beside the text
+	const n = LESSONS.length;
+	const half = (i: number) => (n % 3 === 2 && i >= n - 2) || (n % 3 === 1 && n >= 4 && i >= n - 4);
+	const across = (i: number) => n % 2 === 1 && i === n - 1;
+	const minutes = LESSONS.map(minutesOf);
+	const shortest = Math.floor(Math.min(...minutes) / 5) * 5;
+	const longest = Math.ceil(Math.max(...minutes) / 5) * 5;
 </script>
 
 <Head
@@ -24,10 +40,22 @@
 	<span class="badge">DLA PRZEDSZKOLI I SZKÓŁ</span>
 	<h1 id="przedszkola-h">Zajęcia o bezpieczeństwie z Pikselkiem</h1>
 	<p class="intro__lead">
-		Do każdej piosenki gotowy scenariusz zajęć na około 40 minut: rozmowa, piosenka, zabawa,
-		kolorowanka i podsumowanie. Dla przedszkolaków (3–6 lat) i klas 1–3. Wszystko można bezpłatnie
-		drukować i wykorzystywać na zajęciach.
+		Do każdej piosenki gotowy scenariusz zajęć: rozmowa, piosenka, zabawa, kolorowanka i
+		podsumowanie.
 	</p>
+	<ul class="facts">
+		<li><strong>Dla kogo:</strong> przedszkole (3–6 lat) i klasy 1–3</li>
+		<li><strong>Czas:</strong> {shortest}–{longest} minut</li>
+		<li>
+			<strong>W scenariuszu:</strong> cele, pomoce, przebieg z minutami, zasady z piosenki i pytania do
+			rozmowy
+		</li>
+		<li><strong>Kolorowanka:</strong> Pikselek i zasada z piosenki</li>
+		<li><strong>Do druku</strong> na A4 albo do pokazania na dużym ekranie</li>
+		<li>
+			<strong>Bezpłatnie</strong>, bez rejestracji i logowania; można wykorzystywać na zajęciach
+		</li>
+	</ul>
 	<p>
 		Dobre okazje: <strong>11 lutego</strong> (Europejski Dzień Numeru Alarmowego 112) i
 		<strong>Dzień Bezpiecznego Internetu</strong> w lutym.
@@ -35,9 +63,9 @@
 </section>
 
 <ul class="lessons">
-	{#each LESSONS as lesson (lesson.slug)}
+	{#each lessons as lesson, i (lesson.slug)}
 		{@const known = data.songs[lesson.songId]}
-		<li class="card">
+		<li class="card" class:card--half={half(i)} class:card--across={across(i)}>
 			{#if known}
 				<img
 					src={thumbOf(lesson.songId, known.short ? 's' : 'm')}
@@ -48,15 +76,20 @@
 				/>
 			{/if}
 			<div class="card__text">
+				{#if SONGS[lesson.songId]?.topic}<span class="chip">{SONGS[lesson.songId].topic}</span>{/if}
 				<h2>{lesson.song}</h2>
 				<p class="card__topic">{lesson.topic} · około {minutesOf(lesson)} minut</p>
 				{#if lesson.day}<p class="card__day">{lesson.day}</p>{/if}
 				<div class="card__links">
 					<a class="btn btn--blue" href={resolve('/dla-przedszkoli/[slug]', { slug: lesson.slug })}
-						>Scenariusz<span class="visually-hidden">: {lesson.song}</span></a
+						><span class="btn__name"
+							>Scenariusz<span class="visually-hidden">: {lesson.song}</span></span
+						><span class="btn__about"><span class="visually-hidden">, </span>do druku · A4</span></a
 					>
 					<a class="btn btn--white" href={resolve('/kolorowanka/[slug]', { slug: lesson.slug })}
-						>Kolorowanka<span class="visually-hidden">: {lesson.song}</span></a
+						><span class="btn__name"
+							>Kolorowanka<span class="visually-hidden">: {lesson.song}</span></span
+						><span class="btn__about"><span class="visually-hidden">, </span>do druku · A4</span></a
 					>
 				</div>
 			</div>
@@ -90,15 +123,51 @@
 		font-size: 20px;
 	}
 
+	/* The cards of a row are as tall as the tallest, so that the buttons stand in one place whatever the title */
 	.lessons {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
-		/* All cards as tall as the tallest, so that the buttons stand in one place whatever the title */
-		grid-auto-rows: 1fr;
+		grid-template-columns: minmax(0, 1fr);
 		gap: 22px;
 		margin: 0;
 		padding: 0;
 		list-style: none;
+	}
+
+	@media (min-width: 640px) and (max-width: 899px) {
+		.lessons {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		/* .card below sets a column */
+		.card.card--across {
+			grid-column: 1 / -1;
+			flex-direction: row;
+			align-items: center;
+		}
+
+		.card.card--across img {
+			flex: none;
+			width: calc(50% - 25px);
+			min-width: 0;
+		}
+
+		.card--across .card__text {
+			align-self: stretch;
+		}
+	}
+
+	@media (min-width: 900px) {
+		.lessons {
+			grid-template-columns: repeat(6, minmax(0, 1fr));
+		}
+
+		.card {
+			grid-column: span 2;
+		}
+
+		.card--half {
+			grid-column: span 3;
+		}
 	}
 
 	.card {
@@ -150,7 +219,31 @@
 	}
 
 	.card__links .btn {
-		padding-inline: 12px;
+		flex-direction: column;
+		gap: 0;
+		padding: 8px 12px 10px;
+	}
+
+	.btn__about {
+		font-size: 14px;
+		font-weight: 700;
+		opacity: 0.85;
+	}
+
+	.card .chip {
+		align-self: flex-start;
+	}
+
+	/* As wide as the box (its items start on the left), two columns where they fit */
+	.facts {
+		align-self: stretch;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+		gap: 8px 28px;
+		max-width: 1000px;
+		margin: 0;
+		padding: 0 0 0 22px;
+		font-size: 17px;
 	}
 
 	@media (max-width: 600px) {

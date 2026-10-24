@@ -43,15 +43,6 @@
 		</button>
 		<KidModeLink white />
 	</div>
-	{#if data.songs.length > 1}
-		<nav class="jump no-print" aria-label="Piosenki na tej stronie">
-			<ul>
-				{#each data.songs as song (song.card.id)}
-					<li><a href={`#${song.card.slug}`}>{song.card.title}</a></li>
-				{/each}
-			</ul>
-		</nav>
-	{/if}
 </section>
 
 <section class="how no-print" aria-labelledby="jak-h">
@@ -83,77 +74,99 @@
 	</ol>
 </section>
 
-<div class="songs">
-	{#each data.songs as song (song.card.id)}
-		<article class="song" id={song.card.slug} aria-labelledby={`${song.card.slug}-h`}>
-			<div class="song__head">
-				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- pathOf gives the page of the song -->
-				<a class="song__picture no-print" href={pathOf(song.card)} tabindex="-1" aria-hidden="true">
-					<img src={thumbOf(song.card.id, 'm')} alt="" width="320" height="180" loading="lazy" />
-					<span class="song__play"><Icon name="play" size={28} /></span>
-				</a>
-				<div class="song__title">
-					<div class="song__chips">
-						{#if song.card.topic}<span class="chip">{song.card.topic}</span>{/if}
-						{#if song.card.seconds}<span class="chip chip--plain"
-								><span class="visually-hidden">czas: </span>{clock(song.card.seconds)}</span
-							>{/if}
-					</div>
-					<h2 id={`${song.card.slug}-h`}>{song.card.title}</h2>
-					{#if song.card.subtitle}<p class="song__subtitle">{song.card.subtitle}</p>{/if}
-					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- pathOf gives the page of the song -->
-					<a class="song__open no-print" href={pathOf(song.card)}
-						><Icon name="play" size={20} /> Włącz piosenkę<span class="visually-hidden"
-							>: {song.card.title}</span
-						></a
+<!-- The songs with their names in a bar that stays at the top while they scroll by -->
+<div class="songs-wrap">
+	{#if data.songs.length > 1}
+		<nav class="jump no-print" aria-label="Piosenki na tej stronie">
+			<ul>
+				{#each data.songs as song (song.card.id)}
+					<li><a href={`#${song.card.slug}`}>{song.card.title}</a></li>
+				{/each}
+			</ul>
+		</nav>
+	{/if}
+
+	<div class="songs">
+		{#each data.songs as song (song.card.id)}
+			<article class="song" id={song.card.slug} aria-labelledby={`${song.card.slug}-h`}>
+				<div class="song__head">
+					<!-- eslint-disable svelte/no-navigation-without-resolve -- pathOf gives the page of the song -->
+					<a
+						class="song__picture no-print"
+						href={pathOf(song.card)}
+						tabindex="-1"
+						aria-hidden="true"
 					>
-					{#each guidesForSong(song.card.id) as guide (guide.slug)}
-						<a class="song__guide no-print" href={resolve('/poradnik/[slug]', { slug: guide.slug })}
-							>Poradnik: {guide.title}</a
+						<!-- eslint-enable svelte/no-navigation-without-resolve -->
+						<img src={thumbOf(song.card.id, 'm')} alt="" width="320" height="180" loading="lazy" />
+						<span class="song__play"><Icon name="play" size={28} /></span>
+					</a>
+					<div class="song__title">
+						<div class="song__chips">
+							{#if song.card.topic}<span class="chip">{song.card.topic}</span>{/if}
+							{#if song.card.seconds}<span class="chip chip--plain"
+									><span class="visually-hidden">czas: </span>{clock(song.card.seconds)}</span
+								>{/if}
+						</div>
+						<h2 id={`${song.card.slug}-h`}>{song.card.title}</h2>
+						{#if song.card.subtitle}<p class="song__subtitle">{song.card.subtitle}</p>{/if}
+						<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- pathOf gives the page of the song -->
+						<a class="song__open no-print" href={pathOf(song.card)}
+							><Icon name="play" size={20} /> Włącz piosenkę<span class="visually-hidden"
+								>: {song.card.title}</span
+							></a
 						>
-					{/each}
+						{#each guidesForSong(song.card.id) as guide (guide.slug)}
+							<a
+								class="song__guide no-print"
+								href={resolve('/poradnik/[slug]', { slug: guide.slug })}>Poradnik: {guide.title}</a
+							>
+						{/each}
+					</div>
 				</div>
-			</div>
 
-			<div class="song__body">
-				{#if song.rules.length}
-					<div class="rules">
-						<h3>Zasady z piosenki</h3>
-						<ul>
-							{#each song.rules as rule, i (i)}
-								<li><span class="rules__icon" aria-hidden="true">{rule.icon}</span>{rule.text}</li>
-							{/each}
-						</ul>
+				<div class="song__body">
+					{#if song.rules.length}
+						<div class="rules">
+							<h3>Zasady z piosenki</h3>
+							<ul>
+								{#each song.rules as rule, i (i)}
+									<li>
+										<span class="rules__icon" aria-hidden="true">{rule.icon}</span>{rule.text}
+									</li>
+								{/each}
+							</ul>
+						</div>
+					{/if}
+					{#if song.questions.length}
+						<div class="questions">
+							<h3>Porozmawiajcie po piosence</h3>
+							<ol>
+								{#each song.questions as question, i (i)}
+									<li>{question}</li>
+								{/each}
+							</ol>
+						</div>
+					{/if}
+				</div>
+
+				{#if song.tips.length}
+					<div class="tips">
+						<h3>Wskazówki dla rodziców</h3>
+						{#each song.tips as tip, i (i)}
+							<p class:tips__point={tip.point}>{tip.text}</p>
+						{/each}
 					</div>
 				{/if}
-				{#if song.questions.length}
-					<div class="questions">
-						<h3>Porozmawiajcie po piosence</h3>
-						<ol>
-							{#each song.questions as question, i (i)}
-								<li>{question}</li>
-							{/each}
-						</ol>
-					</div>
-				{/if}
-			</div>
-
-			{#if song.tips.length}
-				<div class="tips">
-					<h3>Wskazówki dla rodziców</h3>
-					{#each song.tips as tip, i (i)}
-						<p class:tips__point={tip.point}>{tip.text}</p>
-					{/each}
-				</div>
-			{/if}
-		</article>
-	{:else}
-		<p class="empty">
-			Piosenki właśnie się wczytują. Zajrzyj za chwilę albo
-			<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- YouTube -->
-			<a href={SITE.channel}>obejrzyj je na YouTube</a>.
-		</p>
-	{/each}
+			</article>
+		{:else}
+			<p class="empty">
+				Piosenki właśnie się wczytują. Zajrzyj za chwilę albo
+				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- YouTube -->
+				<a href={SITE.channel}>obejrzyj je na YouTube</a>.
+			</p>
+		{/each}
+	</div>
 </div>
 
 {#if data.help.length}
@@ -258,14 +271,42 @@
 		gap: 14px;
 	}
 
+	.songs-wrap {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	/* One row that stays at the top, sideways where the names do not fit */
+	.jump {
+		position: sticky;
+		top: 0;
+		z-index: 4;
+		margin-inline: -24px;
+		padding: 10px 24px 14px;
+		background: var(--bg);
+	}
+
+	/* Room for the chips' shadow and the focus ring inside the scrolling row */
 	.jump ul {
 		display: flex;
 		flex-direction: row;
-		flex-wrap: wrap;
 		gap: 10px;
-		margin: 0;
-		padding: 0;
+		margin: -8px;
+		padding: 8px 8px 12px;
+		overflow-x: auto;
 		list-style: none;
+	}
+
+	.jump li {
+		flex: none;
+	}
+
+	@media (max-width: 600px) {
+		.jump {
+			margin-inline: -16px;
+			padding-inline: 16px;
+		}
 	}
 
 	.jump a {
@@ -346,7 +387,8 @@
 		border-radius: 36px;
 		background: var(--card);
 		box-shadow: 0 6px 0 var(--lift);
-		scroll-margin-top: 16px;
+		/* Under the bar of names */
+		scroll-margin-top: 88px;
 	}
 
 	.song__head {
@@ -626,14 +668,14 @@
 		}
 
 		.song {
-			gap: 10px;
-			padding-top: 18px;
+			gap: 8px;
+			padding-top: 12px;
 			border-top: 2px solid #000;
 			break-inside: avoid;
 		}
 
 		.song__title h2 {
-			font-size: 24px;
+			font-size: 22px;
 		}
 
 		.rules,
@@ -643,18 +685,30 @@
 			box-shadow: none;
 		}
 
+		.rules h3,
+		.questions h3 {
+			margin-bottom: 4px;
+			font-size: 15px;
+		}
+
+		.rules ul,
+		.questions ol {
+			gap: 2px;
+			line-height: 1.35;
+		}
+
+		.song__chips {
+			display: none;
+		}
+
 		.help h2 {
 			font-size: 24px;
 			margin-bottom: 10px;
 		}
 
-		/* Backgrounds do not print: the dot of a point is a character */
-		.tips__point::before {
-			content: '•';
-			top: 0;
-			width: auto;
-			height: auto;
-			background: none;
+		/* On paper what the button promises, the rules and questions: 1–2 pages of A4. The tips stay on screen. */
+		.tips {
+			display: none;
 		}
 
 		.chip {

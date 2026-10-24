@@ -1,6 +1,48 @@
 {
  "videos": [
   {
+   "id": "i65ad55Mk14",
+   "title": "Jeden, jeden, dwa",
+   "subtitle": "Piosenka dla dzieci o numerze alarmowym 112",
+   "fullTitle": "Pikselek - Jeden, jeden, dwa 🚑 Piosenka dla dzieci o numerze alarmowym 112",
+   "description": "Wesoła piosenka dla dzieci o numerze alarmowym 112! Pikselek piecze z babcią szarlotkę, gdy babci nagle robi się słabo. Pikselek wie, co robić – dzwoni pod 112, spokojnie mówi, co się stało i gdzie jest, i czeka na pomoc. Przyjeżdża karetka, a z babcią wszystko w porządku!\n\n📞 112 – numer alarmowy, gdy dzieje się coś naprawdę złego.\n❗ Mówię CO się stało i GDZIE jestem.\n👂 Słucham pani i nie rozłączam się.\n🧸 112 to nie zabawa – dzwonię tylko, gdy jest źle.\n\nŚpiewaj razem z nami – tekst pojawia się na ekranie.\n\nDla rodziców: przećwiczcie z dzieckiem, jak wygląda rozmowa z numerem 112. Nauczcie je swojego adresu (ulica, numer domu, miasto) i pokażcie, jak na Waszym telefonie wybrać numer alarmowy także przy zablokowanym ekranie. Przypomnijcie, że za zgłoszenie prawdziwego problemu nikt nie będzie zły.\n\nZobacz też inne piosenki z Pikselkiem:\n▶️ playlista „Pikselek – bezpieczne piosenki dla dzieci”\n\n♥️♥️♥️  SUBSKRYBUJ  ♥️♥️♥️",
+   "published": "2026-10-24T11:30:27Z",
+   "seconds": 140,
+   "short": false,
+   "slug": "jeden-jeden-dwa",
+   "parents": {
+    "intro": "Wesoła piosenka dla dzieci o numerze alarmowym 112! Pikselek piecze z babcią szarlotkę, gdy babci nagle robi się słabo. Pikselek wie, co robić – dzwoni pod 112, spokojnie mówi, co się stało i gdzie jest, i czeka na pomoc. Przyjeżdża karetka, a z babcią wszystko w porządku!",
+    "rules": [
+     {
+      "icon": "❗",
+      "text": "Mówię CO się stało i GDZIE jestem."
+     },
+     {
+      "icon": "👂",
+      "text": "Słucham pani i nie rozłączam się."
+     },
+     {
+      "icon": "🧸",
+      "text": "112 to nie zabawa – dzwonię tylko, gdy jest źle."
+     }
+    ],
+    "tips": [
+     {
+      "text": "Przećwiczcie z dzieckiem, jak wygląda rozmowa z numerem 112. Nauczcie je swojego adresu (ulica, numer domu, miasto) i pokażcie, jak na Waszym telefonie wybrać numer alarmowy także przy zablokowanym ekranie. Przypomnijcie, że za zgłoszenie prawdziwego problemu nikt nie będzie zły.",
+      "point": false
+     }
+    ],
+    "helpIntro": "",
+    "help": [
+     {
+      "icon": "📞",
+      "text": "112 – numer alarmowy, gdy dzieje się coś naprawdę złego."
+     }
+    ],
+    "singAlong": true
+   }
+  },
+  {
    "id": "Uo1OsJlukhM",
    "title": "Jeden, jeden, dwa!",
    "subtitle": "Piosenka dla dzieci o 112",

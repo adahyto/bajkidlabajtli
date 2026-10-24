@@ -2,12 +2,16 @@ import { pathOf, toCard } from '$lib/cards';
 import { SONGS } from '$lib/songs';
 import type { Channel, Video } from '$lib/types';
 
-/** The one before and after in a list, round: after the last comes the first again */
-export function around<T>(list: T[], at: number): { prev: T | null; next: T | null } {
-	if (list.length < 2 || at < 0) return { prev: null, next: null };
+/** The one before and after in a list: none before the first, after the last the first again (`again`) */
+export function around<T>(
+	list: T[],
+	at: number
+): { prev: T | null; next: T | null; again: boolean } {
+	if (list.length < 2 || at < 0) return { prev: null, next: null, again: false };
 	return {
-		prev: list[(at - 1 + list.length) % list.length],
-		next: list[(at + 1) % list.length]
+		prev: at > 0 ? list[at - 1] : null,
+		next: list[(at + 1) % list.length],
+		again: at === list.length - 1
 	};
 }
 
@@ -24,7 +28,7 @@ export function songPage(channel: Channel, video: Video) {
 				.filter((v): v is Video => !!v && v.short === video.short)
 		: channel.videos.filter((v) => v.short === video.short);
 	const at = order.findIndex((v) => v.id === video.id);
-	const { prev, next } = around(order, at);
+	const { prev, next, again } = around(order, at);
 	return {
 		video: {
 			...toCard(video),
@@ -46,6 +50,8 @@ export function songPage(channel: Channel, video: Video) {
 			: null,
 		prev: prev ? toCard(prev) : null,
 		next: next ? toCard(next) : null,
+		// After the last one the list starts again: "Od początku", not "Następna"
+		again,
 		more: channel.videos
 			.filter((v) => v.short === video.short && v.id !== video.id)
 			.slice(0, 4)

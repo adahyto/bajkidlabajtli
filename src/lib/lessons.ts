@@ -251,8 +251,8 @@ export const LESSONS: Lesson[] = [
 	},
 	{
 		slug: 'jeden-jeden-dwa',
-		songId: 'Uo1OsJlukhM',
-		song: 'Jeden, jeden, dwa!',
+		songId: 'i65ad55Mk14',
+		song: 'Jeden, jeden, dwa',
 		topic: 'numer alarmowy 112',
 		description:
 			'Scenariusz zajęć dla przedszkola o numerze alarmowym 112: kiedy dzwonić, co powiedzieć, adres na pamięć. Piosenka, zabawa w telefon i kolorowanka.',
@@ -262,7 +262,7 @@ export const LESSONS: Lesson[] = [
 			'Dziecko zna (albo zaczyna się uczyć) swój adres albo adres przedszkola.'
 		],
 		materials: [
-			'Krótka piosenka „Jeden, jeden, dwa!” (ekran i głośnik)',
+			'Teledysk „Jeden, jeden, dwa” (ekran i głośnik)',
 			'Kolorowanka z Pikselkiem dla każdego dziecka',
 			'Kredki, zabawkowe telefony albo kartonowe „telefony” z cyframi',
 			'Obrazki sytuacji: dym, ktoś upadł, zgubiona zabawka, nuda'
@@ -276,7 +276,7 @@ export const LESSONS: Lesson[] = [
 			{
 				title: 'Piosenka',
 				minutes: 5,
-				text: 'Słuchamy krótkiej piosenki „Jeden, jeden, dwa!” dwa albo trzy razy. Dzieci wystukują rytm 1, 1, 2 na kolanach i śpiewają refren: mówię, co się stało i gdzie, i nie rozłączam się.'
+				text: 'Oglądamy teledysk „Jeden, jeden, dwa”: Pikselek dzwoni pod 112, gdy babci robi się słabo. Za drugim razem dzieci wystukują rytm 1, 1, 2 na kolanach i śpiewają refren: mówię, co się stało i gdzie, i nie rozłączam się.'
 			},
 			{
 				title: 'Dzwonimy czy nie dzwonimy?',
