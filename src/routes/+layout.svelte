@@ -2,6 +2,7 @@
 	import '../app.css';
 	import { resolve } from '$app/paths';
 	import { afterNavigate } from '$app/navigation';
+	import { page } from '$app/state';
 	import { SITE } from '$lib/site';
 	import { trackEntry, trackView } from '$lib/stats';
 
@@ -24,14 +25,19 @@
 		<span>{SITE.name}</span>
 	</a>
 	<nav aria-label="Menu">
-		<!-- eslint-disable svelte/no-navigation-without-resolve -- parts of the resolved home page -->
 		<ul>
+			<!-- eslint-disable svelte/no-navigation-without-resolve -- parts of the resolved home page -->
 			<li><a href={`${resolve('/')}#piosenki`}>Piosenki</a></li>
 			<li><a href={`${resolve('/')}#krotkie`}>Krótkie</a></li>
 			<li><a href={`${resolve('/')}#playlisty`}>Playlisty</a></li>
-			<li><a href={`${resolve('/')}#rodzice`}>Dla rodziców</a></li>
+			<!-- eslint-enable svelte/no-navigation-without-resolve -->
+			<li>
+				<a
+					href={resolve('/dla-rodzicow')}
+					aria-current={page.url.pathname === '/dla-rodzicow' ? 'page' : undefined}>Dla rodziców</a
+				>
+			</li>
 		</ul>
-		<!-- eslint-enable svelte/no-navigation-without-resolve -->
 	</nav>
 	<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- YouTube -->
 	<a class="header__subscribe" href={SITE.subscribe}
@@ -128,6 +134,10 @@
 	nav a:hover {
 		background: var(--line);
 		color: var(--ink);
+	}
+
+	nav a[aria-current='page'] {
+		background: var(--sun);
 	}
 
 	/* A flex row drops the space between the words: the gap is it */

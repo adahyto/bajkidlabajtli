@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import { pathOf, thumbOf } from '$lib/cards';
 	import { clock, songs } from '$lib/format';
+	import { siteLd } from '$lib/jsonld';
 	import { SITE } from '$lib/site';
 	import Head from '$lib/components/Head.svelte';
 	import Icon from '$lib/components/Icon.svelte';
@@ -10,7 +12,7 @@
 	let { data } = $props();
 </script>
 
-<Head title={`${SITE.name} — piosenki z Pikselkiem dla dzieci`} />
+<Head title={`${SITE.name} — piosenki z Pikselkiem dla dzieci`} jsonld={siteLd(page.url.origin)} />
 
 {#if data.hero}
 	<section class="hero">
@@ -147,10 +149,13 @@
 				</tbody>
 			</table>
 		</div>
-		<p class="parents__more">
-			Przy każdej piosence są wszystkie jej zasady, pytania do rozmowy z dzieckiem i wskazówki dla
-			rodziców.
-		</p>
+		<div class="parents__more">
+			<p>
+				Przy każdej piosence są wszystkie jej zasady, pytania do rozmowy z dzieckiem i wskazówki dla
+				rodziców. Wszystkie razem, także do wydruku:
+			</p>
+			<a class="btn btn--blue" href={resolve('/dla-rodzicow')}>Wszystko dla rodziców</a>
+		</div>
 	{/if}
 
 	<div class="facts">
@@ -423,7 +428,15 @@
 	}
 
 	.parents__more {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 16px 24px;
 		margin-top: -12px;
+	}
+
+	.parents__more p {
+		flex: 1 1 360px;
 		color: var(--muted);
 	}
 

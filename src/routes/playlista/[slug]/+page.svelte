@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import { pathOf, thumbOf } from '$lib/cards';
 	import { clock, songs } from '$lib/format';
+	import { playlistLd } from '$lib/jsonld';
 	import { SITE } from '$lib/site';
 	import Head from '$lib/components/Head.svelte';
 	import Icon from '$lib/components/Icon.svelte';
@@ -18,6 +20,11 @@
 	title={`${data.playlist.title} — playlista | ${SITE.name}`}
 	description={`${songs(data.videos.length)} z Pikselkiem, jedna po drugiej: ${data.videos.map((v) => v.title).join(', ')}.`}
 	image={data.videos[0] ? thumbOf(data.videos[0].id, 'l') : undefined}
+	jsonld={playlistLd(
+		page.url.origin,
+		data.playlist.title,
+		data.videos.map((v) => ({ title: v.title, path: pathOf(v) }))
+	)}
 />
 
 <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- a part of the resolved home page -->

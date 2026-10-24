@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import type { SongExtra } from '$lib/songs';
 	import type { Parents } from '$lib/types';
 	import Icon from './Icon.svelte';
@@ -59,6 +60,10 @@
 			</ul>
 		</div>
 	{/if}
+
+	<a class="parents__all" href={resolve('/dla-rodzicow')}
+		>Zasady i pytania ze wszystkich piosenek, do wydruku</a
+	>
 
 	{#if extra.lyrics}
 		<details class="parents__lyrics">
@@ -157,6 +162,10 @@
 	}
 
 	.parents__help li {
+		font-weight: 700;
+	}
+
+	.parents__all {
 		font-weight: 700;
 	}
 
