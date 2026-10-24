@@ -2,7 +2,7 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { thumbOf } from '$lib/cards';
-	import { dayText } from '$lib/days';
+	import { dayText, withDate } from '$lib/days';
 	import { guidesForSong } from '$lib/guides';
 	import { breadcrumbLd } from '$lib/jsonld';
 	import { minutesOf } from '$lib/lessons';
@@ -23,8 +23,8 @@
 </script>
 
 <Head
-	title={`Scenariusz zajęć: ${lesson.song} – ${lesson.topic}`}
-	description={lesson.description}
+	title={lesson.title ?? `Scenariusz zajęć: ${lesson.song} – ${lesson.topic}`}
+	description={withDate(lesson.description, lesson.day)}
 	image={data.song ? thumbOf(data.song.id, data.song.short ? 's' : 'l') : undefined}
 	jsonld={breadcrumbLd(page.url.origin, [
 		{ name: SITE.name, path: '/' },

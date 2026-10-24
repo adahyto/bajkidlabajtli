@@ -471,3 +471,20 @@ test('the privacy page names who is responsible', async ({ page }) => {
 	await page.goto('/prywatnosc');
 	await expect(page.getByText('Administratorem danych jest Adam Tomaś')).toBeVisible();
 });
+
+test('lessons for a day say it to search engines, with the date', async ({ page }) => {
+	await page.goto('/dla-przedszkoli/klik-z-glowa');
+	await expect(page).toHaveTitle(/^Dzień Bezpiecznego Internetu w przedszkolu – scenariusz zajęć/);
+	await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+		'content',
+		/^Scenariusz zajęć na Dzień Bezpiecznego Internetu \((\d{1,2} lutego \d{4}|luty)\)/
+	);
+	await page.goto('/dla-przedszkoli/jeden-jeden-dwa');
+	await expect(page).toHaveTitle(/^Dzień 112 w przedszkolu/);
+	await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+		'content',
+		/Dzień 112 \(11 lutego \d{4}\)/
+	);
+	await page.goto('/dla-przedszkoli/gdy-sie-zgubie');
+	await expect(page).toHaveTitle(/^Scenariusz zajęć: Gdy się zgubię/);
+});

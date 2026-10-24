@@ -2,7 +2,7 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { thumbOf } from '$lib/cards';
-	import { dayText, longDate, nextDate } from '$lib/days';
+	import { dayText, longDate, nextDate, withDate } from '$lib/days';
 	import { breadcrumbLd } from '$lib/jsonld';
 	import { LESSONS, minutesOf } from '$lib/lessons';
 	import { SITE } from '$lib/site';
@@ -31,7 +31,10 @@
 
 <Head
 	title="Scenariusze zajęć i kolorowanki o bezpieczeństwie dla przedszkoli"
-	description="Bezpłatne scenariusze zajęć z piosenkami i kolorowankami z Pikselkiem: zgubienie się w sklepie, złe sekrety, 112, bezpieczny internet, zakupy w grach."
+	description={withDate(
+		'Bezpłatne scenariusze zajęć z piosenkami i kolorowankami, też na Dzień Bezpiecznego Internetu ({data}) i Dzień 112 (11 lutego). Do druku.',
+		'bezpieczny-internet'
+	)}
 	jsonld={breadcrumbLd(page.url.origin, [
 		{ name: SITE.name, path: '/' },
 		{ name: 'Dla przedszkoli', path: '/dla-przedszkoli' }
