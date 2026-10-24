@@ -5,6 +5,7 @@
 	import { SITE } from '$lib/site';
 	import Head from '$lib/components/Head.svelte';
 	import Icon from '$lib/components/Icon.svelte';
+	import KidModeLink from '$lib/components/KidModeLink.svelte';
 
 	/*
 	 * Everything for the grown-ups on one page: the rules of every song and the questions for a talk after it (as on
@@ -32,6 +33,7 @@
 		<button type="button" class="btn btn--blue" onclick={() => print()}>
 			<Icon name="print" /> Wydrukuj zasady i pytania
 		</button>
+		<KidModeLink white />
 	</div>
 	{#if data.songs.length > 1}
 		<nav class="jump no-print" aria-label="Piosenki na tej stronie">
@@ -153,6 +155,35 @@
 	</section>
 {/if}
 
+<section class="kid-mode no-print" aria-labelledby="dziecko-h">
+	<h2 id="dziecko-h">Tryb dla dziecka</h2>
+	<div class="kid-mode__body">
+		<div class="kid-mode__text">
+			<p>
+				Same duże obrazki piosenek, bez menu i linków. Dziecko wybiera piosenkę, a po niej widzi
+				tylko „Jeszcze raz” i „Następna”. Przycisk „Wszystkie po kolei” włącza piosenki jedna po
+				drugiej. Żeby wyjść, przytrzymaj „Wyjdź” przez 3 sekundy. Logo YouTube w odtwarzaczu nadal
+				prowadzi do YouTube.
+			</p>
+			<KidModeLink />
+		</div>
+		<div class="kid-mode__icon">
+			<h3>Ikonka na telefonie albo tablecie</h3>
+			<p>Ikonka otwiera od razu tryb dla dziecka, na całym ekranie, bez paska przeglądarki.</p>
+			<ul>
+				<li>
+					<strong>Android (Chrome):</strong> otwórz tryb dla dziecka, w menu ⋮ wybierz „Dodaj do ekranu
+					głównego”.
+				</li>
+				<li>
+					<strong>iPhone i iPad (Safari):</strong> otwórz tryb dla dziecka, stuknij „Udostępnij” i wybierz
+					„Do ekranu początkowego”.
+				</li>
+			</ul>
+		</div>
+	</div>
+</section>
+
 <section class="safe no-print" aria-labelledby="strona-h">
 	<h2 id="strona-h">Jak strona chroni dziecko</h2>
 	<div class="facts">
@@ -203,6 +234,12 @@
 		font-size: 20px;
 	}
 
+	.intro__buttons {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 14px;
+	}
+
 	.jump ul {
 		display: flex;
 		flex-direction: row;
@@ -228,6 +265,7 @@
 
 	.how h2,
 	.help h2,
+	.kid-mode h2,
 	.safe h2 {
 		font-size: clamp(30px, 4vw, 40px);
 		margin-bottom: 22px;
@@ -463,6 +501,36 @@
 
 	.help ul {
 		padding: 0;
+	}
+
+	.kid-mode__body {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+		gap: 20px;
+	}
+
+	.kid-mode__text {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 18px;
+	}
+
+	.kid-mode__icon {
+		padding: 24px;
+		border-radius: 24px;
+		background: var(--card);
+		box-shadow: 0 6px 0 var(--lift);
+	}
+
+	.kid-mode__icon h3 {
+		margin-bottom: 8px;
+		font-family: 'Nunito', system-ui, sans-serif;
+		font-size: 20px;
+	}
+
+	.kid-mode__icon ul {
+		margin-top: 12px;
 	}
 
 	.facts {

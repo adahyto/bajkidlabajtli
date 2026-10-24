@@ -8,6 +8,9 @@
 
 	let { children } = $props();
 
+	// The mode for a child (routes/dziecko) has no menu and no footer: nothing there leads out by a tap
+	const kid = $derived(page.route.id === '/dziecko');
+
 	// Every page seen is told by the browser, for the statistics without cookies (lib/stats.ts); the first page of a
 	// visit also says where it came from. The same page with another ? or # is not a new view.
 	afterNavigate(({ type, from, to }) => {
@@ -17,53 +20,65 @@
 	});
 </script>
 
-<a class="skip" href="#tresc">Przejdź do treści</a>
+{#if kid}
+	<main id="tresc" class="shell main main--kid">
+		{@render children()}
+	</main>
+{:else}
+	<a class="skip" href="#tresc">Przejdź do treści</a>
 
-<header class="shell header">
-	<a class="header__name" href={resolve('/')}>
-		<img src="/pikselek.png" alt="" width="52" height="52" />
-		<span>{SITE.name}</span>
-	</a>
-	<nav aria-label="Menu">
-		<ul>
-			<!-- eslint-disable svelte/no-navigation-without-resolve -- parts of the resolved home page -->
-			<li><a href={`${resolve('/')}#piosenki`}>Piosenki</a></li>
-			<li><a href={`${resolve('/')}#krotkie`}>Krótkie</a></li>
-			<li><a href={`${resolve('/')}#playlisty`}>Playlisty</a></li>
-			<!-- eslint-enable svelte/no-navigation-without-resolve -->
-			<li>
-				<a
-					href={resolve('/dla-rodzicow')}
-					aria-current={page.url.pathname === '/dla-rodzicow' ? 'page' : undefined}>Dla rodziców</a
-				>
-			</li>
-		</ul>
-	</nav>
-	<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- YouTube -->
-	<a class="header__subscribe" href={SITE.subscribe}
-		>Subskrybuj<span class="header__wide">na YouTube</span></a
-	>
-</header>
+	<header class="shell header">
+		<a class="header__name" href={resolve('/')}>
+			<img src="/pikselek.png" alt="" width="52" height="52" />
+			<span>{SITE.name}</span>
+		</a>
+		<nav aria-label="Menu">
+			<ul>
+				<!-- eslint-disable svelte/no-navigation-without-resolve -- parts of the resolved home page -->
+				<li><a href={`${resolve('/')}#piosenki`}>Piosenki</a></li>
+				<li><a href={`${resolve('/')}#krotkie`}>Krótkie</a></li>
+				<li><a href={`${resolve('/')}#playlisty`}>Playlisty</a></li>
+				<!-- eslint-enable svelte/no-navigation-without-resolve -->
+				<li>
+					<a
+						href={resolve('/dla-rodzicow')}
+						aria-current={page.url.pathname === '/dla-rodzicow' ? 'page' : undefined}
+						>Dla rodziców</a
+					>
+				</li>
+			</ul>
+		</nav>
+		<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- YouTube -->
+		<a class="header__subscribe" href={SITE.subscribe}
+			>Subskrybuj<span class="header__wide">na YouTube</span></a
+		>
+	</header>
 
-<main id="tresc" class="shell main">
-	{@render children()}
-</main>
+	<main id="tresc" class="shell main">
+		{@render children()}
+	</main>
 
-<footer class="footer">
-	<div class="shell footer__inner">
-		<p class="footer__name">
-			<img src="/pikselek.png" alt="" width="40" height="40" loading="lazy" />
-			{SITE.name} · nowe piosenki co tydzień
-		</p>
-		<ul>
-			<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- YouTube -->
-			<li><a href={SITE.channel}>Kanał na YouTube</a></li>
-			<li><a href={resolve('/prywatnosc')}>Prywatność</a></li>
-			<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- an e-mail address -->
-			<li><a href={`mailto:${SITE.email}`}>Kontakt</a></li>
-		</ul>
-	</div>
-</footer>
+	<footer class="footer">
+		<div class="shell footer__inner">
+			<p class="footer__name">
+				<img src="/pikselek.png" alt="" width="40" height="40" loading="lazy" />
+				{SITE.name} · nowe piosenki co tydzień
+			</p>
+			<ul>
+				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- YouTube -->
+				<li><a href={SITE.channel}>Kanał na YouTube</a></li>
+				<li><a href={resolve('/prywatnosc')}>Prywatność</a></li>
+				<li>
+					© {new Date().getFullYear()}
+					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- the site behind this one, as on the other doner.cloud sites -->
+					<a href="https://doner.cloud/" target="_blank" rel="noopener"
+						>doner.cloud<span class="visually-hidden"> (otwiera się w nowej karcie)</span></a
+					>
+				</li>
+			</ul>
+		</div>
+	</footer>
+{/if}
 
 <style>
 	.skip {
@@ -215,6 +230,12 @@
 		.main {
 			gap: 48px;
 		}
+	}
+
+	.main--kid {
+		gap: 28px;
+		padding-top: 16px;
+		padding-bottom: 40px;
 	}
 
 	.footer {

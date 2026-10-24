@@ -11,8 +11,8 @@ import type { Channel } from '$lib/types';
  * DATA_DIR/stats/<YYYY-MM>.json (a Docker volume); months older than 13 are deleted once a day. /prywatnosc says the
  * same.
  *
- * Keys: view:<path> for the home page, /dla-rodzicow, /prywatnosc and each song, short and playlist of the channel,
- * src:<kind>.
+ * Keys: view:<path> for the home page, /dla-rodzicow, /dziecko, /prywatnosc and each song, short and playlist of the
+ * channel, src:<kind>.
  * Our own checks and load tests are not visitors: their counts go to test:<key> instead (isTest), as on urlhub.
  */
 
@@ -135,7 +135,7 @@ export function isTest(request: Request, address: () => string): boolean {
 	}
 }
 
-const FIXED = new Set(['/', '/dla-rodzicow', '/prywatnosc']);
+const FIXED = new Set(['/', '/dla-rodzicow', '/dziecko', '/prywatnosc']);
 const ROUTE = /^\/(piosenka|krotka|playlista)\/([a-z0-9-]{1,90})$/;
 
 /** The page an address is, as a key (each song and playlist apart), or null for what is not counted */

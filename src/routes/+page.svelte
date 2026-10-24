@@ -7,6 +7,7 @@
 	import { SITE } from '$lib/site';
 	import Head from '$lib/components/Head.svelte';
 	import Icon from '$lib/components/Icon.svelte';
+	import KidModeLink from '$lib/components/KidModeLink.svelte';
 	import VideoCard from '$lib/components/VideoCard.svelte';
 
 	let { data } = $props();
@@ -154,7 +155,10 @@
 				Przy każdej piosence są wszystkie jej zasady, pytania do rozmowy z dzieckiem i wskazówki dla
 				rodziców. Wszystkie razem, także do wydruku:
 			</p>
-			<a class="btn btn--blue" href={resolve('/dla-rodzicow')}>Wszystko dla rodziców</a>
+			<div class="parents__buttons">
+				<a class="btn btn--blue" href={resolve('/dla-rodzicow')}>Wszystko dla rodziców</a>
+				<KidModeLink white />
+			</div>
 		</div>
 	{/if}
 
@@ -438,6 +442,18 @@
 	.parents__more p {
 		flex: 1 1 360px;
 		color: var(--muted);
+	}
+
+	.parents__buttons {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 14px;
+	}
+
+	.parents__buttons :global(.btn--white) {
+		box-shadow:
+			inset 0 0 0 2px var(--line),
+			0 6px 0 var(--lift);
 	}
 
 	.table {

@@ -130,6 +130,17 @@ test('search engines read the video on a song page and the channel on the home p
 	expect(reports).toEqual([]);
 });
 
+test('the footer: © doner.cloud, no e-mail', async ({ page }) => {
+	await page.goto('/');
+	const footer = page.getByRole('contentinfo');
+	await expect(footer.getByRole('link', { name: /^doner\.cloud/ })).toHaveAttribute(
+		'href',
+		'https://doner.cloud/'
+	);
+	await expect(footer).toContainText(`© ${new Date().getFullYear()} doner.cloud`);
+	await expect(footer.getByRole('link', { name: 'Kontakt' })).toHaveCount(0);
+});
+
 test('the privacy page names who is responsible', async ({ page }) => {
 	await page.goto('/prywatnosc');
 	await expect(page.getByText('Administratorem danych jest Adam Tomaś')).toBeVisible();

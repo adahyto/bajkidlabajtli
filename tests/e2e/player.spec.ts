@@ -14,6 +14,14 @@ test('the player starts on a click, from youtube-nocookie, and ends with our two
 		() => (window as unknown as { __yt: { created: string[] } }).__yt.created
 	);
 	expect(created).toEqual(['https://www.youtube-nocookie.com/nvQ1vsDZJds']);
+	// The words are in the picture: YouTube's captions start off
+	const yt = () =>
+		page.evaluate(
+			() =>
+				(window as unknown as { __yt: { vars: Record<string, unknown>; unloaded: string[] } }).__yt
+		);
+	expect((await yt()).vars.cc_load_policy).toBe(0);
+	await expect.poll(async () => (await yt()).unloaded).toContain('captions');
 
 	await page.evaluate(() => (window as unknown as { __ytEnd: () => void }).__ytEnd());
 	await expect(page.getByText('Koniec! Co teraz?')).toBeVisible();
