@@ -2,6 +2,7 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { thumbOf } from '$lib/cards';
+	import { dayText } from '$lib/days';
 	import { guidesForSong } from '$lib/guides';
 	import { breadcrumbLd } from '$lib/jsonld';
 	import { minutesOf } from '$lib/lessons';
@@ -45,7 +46,7 @@
 		<ul class="lesson__facts">
 			<li><strong>Wiek:</strong> przedszkole (3–6 lat), klasy 1–3</li>
 			<li><strong>Czas:</strong> około {minutesOf(lesson)} minut</li>
-			{#if lesson.day}<li><strong>Dobry dzień:</strong> {lesson.day}</li>{/if}
+			{#if lesson.day}<li><strong>Dobry dzień:</strong> {dayText(lesson.day)}</li>{/if}
 		</ul>
 		<div class="lesson__buttons no-print">
 			<button type="button" class="btn btn--blue" onclick={() => print()}>

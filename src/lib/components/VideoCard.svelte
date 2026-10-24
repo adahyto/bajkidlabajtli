@@ -9,11 +9,7 @@
 	 * that no row of the grid stays half empty (lib/grid.ts chooses them): md 640–899 px, lg 900–1099 px, xl
 	 * from 1100 px
 	 */
-	let {
-		card,
-		eager = false,
-		wide = []
-	}: { card: Card; eager?: boolean; wide?: Width[] } = $props();
+	let { card, wide = [] }: { card: Card; wide?: Width[] } = $props();
 </script>
 
 <!-- eslint-disable svelte/no-navigation-without-resolve -- pathOf gives the page of the song -->
@@ -30,7 +26,7 @@
 		<img
 			src={thumbOf(card.id, card.short ? 's' : 'm')}
 			alt=""
-			loading={eager ? 'eager' : 'lazy'}
+			loading="lazy"
 			width={card.short ? 270 : 640}
 			height={card.short ? 480 : 360}
 		/>

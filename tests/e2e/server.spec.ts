@@ -93,3 +93,14 @@ test('a page seen is counted, an unknown one is not an error', async ({ request 
 		expect(res.status()).toBe(204);
 	}
 });
+
+test('the icons Google asks for are there, and the home page names the site in its description', async ({
+	request
+}) => {
+	const ico = await request.get('/favicon.ico');
+	expect(ico.status()).toBe(200);
+	expect((await ico.body()).subarray(0, 4)).toEqual(Buffer.from([0, 0, 1, 0]));
+	const html = await (await request.get('/')).text();
+	expect(html).toContain('rel="icon" href="./favicon.ico" sizes="48x48"');
+	expect(html).toMatch(/<meta name="description" content="Bajki dla Bajtli to /);
+});
