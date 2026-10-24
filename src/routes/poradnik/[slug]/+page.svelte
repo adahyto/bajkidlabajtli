@@ -137,9 +137,17 @@
 	.crumbs {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 8px;
-		margin-bottom: -16px;
+		align-items: center;
+		gap: 0 8px;
+		margin-block: -8px -24px;
 		font-weight: 700;
+	}
+
+	/* 44 px to tap, the text where it was */
+	.crumbs a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
 	}
 
 	.guide__head {
@@ -255,6 +263,9 @@
 	}
 
 	.guide__more {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
 		font-weight: 800;
 	}
 

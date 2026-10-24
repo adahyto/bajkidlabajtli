@@ -153,9 +153,17 @@
 	.crumbs {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 8px;
-		margin-bottom: -14px;
+		align-items: center;
+		gap: 0 8px;
+		margin-block: -8px -22px;
 		font-weight: 700;
+	}
+
+	/* 44 px to tap, the text where it was */
+	.crumbs a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
 	}
 
 	.lesson__head {

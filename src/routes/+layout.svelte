@@ -193,6 +193,7 @@
 		display: flex;
 		align-items: center;
 		gap: 12px;
+		min-height: 44px;
 		margin-right: auto;
 		color: var(--ink);
 		text-decoration: none;
@@ -523,10 +524,17 @@
 	.footer ul {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 8px 24px;
+		gap: 0 24px;
 		margin: 0;
 		padding: 0;
 		list-style: none;
 		font-weight: 700;
+	}
+
+	/* 44 px to tap */
+	.footer li a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
 	}
 </style>
