@@ -29,8 +29,8 @@
 				Śpiewaj z Pikselkiem! <span class="hero__about">Piosenki dla dzieci o bezpieczeństwie</span>
 			</h1>
 			<p>
-				Krótkie piosenki dla dzieci 3–8 lat. W każdej jedna prosta zasada, zaśpiewana tak, żeby
-				została w głowie.
+				{SITE.name} to krótkie piosenki dla dzieci 3–8 lat. W każdej jedna prosta zasada, zaśpiewana tak,
+				żeby została w głowie.
 			</p>
 		</div>
 		<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- pathOf gives the page of the song -->
