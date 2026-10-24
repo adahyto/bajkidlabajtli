@@ -21,6 +21,7 @@ for (const path of [
 	'/playlista/bezpieczny-pikselek',
 	'/dla-rodzicow',
 	'/dziecko',
+	'/offline',
 	'/prywatnosc',
 	'/nie-ma-takiej-strony'
 ]) {

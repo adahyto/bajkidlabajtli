@@ -1,12 +1,25 @@
 <script lang="ts">
 	import '../app.css';
 	import { resolve } from '$app/paths';
+	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/state';
+	import { installed, keepInstallEvent } from '$lib/install.svelte';
 	import { SITE } from '$lib/site';
 	import { trackEntry, trackView } from '$lib/stats';
 
 	let { children } = $props();
+
+	// The browser's offer to install the app, kept for the button (lib/install.svelte.ts); Svelte has no types for
+	// these window events
+	onMount(() => {
+		addEventListener('beforeinstallprompt', keepInstallEvent);
+		addEventListener('appinstalled', installed);
+		return () => {
+			removeEventListener('beforeinstallprompt', keepInstallEvent);
+			removeEventListener('appinstalled', installed);
+		};
+	});
 
 	// The mode for a child (routes/dziecko) has no menu and no footer: nothing there leads out by a tap
 	const kid = $derived(page.route.id === '/dziecko');
