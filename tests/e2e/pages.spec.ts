@@ -26,7 +26,36 @@ test('the home page shows the songs, shorts, playlist and the part for parents',
 	await expect(page.locator('#krotkie a.card')).toHaveCount(5);
 	await expect(page.locator('#playlisty')).toContainText('Bezpieczny Pikselek');
 	await expect(page.locator('#playlisty')).toContainText('4 PIOSENKI');
-	await expect(page.locator('#rodzice tbody tr')).toHaveCount(4);
+	// The newest song on its picture, three ways in under it
+	await expect(
+		page.getByRole('link', {
+			name: /^Włącz: (Nowa|Najnowsza) piosenka: Niespodzianka tak, sekret nie/
+		})
+	).toBeVisible();
+	const paths = page.getByRole('list', { name: 'Dla kogo' }).getByRole('link');
+	await expect(paths).toHaveCount(3);
+	await expect(paths.nth(0)).toHaveAttribute('href', '/dziecko');
+	await expect(paths.nth(1)).toHaveAttribute('href', '/dla-rodzicow');
+	await expect(paths.nth(2)).toHaveAttribute('href', '/dla-przedszkoli');
+	await expect(page.getByRole('list', { name: 'Jak strona chroni dziecko' })).toContainText(
+		'YouTube dopiero po kliknięciu'
+	);
+	// A short names its song, unless its title says it already
+	const shorts = page.getByRole('list', { name: 'Krótkie piosenki' });
+	await expect(shorts.getByRole('link', { name: /Dzyń, dzyń, dzyń!/ })).toContainText(
+		'z piosenki: Złote monetki'
+	);
+	await expect(shorts.getByText('z piosenki: Niespodzianka tak, sekret nie')).toHaveCount(0);
+	await expect(
+		page.locator('#playlisty').getByRole('link', { name: 'Wszystkie po kolei' })
+	).toBeVisible();
+	// For parents only a short way in, the rest on their page
+	const parents = page.getByRole('region', { name: 'Dla rodziców' });
+	await expect(parents.getByRole('listitem')).toHaveCount(3);
+	await expect(parents.getByRole('link', { name: 'Zasady i pytania do rozmowy' })).toHaveAttribute(
+		'href',
+		'/dla-rodzicow'
+	);
 	// Before a video is played, nothing but this site
 	await page.mouse.wheel(0, 5000);
 	await page.waitForLoadState('networkidle');

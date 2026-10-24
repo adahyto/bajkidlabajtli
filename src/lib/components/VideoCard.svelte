@@ -1,13 +1,31 @@
 <script lang="ts">
 	import { pathOf, thumbOf, type Card } from '$lib/cards';
 	import { clock } from '$lib/format';
+	import type { Width } from '$lib/grid';
 	import Icon from './Icon.svelte';
 
-	let { card, eager = false }: { card: Card; eager?: boolean } = $props();
+	/*
+	 * wide: the screen widths at which the card takes two columns of the grid, with its picture beside the text, so
+	 * that no row of the grid stays half empty (lib/grid.ts chooses them): md 640–899 px, lg 900–1099 px, xl
+	 * from 1100 px
+	 */
+	let {
+		card,
+		eager = false,
+		wide = []
+	}: { card: Card; eager?: boolean; wide?: Width[] } = $props();
 </script>
 
-<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- pathOf gives the page of the song -->
-<a class="card" class:card--short={card.short} href={pathOf(card)}>
+<!-- eslint-disable svelte/no-navigation-without-resolve -- pathOf gives the page of the song -->
+<a
+	class="card"
+	class:card--short={card.short}
+	class:card--wide-md={wide.includes('md')}
+	class:card--wide-lg={wide.includes('lg')}
+	class:card--wide-xl={wide.includes('xl')}
+	href={pathOf(card)}
+>
+	<!-- eslint-enable svelte/no-navigation-without-resolve -->
 	<span class="card__picture">
 		<img
 			src={thumbOf(card.id, card.short ? 's' : 'm')}
@@ -25,6 +43,8 @@
 	</span>
 	<span class="card__text">
 		<span class="card__title">{card.title}</span>
+		{#if wide.length && card.subtitle}<span class="card__subtitle">{card.subtitle}</span>{/if}
+		{#if card.short && card.from}<span class="card__from">z piosenki: {card.from}</span>{/if}
 		{#if card.topic && !card.short}<span class="chip">{card.topic}</span>{/if}
 	</span>
 </a>
@@ -119,6 +139,109 @@
 	}
 
 	.card--short .card__title {
+		min-height: 0;
 		font-size: 20px;
+	}
+
+	.card__from {
+		margin-top: -6px;
+		color: var(--muted);
+		font-weight: 700;
+		font-size: 15px;
+		line-height: 1.3;
+	}
+
+	/* Only on a wide card, beside the picture: what the song is about */
+	.card__subtitle {
+		display: none;
+		color: var(--muted);
+		font-weight: 600;
+		font-size: 17px;
+		line-height: 1.4;
+	}
+
+	/* A wide card: two columns, a bigger picture with the text beside it, both in the middle of the row */
+	@media (min-width: 640px) and (max-width: 899px) {
+		.card--wide-md {
+			grid-column: span 2;
+			flex-direction: row;
+			align-items: center;
+			gap: 20px;
+		}
+
+		.card--wide-md .card__picture {
+			flex: 0 0 58%;
+		}
+
+		.card--wide-md .card__text {
+			flex: 1;
+			justify-content: center;
+			padding: 8px 8px 8px 0;
+		}
+
+		.card--wide-md .card__title {
+			min-height: 0;
+			font-size: 28px;
+		}
+
+		.card--wide-md .card__subtitle {
+			display: block;
+		}
+	}
+
+	@media (min-width: 900px) and (max-width: 1099px) {
+		.card--wide-lg {
+			grid-column: span 2;
+			flex-direction: row;
+			align-items: center;
+			gap: 20px;
+		}
+
+		.card--wide-lg .card__picture {
+			flex: 0 0 58%;
+		}
+
+		.card--wide-lg .card__text {
+			flex: 1;
+			justify-content: center;
+			padding: 8px 8px 8px 0;
+		}
+
+		.card--wide-lg .card__title {
+			min-height: 0;
+			font-size: 28px;
+		}
+
+		.card--wide-lg .card__subtitle {
+			display: block;
+		}
+	}
+
+	@media (min-width: 1100px) {
+		.card--wide-xl {
+			grid-column: span 2;
+			flex-direction: row;
+			align-items: center;
+			gap: 20px;
+		}
+
+		.card--wide-xl .card__picture {
+			flex: 0 0 58%;
+		}
+
+		.card--wide-xl .card__text {
+			flex: 1;
+			justify-content: center;
+			padding: 8px 8px 8px 0;
+		}
+
+		.card--wide-xl .card__title {
+			min-height: 0;
+			font-size: 28px;
+		}
+
+		.card--wide-xl .card__subtitle {
+			display: block;
+		}
 	}
 </style>

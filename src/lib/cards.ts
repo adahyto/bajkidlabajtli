@@ -10,6 +10,8 @@ export type Card = {
 	seconds: number;
 	short: boolean;
 	topic: string;
+	/** A short on the home page: the title of its full song */
+	from?: string;
 };
 
 export const toCard = (v: Video): Card => ({
