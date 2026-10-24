@@ -5,6 +5,8 @@ RUN npm ci
 COPY . .
 RUN npm run build
 RUN npm prune --production
+# sharp (lib/server/thumbs.ts): only its build for Alpine (musl); npm puts in every one, ~27 MB more
+RUN find node_modules/@img -mindepth 1 -maxdepth 1 -name 'sharp-*' ! -name 'sharp-*linuxmusl-*' -exec rm -rf {} +
 
 FROM node:22-alpine AS runner
 WORKDIR /app
