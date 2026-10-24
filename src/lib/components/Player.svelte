@@ -41,7 +41,8 @@
 	 * child, routes/dziecko). `autostart` plays at once, for a click that opened the player. If YouTube's script does
 	 * not load, a plain frame plays the video, without the end screen. A video that will not play here links to
 	 * YouTube, but with `closed` (the mode for a child, where nothing leads out) it only offers to try again.
-	 * Without the internet it says so, with "Spróbuj jeszcze raz".
+	 * Without the internet it says so, with "Spróbuj jeszcze raz". `started` turns true once a video plays, for the
+	 * page to drop its "włączy się po kliknięciu".
 	 *
 	 * The channel's songs have their words in the picture, so YouTube's captions start off: they would cover them.
 	 * A viewer can still turn them on with the player's CC button.
@@ -53,7 +54,9 @@
 		vertical = false,
 		ask = false,
 		autostart = false,
-		closed = false
+		closed = false,
+		// eslint-disable-next-line no-useless-assignment -- a bindable prop: the page reads it
+		started = $bindable(false)
 	}: {
 		queue: Item[];
 		index?: number;
@@ -62,12 +65,16 @@
 		ask?: boolean;
 		autostart?: boolean;
 		closed?: boolean;
+		started?: boolean;
 	} = $props();
 
 	const item = $derived(queue[index] ?? queue[0]);
 	let box: HTMLDivElement | undefined = $state();
 	let phase: 'poster' | 'loading' | 'playing' | 'ended' | 'frame' | 'error' | 'offline' =
 		$state('poster');
+	$effect(() => {
+		if (phase === 'playing' || phase === 'frame') started = true;
+	});
 	let player: YT | null = null;
 	let loadedId = '';
 	// The video whose captions were turned off when it started; a later click on CC keeps them on

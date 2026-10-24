@@ -20,16 +20,16 @@ test('the home page shows the songs, shorts, playlist and the part for parents',
 		'Śpiewaj z Pikselkiem! Piosenki dla dzieci o bezpieczeństwie'
 	);
 	const songs = page.locator('#piosenki a.card');
-	await expect(songs).toHaveCount(4);
-	await expect(songs.first()).toContainText('Niespodzianka tak, sekret nie');
-	await expect(songs.first()).toContainText('2:29');
+	await expect(songs).toHaveCount(5);
+	await expect(songs.first()).toContainText('Jeden, jeden, dwa');
+	await expect(songs.first()).toContainText('2:20');
 	await expect(page.locator('#krotkie a.card')).toHaveCount(5);
 	await expect(page.locator('#playlisty')).toContainText('Bezpieczny Pikselek');
 	await expect(page.locator('#playlisty')).toContainText('4 PIOSENKI');
 	// The newest song on its picture, three ways in under it
 	await expect(
 		page.getByRole('link', {
-			name: /^Włącz: (Nowa|Najnowsza) piosenka: Niespodzianka tak, sekret nie/
+			name: /^Włącz: (Nowa|Najnowsza) piosenka: Jeden, jeden, dwa/
 		})
 	).toBeVisible();
 	const paths = page.getByRole('list', { name: 'Dla kogo' }).getByRole('link');
@@ -116,7 +116,7 @@ test('for parents: every song with its rules and questions, the numbers for help
 	await (await menu(page)).getByRole('link', { name: 'Dla rodziców' }).click();
 	await expect(page).toHaveURL(/\/dla-rodzicow$/);
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Piosenka, a potem rozmowa');
-	await expect(page.locator('article.song')).toHaveCount(4);
+	await expect(page.locator('article.song')).toHaveCount(5);
 	const song = page.getByRole('article', { name: 'Gdy się zgubię' });
 	await expect(song).toContainText('Stój jak drzewo – zostań w miejscu, nie szukaj sam.');
 	await expect(song).toContainText('Kogo w sklepie możesz poprosić o pomoc?');
@@ -184,6 +184,42 @@ test('search engines read the video on a song page and the channel on the home p
 	expect(reports).toEqual([]);
 });
 
+test('the first song of a list has no "Poprzednia", after the last it starts again', async ({
+	page
+}) => {
+	// The playlist's order: Niespodzianka tak, sekret nie … Klik z głową
+	await page.goto('/piosenka/niespodzianka-tak-sekret-nie');
+	const steps = page.getByRole('navigation', { name: 'Inne piosenki po kolei' });
+	await expect(steps.getByRole('link')).toHaveCount(1);
+	await expect(steps.getByRole('link')).toContainText('Następna');
+	await page.goto('/piosenka/klik-z-glowa');
+	await expect(steps.getByRole('link', { name: /Poprzednia/ })).toContainText('Gdy się zgubię');
+	await expect(steps.getByRole('link', { name: /Od początku/ })).toContainText(
+		'Niespodzianka tak, sekret nie'
+	);
+	// The playlist: one way to the rules for parents, under the list
+	await page.goto('/playlista/bezpieczny-pikselek');
+	await expect(
+		page.getByRole('main').getByRole('link', { name: 'Dla rodziców', exact: true })
+	).toHaveCount(1);
+	await expect(
+		page.getByRole('list', { name: 'Piosenki na playliście' }).getByRole('link')
+	).toHaveCount(0);
+});
+
+test('for parents: the names of the songs stay at the top while scrolling', async ({ page }) => {
+	await page.goto('/dla-rodzicow');
+	const bar = page.getByRole('navigation', { name: 'Piosenki na tej stronie' });
+	await bar.getByRole('link', { name: 'Klik z głową' }).click();
+	await expect(page).toHaveURL(/#klik-z-glowa$/);
+	await expect.poll(async () => (await bar.boundingBox())?.y).toBe(0);
+	// The song's name is not under the bar
+	const bottom = (await bar.boundingBox())!.height;
+	expect(
+		(await page.getByRole('article', { name: 'Klik z głową' }).boundingBox())!.y
+	).toBeGreaterThanOrEqual(bottom);
+});
+
 test('a short with its full song on the channel points search engines to the song', async ({
 	page
 }) => {
@@ -193,14 +229,11 @@ test('a short with its full song on the channel points search engines to the son
 		'http://127.0.0.1:4173/piosenka/gdy-sie-zgubie'
 	);
 	await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(0);
-	// A short without one is a page of its own
+	// Found by its title when its description does not link the song
 	await page.goto('/krotka/jeden-jeden-dwa');
 	await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
 		'href',
-		'http://127.0.0.1:4173/krotka/jeden-jeden-dwa'
-	);
-	await expect(page).toHaveTitle(
-		'Jeden, jeden, dwa! – piosenka dla dzieci o 112 | Bajki dla Bajtli'
+		'http://127.0.0.1:4173/piosenka/jeden-jeden-dwa'
 	);
 });
 
@@ -290,10 +323,20 @@ test('for kindergartens: a lesson plan for every song, its colouring page to pri
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText(
 		'Zajęcia o bezpieczeństwie z Pikselkiem'
 	);
+	// In the order of the home page, the newest first, with the topics of the songs
 	await expect(page.locator('.lessons > li')).toHaveCount(5);
-	await page.getByRole('link', { name: /^Scenariusz\s*: Jeden, jeden, dwa!$/ }).click();
+	await expect(page.locator('.lessons h2')).toHaveText([
+		'Jeden, jeden, dwa',
+		'Niespodzianka tak, sekret nie',
+		'Złote monetki',
+		'Gdy się zgubię',
+		'Klik z głową'
+	]);
+	await expect(page.locator('.lessons > li').first()).toContainText('Numer 112');
+	await expect(page.getByText('Bezpłatnie')).toBeVisible();
+	await page.getByRole('link', { name: /^Scenariusz\s*: Jeden, jeden, dwa\b/ }).click();
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-		'Jeden, jeden, dwa!: numer alarmowy 112'
+		'Jeden, jeden, dwa: numer alarmowy 112'
 	);
 	await expect(page.getByText('11 lutego: Europejski Dzień Numeru Alarmowego 112')).toBeVisible();
 	await expect(page.locator('.step')).toHaveCount(6);
@@ -312,6 +355,15 @@ test('for kindergartens: a lesson plan for every song, its colouring page to pri
 		'href',
 		/dla-przedszkoli\/gdy-sie-zgubie$/
 	);
+	// The song about 112 too, and its guide (they were tied to the short before the song came out)
+	await page.goto('/piosenka/jeden-jeden-dwa');
+	await expect(page.getByRole('link', { name: 'scenariusz zajęć' })).toHaveAttribute(
+		'href',
+		/dla-przedszkoli\/jeden-jeden-dwa$/
+	);
+	await expect(
+		page.getByRole('link', { name: /Jak nauczyć dziecko dzwonić pod numer 112/ })
+	).toBeVisible();
 });
 
 test('an unknown guide is a 404', async ({ page }) => {

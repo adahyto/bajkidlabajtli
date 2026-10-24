@@ -24,7 +24,7 @@ test('a parent opens it from the home page; no menu, no footer, only the songs',
 	await expect(page.getByRole('contentinfo')).toHaveCount(0);
 	await expect(
 		page.getByRole('list', { name: 'Piosenki', exact: true }).getByRole('button')
-	).toHaveCount(4);
+	).toHaveCount(5);
 	await expect(
 		page.getByRole('list', { name: 'Krótkie piosenki' }).getByRole('button')
 	).toHaveCount(5);
@@ -57,9 +57,9 @@ test('"Wszystkie po kolei" plays the songs one after another', async ({ page }) 
 	await page.goto('/dziecko');
 	await page.getByRole('button', { name: 'Wszystkie po kolei' }).click();
 	const stage = page.getByRole('dialog');
-	await expect(stage).toContainText('1 z 4');
+	await expect(stage).toContainText('1 z 5');
 	await end(page);
-	await expect(stage).toContainText('2 z 4');
+	await expect(stage).toContainText('2 z 5');
 	await expect(stage.getByText('Koniec! Co teraz?')).toHaveCount(0);
 });
 

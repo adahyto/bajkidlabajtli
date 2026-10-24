@@ -31,6 +31,6 @@ test('every lesson plan is complete, ~40 minutes, and fits in search results', (
 });
 
 test('a song finds its lesson plan', () => {
-	assert.equal(lessonForSong('Uo1OsJlukhM')?.slug, 'jeden-jeden-dwa');
+	assert.equal(lessonForSong('i65ad55Mk14')?.slug, 'jeden-jeden-dwa');
 	assert.equal(lessonForSong('nie-ma'), undefined);
 });

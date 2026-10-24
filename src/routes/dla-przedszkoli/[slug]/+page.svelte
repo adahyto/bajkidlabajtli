@@ -18,6 +18,7 @@
 	let { data } = $props();
 	const lesson = $derived(data.lesson);
 	const guides = $derived(guidesForSong(lesson.songId));
+	let started = $state(false);
 </script>
 
 <Head
@@ -111,10 +112,14 @@
 	{#if data.song}
 		<section class="lesson__section no-print" aria-labelledby="song-h">
 			<h2 id="song-h">Piosenka: {data.song.title}</h2>
-			<Player queue={[{ id: data.song.id, title: data.song.title }]} vertical={data.song.short} />
+			<Player
+				queue={[{ id: data.song.id, title: data.song.title }]}
+				vertical={data.song.short}
+				bind:started
+			/>
 			<p class="lesson__note">
-				Film z YouTube włączy się po kliknięciu. Na zajęciach najlepiej otworzyć tę stronę na dużym
-				ekranie.
+				{#if !started}Film z YouTube włączy się po kliknięciu.{/if} Na zajęciach najlepiej otworzyć tę
+				stronę na dużym ekranie.
 			</p>
 		</section>
 	{/if}

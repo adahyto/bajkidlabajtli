@@ -15,6 +15,7 @@
 	// The song playing; the player moves it on by itself (components/Player.svelte)
 	let index = $state(0);
 	const playing = $derived(data.videos[index]);
+	let started = $state(false);
 </script>
 
 <Head
@@ -39,40 +40,42 @@
 
 <div class="list">
 	<div class="list__main">
-		<Player queue={data.videos} bind:index />
+		<Player queue={data.videos} bind:index bind:started />
 		<div class="list__head">
 			<span class="badge">PLAYLISTA · TERAZ {index + 1} Z {data.videos.length}</span>
 			<h1>{data.playlist.title}</h1>
 			{#if playing}<p class="list__now">Teraz: <strong>{playing.title}</strong></p>{/if}
 			{#if data.playlist.description}<p class="list__about">{data.playlist.description}</p>{/if}
 			<p class="list__note">
-				Film z YouTube włączy się po kliknięciu. Piosenki grają jedna po drugiej.
+				{#if !started}Film z YouTube włączy się po kliknięciu.{/if} Piosenki grają jedna po drugiej.
 			</p>
 		</div>
 	</div>
 
-	<ol class="list__songs" aria-label="Piosenki na playliście">
-		{#each data.videos as card, i (card.id)}
-			<li>
-				<button
-					type="button"
-					class="item"
-					aria-current={i === index ? 'true' : undefined}
-					onclick={() => (index = i)}
-				>
-					<img src={thumbOf(card.id, card.short ? 's' : 'm')} alt="" width="160" height="90" />
-					<span class="item__text">
-						<span class="item__title">{i + 1}. {card.title}</span>
-						{#if card.seconds}<span class="item__time">{clock(card.seconds)}</span>{/if}
-					</span>
-				</button>
-				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- pathOf gives the page of the song -->
-				<a class="item__more" href={pathOf(card)}
-					>Dla rodziców<span class="visually-hidden">: {card.title}</span></a
-				>
-			</li>
-		{/each}
-	</ol>
+	<div class="list__side">
+		<ol class="list__songs" aria-label="Piosenki na playliście">
+			{#each data.videos as card, i (card.id)}
+				<li>
+					<button
+						type="button"
+						class="item"
+						aria-current={i === index ? 'true' : undefined}
+						onclick={() => (index = i)}
+					>
+						<img src={thumbOf(card.id, card.short ? 's' : 'm')} alt="" width="160" height="90" />
+						<span class="item__text">
+							<span class="item__title">{i + 1}. {card.title}</span>
+							{#if card.seconds}<span class="item__time">{clock(card.seconds)}</span>{/if}
+						</span>
+					</button>
+				</li>
+			{/each}
+		</ol>
+		<p class="list__parents">
+			Zasady i pytania do rozmowy po każdej piosence:
+			<a href={resolve('/dla-rodzicow')}>Dla rodziców</a>
+		</p>
+	</div>
 </div>
 
 <style>
@@ -130,8 +133,14 @@
 		font-size: 15px;
 	}
 
-	.list__songs {
+	.list__side {
 		flex: 1 1 340px;
+		display: flex;
+		flex-direction: column;
+		gap: 18px;
+	}
+
+	.list__songs {
 		display: flex;
 		flex-direction: column;
 		gap: 14px;
@@ -194,10 +203,9 @@
 		color: var(--muted);
 	}
 
-	.item__more {
-		align-self: flex-end;
+	.list__parents {
 		padding: 4px 10px;
-		font-size: 15px;
+		font-size: 16px;
 		font-weight: 700;
 	}
 </style>
