@@ -14,7 +14,11 @@ test('a parent opens it from the home page; no menu, no footer, only the songs',
 	page
 }) => {
 	await page.goto('/');
-	await page.getByRole('link', { name: 'Tryb dla dziecka' }).click();
+	// "Tryb dla dziecka" on a computer, "Dla dziecka" on a phone
+	await page
+		.getByRole('banner')
+		.getByRole('link', { name: /dla dziecka/i })
+		.click();
 	await expect(page).toHaveURL(/\/dziecko$/);
 	await expect(page.getByRole('navigation', { name: 'Menu' })).toHaveCount(0);
 	await expect(page.getByRole('contentinfo')).toHaveCount(0);
@@ -93,7 +97,7 @@ test('"Wyjdź" leaves only when held for 3 seconds', async ({ page }) => {
 	await page.waitForTimeout(3400);
 	await page.keyboard.up(' ');
 	await expect(page).toHaveURL(/\/$/);
-	await expect(page.getByRole('navigation', { name: 'Menu' })).toBeVisible();
+	await expect(page.getByRole('banner')).toBeVisible();
 });
 
 test('the icon on a phone opens the mode for a child', async ({ page, request }) => {

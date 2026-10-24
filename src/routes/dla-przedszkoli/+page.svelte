@@ -93,6 +93,8 @@
 	.lessons {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+		/* All cards as tall as the tallest, so that the buttons stand in one place whatever the title */
+		grid-auto-rows: 1fr;
 		gap: 22px;
 		margin: 0;
 		padding: 0;
@@ -117,6 +119,7 @@
 	}
 
 	.card__text {
+		flex: 1;
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
@@ -137,11 +140,17 @@
 		font-weight: 700;
 	}
 
+	/* The two buttons side by side, in halves, in every card */
 	.card__links {
-		display: flex;
-		flex-wrap: wrap;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
 		gap: 12px;
-		margin-top: 6px;
+		margin-top: auto;
+		padding-top: 6px;
+	}
+
+	.card__links .btn {
+		padding-inline: 12px;
 	}
 
 	@media (max-width: 600px) {
