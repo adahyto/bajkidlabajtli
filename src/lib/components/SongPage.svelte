@@ -230,7 +230,9 @@
 		align-items: center;
 		gap: 8px;
 		align-self: flex-start;
-		margin-bottom: -40px;
+		/* 44 px to tap, the text where it was */
+		min-height: 44px;
+		margin-block: -8px -48px;
 		font-weight: 800;
 		text-decoration: none;
 	}
@@ -280,8 +282,16 @@
 		gap: 8px;
 	}
 
+	/* A small chip, but 44 px to tap: the space above and below takes the tap too */
 	a.chip {
+		position: relative;
 		text-decoration: none;
+	}
+
+	a.chip::after {
+		content: '';
+		position: absolute;
+		inset: -8px 0;
 	}
 
 	.song h1 {

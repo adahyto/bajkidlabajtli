@@ -40,12 +40,15 @@ test('the home page shows the songs, shorts, playlist and the part for parents',
 	await expect(page.getByRole('list', { name: 'Jak strona chroni dziecko' })).toContainText(
 		'YouTube dopiero po kliknięciu'
 	);
-	// A short names its song, unless its title says it already
+	// Every short names its song, also when its title is the song's (cards alike)
 	const shorts = page.getByRole('list', { name: 'Krótkie piosenki' });
 	await expect(shorts.getByRole('link', { name: /Dzyń, dzyń, dzyń!/ })).toContainText(
 		'z piosenki: Złote monetki'
 	);
-	await expect(shorts.getByText('z piosenki: Niespodzianka tak, sekret nie')).toHaveCount(0);
+	await expect(shorts.getByText('z piosenki: Niespodzianka tak, sekret nie')).toHaveCount(1);
+	await expect(shorts.getByText(/^z piosenki: /)).toHaveCount(
+		await shorts.getByRole('link').count()
+	);
 	await expect(
 		page.locator('#playlisty').getByRole('link', { name: 'Wszystkie po kolei' })
 	).toBeVisible();
@@ -97,6 +100,12 @@ test('a song with phone numbers for help', async ({ page }) => {
 test('a short leads to its full song', async ({ page }) => {
 	await page.goto('/krotka/stoj-jak-drzewo');
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Stój jak drzewo!');
+	// The other shorts below name their songs, as on the home page
+	await expect(
+		page
+			.getByRole('region', { name: 'Inne krótkie piosenki' })
+			.getByText('z piosenki: Złote monetki')
+	).toBeVisible();
 	await page.getByRole('link', { name: /CAŁA PIOSENKA/ }).click();
 	await expect(page).toHaveURL(/\/piosenka\/gdy-sie-zgubie$/);
 });

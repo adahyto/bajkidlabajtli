@@ -1,4 +1,4 @@
-import { toCard } from '$lib/cards';
+import { cardsIn, toCard } from '$lib/cards';
 import { getChannel } from '$lib/server/youtube';
 import type { PageServerLoad } from './$types';
 
@@ -20,18 +20,12 @@ export const load: PageServerLoad = async () => {
 	const songs = channel.videos.filter((v) => !v.short);
 	const shorts = channel.videos.filter((v) => v.short);
 	const hero = songs[0] ?? channel.videos[0];
-	// Only when it says more than the short's own title ("Jeden, jeden, dwa!" is the song "Jeden, jeden, dwa")
-	const letters = (text: string) => text.toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
-	const fromOf = (short: (typeof shorts)[number]) => {
-		const title = songs.find((v) => v.id === short.fullId)?.title;
-		return title && letters(title) !== letters(short.title) ? title : undefined;
-	};
 	return {
 		hero: hero ? toCard(hero) : null,
 		heroNew: !!hero && Date.now() - Date.parse(hero.published) < NEW_MS,
 		songs: songs.map(toCard),
 		// A short's title is a line of the chorus; its card also names the song it comes from
-		shorts: shorts.map((v) => ({ ...toCard(v), from: fromOf(v) })),
+		shorts: shorts.map(cardsIn(channel.videos)),
 		playlists: channel.playlists.map((p) => ({
 			title: p.title,
 			slug: p.slug,

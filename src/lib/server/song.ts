@@ -1,4 +1,4 @@
-import { pathOf, toCard } from '$lib/cards';
+import { cardsIn, pathOf, toCard } from '$lib/cards';
 import { SONGS } from '$lib/songs';
 import type { Channel, Video } from '$lib/types';
 
@@ -55,6 +55,6 @@ export function songPage(channel: Channel, video: Video) {
 		more: channel.videos
 			.filter((v) => v.short === video.short && v.id !== video.id)
 			.slice(0, 4)
-			.map(toCard)
+			.map(cardsIn(channel.videos))
 	};
 }

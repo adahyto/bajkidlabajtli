@@ -65,12 +65,18 @@
 	<div class="kid__bar">
 		<p class="kid__name">
 			<img src="/pikselek.png" alt="" width="48" height="48" />
-			{SITE.name}
+			<span class="kid__name-text">{SITE.name}</span>
 		</p>
 		<div class="kid__grown-ups">
-			{#if fullPossible && !full}
-				<button type="button" class="kid__full" onclick={enterFullscreen}>Cały ekran</button>
-			{/if}
+			<!-- In the page from the start, hidden until the browser says it can: the bar does not jump when it shows -->
+			<button
+				type="button"
+				class="kid__full"
+				class:kid__full--off={!fullPossible || full}
+				onclick={enterFullscreen}
+			>
+				<Icon name="expand" size={22} /><span class="kid__full-text">Cały ekran</span>
+			</button>
 			<HoldButton label="Wyjdź" onhold={leave} />
 		</div>
 	</div>
@@ -183,6 +189,9 @@
 	}
 
 	.kid__full {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
 		min-height: 52px;
 		padding: 8px 18px;
 		border: 0;
@@ -194,6 +203,10 @@
 			system-ui,
 			sans-serif;
 		cursor: pointer;
+	}
+
+	.kid__full--off {
+		visibility: hidden;
 	}
 
 	.kid__all {
@@ -341,7 +354,38 @@
 		.kid__name {
 			font-size: 20px;
 		}
+	}
 
+	/* The bar stays one row on a phone: Pikselek without the name (still read out), then the icon alone */
+	@media (max-width: 520px) {
+		.kid__name-text {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
+			clip-path: inset(50%);
+			white-space: nowrap;
+		}
+	}
+
+	@media (max-width: 400px) {
+		.kid__full {
+			width: 52px;
+			padding: 0;
+			justify-content: center;
+		}
+
+		.kid__full-text {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
+			clip-path: inset(50%);
+			white-space: nowrap;
+		}
+	}
+
+	@media (max-width: 600px) {
 		.kid__all {
 			align-self: stretch;
 		}

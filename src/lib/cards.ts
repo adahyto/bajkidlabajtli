@@ -10,7 +10,7 @@ export type Card = {
 	seconds: number;
 	short: boolean;
 	topic: string;
-	/** A short on the home page: the title of its full song */
+	/** A short: the title of its full song, on every card of a short alike */
 	from?: string;
 };
 
@@ -23,6 +23,14 @@ export const toCard = (v: Video): Card => ({
 	short: v.short,
 	topic: SONGS[v.id]?.topic ?? ''
 });
+
+/** Cards for a list of videos: each short also names the song it comes from, out of the channel's videos */
+export const cardsIn =
+	(videos: Video[]) =>
+	(v: Video): Card => ({
+		...toCard(v),
+		from: v.short ? videos.find((f) => !f.short && f.id === v.fullId)?.title : undefined
+	});
 
 export const pathOf = (v: { short: boolean; slug: string }) =>
 	`/${v.short ? 'krotka' : 'piosenka'}/${v.slug}` as const;

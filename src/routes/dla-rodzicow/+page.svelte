@@ -458,6 +458,9 @@
 	}
 
 	.song__guide {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
 		font-weight: 800;
 	}
 
