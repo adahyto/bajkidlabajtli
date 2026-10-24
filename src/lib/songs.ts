@@ -15,6 +15,15 @@ export type SongExtra = {
 };
 
 export const SONGS: Record<string, SongExtra> = {
+	// Jeden, jeden, dwa
+	i65ad55Mk14: {
+		topic: 'Numer 112',
+		questions: [
+			'Pod jaki numer dzwonimy, gdy dzieje się coś naprawdę złego?',
+			'Co powiesz pani, która odbierze telefon? A znasz swój adres?',
+			'Czy można zadzwonić pod 112 dla zabawy?'
+		]
+	},
 	// Klik z głową
 	ALro8KR2sZw: {
 		topic: 'Internet',
