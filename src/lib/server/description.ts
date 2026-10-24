@@ -55,11 +55,30 @@ export const isShort = (fullTitle: string, description: string, tags: string[] =
 	/#shorts?\b/i.test(description) ||
 	tags.some((t) => /^shorts?$/i.test(t));
 
-/** The full song a short comes from: "Cały teledysk: https://www.youtube.com/watch?v=<id>" */
+/** The full song a short comes from: "Cały teledysk: https://www.youtube.com/watch?v=<id>" (also "teledysk :") */
 export function fullIdOf(description: string): string | undefined {
-	return /Cały teledysk:\s*https?:\/\/(?:www\.|m\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]{11})/i.exec(
+	return /Cały teledysk\s*:\s*https?:\/\/(?:www\.|m\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]{11})/i.exec(
 		description
 	)?.[1];
+}
+
+/**
+ * A short whose description does not link its full song (the short came out first): the song the short names —
+ * by its own title ("Jeden, jeden, dwa!"), in its subtitle ("Złote monetki – piosenka dla dzieci") or in its
+ * description ("Refren piosenki „Gdy się zgubię”"). Only when exactly one song has that title.
+ */
+export function fullIdByTitle(
+	short: { title: string; subtitle: string; description: string },
+	songs: { id: string; title: string }[]
+): string | undefined {
+	const names = [
+		short.title,
+		short.subtitle.split(/\s[–—-]\s/)[0],
+		/piosenki\s+„([^”"]+)[”"]/i.exec(short.description)?.[1] ?? ''
+	];
+	const keys = new Set(names.map(slugify).filter(Boolean));
+	const found = songs.filter((s) => keys.has(slugify(s.title)));
+	return found.length === 1 ? found[0].id : undefined;
 }
 
 /** A part of an address from a title: "Niespodzianka tak, sekret nie" → "niespodzianka-tak-sekret-nie" */
