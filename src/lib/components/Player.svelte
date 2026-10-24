@@ -41,6 +41,7 @@
 	 * child, routes/dziecko). `autostart` plays at once, for a click that opened the player. If YouTube's script does
 	 * not load, a plain frame plays the video, without the end screen. A video that will not play here links to
 	 * YouTube, but with `closed` (the mode for a child, where nothing leads out) it only offers to try again.
+	 * Without the internet it says so, with "Spróbuj jeszcze raz".
 	 *
 	 * The channel's songs have their words in the picture, so YouTube's captions start off: they would cover them.
 	 * A viewer can still turn them on with the player's CC button.
@@ -65,7 +66,8 @@
 
 	const item = $derived(queue[index] ?? queue[0]);
 	let box: HTMLDivElement | undefined = $state();
-	let phase: 'poster' | 'loading' | 'playing' | 'ended' | 'frame' | 'error' = $state('poster');
+	let phase: 'poster' | 'loading' | 'playing' | 'ended' | 'frame' | 'error' | 'offline' =
+		$state('poster');
 	let player: YT | null = null;
 	let loadedId = '';
 	// The video whose captions were turned off when it started; a later click on CC keeps them on
@@ -87,6 +89,11 @@
 
 	async function start() {
 		if (!box || phase === 'loading') return;
+		// The app works without the internet (src/service-worker.ts), YouTube does not
+		if (!navigator.onLine) {
+			phase = 'offline';
+			return;
+		}
 		phase = 'loading';
 		const id = item.id;
 		try {
@@ -124,7 +131,7 @@
 			});
 			phase = 'playing';
 		} catch {
-			phase = 'frame';
+			phase = navigator.onLine ? 'frame' : 'offline';
 		}
 	}
 
@@ -248,6 +255,16 @@
 					</a>
 				{/if}
 			</div>
+		</div>
+	{/if}
+
+	{#if phase === 'offline'}
+		<div class="player__end">
+			<p class="player__end-title">Nie ma internetu</p>
+			<p>Piosenka zagra, gdy internet wróci.</p>
+			<button type="button" class="player__choice" onclick={retry}>
+				<Icon name="again" size={32} /> Spróbuj jeszcze raz
+			</button>
 		</div>
 	{/if}
 

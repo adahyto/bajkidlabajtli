@@ -47,6 +47,14 @@
 		pozycja przewinięcia, żeby po powrocie strona otworzyła się w tym samym miejscu; znika po
 		zamknięciu karty.
 	</p>
+	<p>
+		Żeby strona działała jak aplikacja, także bez internetu, przeglądarka zapisuje w swojej pamięci
+		(Cache Storage, przez tzw. service worker) kopie plików strony, odwiedzonych stron i obrazków
+		piosenek, najwyżej 60 obrazków. To te same treści, które widzi każdy odwiedzający; nie ma w nich
+		nic o Tobie i nic z nich nie trafia do nas. Kopie usuwa wyczyszczenie danych tej strony w
+		ustawieniach przeglądarki albo odinstalowanie aplikacji. Instalacja aplikacji to zwykła ikonka
+		na ekranie: niczego nie wysyła do nas ani do sklepów z aplikacjami.
+	</p>
 
 	<h2>Statystyki bez ciasteczek</h2>
 	<p>

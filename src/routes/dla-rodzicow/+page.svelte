@@ -5,6 +5,7 @@
 	import { SITE } from '$lib/site';
 	import Head from '$lib/components/Head.svelte';
 	import Icon from '$lib/components/Icon.svelte';
+	import InstallApp from '$lib/components/InstallApp.svelte';
 	import KidModeLink from '$lib/components/KidModeLink.svelte';
 
 	/*
@@ -168,8 +169,13 @@
 			<KidModeLink />
 		</div>
 		<div class="kid-mode__icon">
-			<h3>Ikonka na telefonie albo tablecie</h3>
-			<p>Ikonka otwiera od razu tryb dla dziecka, na całym ekranie, bez paska przeglądarki.</p>
+			<h3>Aplikacja na telefonie, tablecie albo komputerze</h3>
+			<p>
+				Ikonka aplikacji otwiera od razu tryb dla dziecka, na całym ekranie, bez paska przeglądarki.
+				Bez internetu działają tryb dla dziecka i ta strona; same piosenki potrzebują internetu. Po
+				przytrzymaniu ikonki są skróty: „Dla rodziców” i „Wszystkie piosenki”.
+			</p>
+			<div class="kid-mode__install"><InstallApp /></div>
 			<ul>
 				<li>
 					<strong>Android (Chrome):</strong> otwórz tryb dla dziecka, w menu ⋮ wybierz „Dodaj do ekranu
@@ -531,6 +537,10 @@
 
 	.kid-mode__icon ul {
 		margin-top: 12px;
+	}
+
+	.kid-mode__install:not(:empty) {
+		margin-top: 14px;
 	}
 
 	.facts {

@@ -7,6 +7,7 @@
 	import { SITE } from '$lib/site';
 	import Head from '$lib/components/Head.svelte';
 	import Icon from '$lib/components/Icon.svelte';
+	import InstallApp from '$lib/components/InstallApp.svelte';
 	import KidModeLink from '$lib/components/KidModeLink.svelte';
 	import VideoCard from '$lib/components/VideoCard.svelte';
 
@@ -158,6 +159,7 @@
 			<div class="parents__buttons">
 				<a class="btn btn--blue" href={resolve('/dla-rodzicow')}>Wszystko dla rodziców</a>
 				<KidModeLink white />
+				<InstallApp white />
 			</div>
 		</div>
 	{/if}

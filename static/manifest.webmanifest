@@ -1,8 +1,9 @@
 {
 	"name": "Bajki dla Bajtli",
 	"short_name": "Bajki",
-	"description": "Piosenki z Pikselkiem dla dzieci 3–8 lat, w trybie dla dziecka.",
+	"description": "Piosenki z Pikselkiem dla dzieci 3–8 lat: tryb dla dziecka na cały ekran, zasady i pytania do rozmowy dla rodziców.",
 	"lang": "pl",
+	"dir": "ltr",
 	"id": "/dziecko",
 	"start_url": "/dziecko",
 	"scope": "/",
@@ -11,9 +12,54 @@
 	"orientation": "any",
 	"background_color": "#cdebfa",
 	"theme_color": "#ffd45c",
+	"categories": ["kids", "music", "education"],
+	"prefer_related_applications": false,
 	"icons": [
 		{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
 		{ "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
 		{ "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+	],
+	"shortcuts": [
+		{
+			"name": "Tryb dla dziecka",
+			"url": "/dziecko",
+			"icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+		},
+		{
+			"name": "Dla rodziców",
+			"short_name": "Rodzice",
+			"description": "Zasady z piosenek i pytania do rozmowy z dzieckiem",
+			"url": "/dla-rodzicow",
+			"icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+		},
+		{
+			"name": "Wszystkie piosenki",
+			"short_name": "Piosenki",
+			"url": "/#piosenki",
+			"icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+		}
+	],
+	"screenshots": [
+		{
+			"src": "/screenshots/dziecko-telefon.jpg",
+			"sizes": "720x1280",
+			"type": "image/jpeg",
+			"form_factor": "narrow",
+			"label": "Tryb dla dziecka: duże obrazki piosenek"
+		},
+		{
+			"src": "/screenshots/rodzice-telefon.jpg",
+			"sizes": "720x1280",
+			"type": "image/jpeg",
+			"form_factor": "narrow",
+			"label": "Dla rodziców: zasady i pytania do rozmowy"
+		},
+		{
+			"src": "/screenshots/dziecko-komputer.jpg",
+			"sizes": "1280x800",
+			"type": "image/jpeg",
+			"form_factor": "wide",
+			"label": "Tryb dla dziecka na komputerze"
+		}
 	]
 }
