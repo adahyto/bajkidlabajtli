@@ -1,28 +1,58 @@
 import { getChannel } from '$lib/server/youtube';
+import { firstSentence } from '$lib/seo';
+import type { Video } from '$lib/types';
 import type { RequestHandler } from './$types';
 
-/** The home page, every song, short and playlist of the channel, /dla-rodzicow and /prywatnosc */
+const xml = (text: string) =>
+	text
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&apos;');
+
+/*
+ * The home page, every song and playlist of the channel, /dla-rodzicow and /prywatnosc. A short is here only when
+ * its full song is not on the channel: otherwise its page points search engines to the song's (lib/server/song.ts).
+ * Each video page also tells about its video (Google's video sitemap): the picture, title, what it is about, the
+ * player, length and date.
+ */
 export const GET: RequestHandler = async ({ url }) => {
 	const channel = await getChannel();
 	const day = (iso: string) => iso.slice(0, 10);
 	const newest = channel.videos[0]?.published ?? '';
-	const pages: { path: string; lastmod?: string }[] = [
+	const at = (path: string) => new URL(path, url.origin).href;
+	const videoTag = (v: Video) =>
+		[
+			'<video:video>',
+			`<video:thumbnail_loc>${at(`/miniatura/${v.id}-${v.short ? 's' : 'l'}.jpg`)}</video:thumbnail_loc>`,
+			`<video:title>${xml(v.subtitle ? `${v.title} – ${v.subtitle}` : v.title)}</video:title>`,
+			`<video:description>${xml(firstSentence(v.parents.intro) || v.subtitle || v.title)}</video:description>`,
+			`<video:player_loc>https://www.youtube-nocookie.com/embed/${v.id}</video:player_loc>`,
+			v.seconds ? `<video:duration>${v.seconds}</video:duration>` : '',
+			`<video:publication_date>${v.published}</video:publication_date>`,
+			'</video:video>'
+		].join('');
+	const pages: { path: string; lastmod?: string; video?: Video }[] = [
 		{ path: '/', lastmod: newest && day(newest) },
-		...channel.videos.map((v) => ({
-			path: `/${v.short ? 'krotka' : 'piosenka'}/${v.slug}`,
-			lastmod: day(v.published)
-		})),
+		...channel.videos
+			.filter((v) => !v.fullId)
+			.map((v) => ({
+				path: `/${v.short ? 'krotka' : 'piosenka'}/${v.slug}`,
+				lastmod: day(v.published),
+				video: v
+			})),
 		...channel.playlists.map((p) => ({ path: `/playlista/${p.slug}` })),
 		{ path: '/dla-rodzicow', lastmod: newest && day(newest) },
 		{ path: '/prywatnosc' }
 	];
 	return new Response(
 		`<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 ${pages
 	.map(
-		({ path, lastmod }) =>
-			`\t<url><loc>${new URL(path, url.origin).href}</loc>${lastmod ? `<lastmod>${lastmod}</lastmod>` : ''}</url>`
+		({ path, lastmod, video }) =>
+			`\t<url><loc>${at(path)}</loc>${lastmod ? `<lastmod>${lastmod}</lastmod>` : ''}${video ? videoTag(video) : ''}</url>`
 	)
 	.join('\n')}
 </urlset>

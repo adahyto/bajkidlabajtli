@@ -9,7 +9,9 @@ test('the home page shows the songs, shorts, playlist and the part for parents',
 	});
 	await page.goto('/');
 	await expect(page).toHaveTitle(/Bajki dla Bajtli/);
-	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Śpiewaj z Pikselkiem!');
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+		'Śpiewaj z Pikselkiem! Piosenki dla dzieci o bezpieczeństwie'
+	);
 	const songs = page.locator('#piosenki a.card');
 	await expect(songs).toHaveCount(4);
 	await expect(songs.first()).toContainText('Niespodzianka tak, sekret nie');
@@ -30,7 +32,14 @@ test('the home page shows the songs, shorts, playlist and the part for parents',
 test('a song: rules and questions for parents, the short, the next song', async ({ page }) => {
 	await page.goto('/piosenka/gdy-sie-zgubie');
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Gdy się zgubię');
-	await expect(page).toHaveTitle('Gdy się zgubię — piosenka | Bajki dla Bajtli');
+	// What parents search for, not only the song's name
+	await expect(page).toHaveTitle(
+		'Gdy się zgubię – piosenka dla dzieci: co robić, gdy zgubisz się w sklepie'
+	);
+	const description = await page.locator('meta[name="description"]').getAttribute('content');
+	expect(description).toBe(
+		'Wesoła piosenka dla dzieci o tym, co zrobić, gdy zgubimy się mamie i tacie! Z zasadami i pytaniami do rozmowy dla rodziców.'
+	);
 	const parents = page.getByRole('region', { name: 'Dla rodziców' });
 	await expect(parents).toContainText('Stój jak drzewo – zostań w miejscu, nie szukaj sam.');
 	await expect(parents).toContainText('Kogo w sklepie możesz poprosić o pomoc?');
@@ -106,10 +115,15 @@ test('search engines read the video on a song page and the channel on the home p
 }) => {
 	const reports: string[] = [];
 	page.on('console', (m) => m.type() === 'error' && reports.push(m.text()));
-	const read = async () =>
-		JSON.parse((await page.locator('script[type="application/ld+json"]').textContent()) ?? '');
+	// The blocks of a page by their type (@graph: the home page's)
+	const read = async (type: string) => {
+		const blocks = await page
+			.locator('script[type="application/ld+json"]')
+			.evaluateAll((all) => all.map((s) => JSON.parse(s.textContent ?? '')));
+		return blocks.find((b) => b['@type'] === type || (type === '@graph' && b['@graph']));
+	};
 	await page.goto('/piosenka/gdy-sie-zgubie');
-	const video = await read();
+	const video = await read('VideoObject');
 	expect(video).toMatchObject({
 		'@type': 'VideoObject',
 		duration: 'PT2M18S',
@@ -118,16 +132,59 @@ test('search engines read the video on a song page and the channel on the home p
 		uploadDate: '2026-10-21T13:00:05Z'
 	});
 	expect(video.description).toMatch(/^Piosenka dla dzieci: co robić/);
+	expect(video.audience).toMatchObject({ suggestedMinAge: 3, suggestedMaxAge: 8 });
+	expect((await read('BreadcrumbList')).itemListElement[1]).toMatchObject({
+		name: 'Gdy się zgubię',
+		item: 'http://127.0.0.1:4173/piosenka/gdy-sie-zgubie'
+	});
 	await page.goto('/playlista/bezpieczny-pikselek');
-	expect((await read()).itemListElement).toHaveLength(4);
+	expect((await read('ItemList')).itemListElement).toHaveLength(4);
 	await page.goto('/');
-	expect((await read())['@graph'][1].sameAs).toEqual(['https://www.youtube.com/@BajkiDlaBajtli']);
+	expect((await read('@graph'))['@graph'][1].sameAs).toEqual([
+		'https://www.youtube.com/@BajkiDlaBajtli'
+	]);
 	await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
 		'content',
 		'http://127.0.0.1:4173/udostepnij.png'
 	);
 	// The content security policy lets the JSON be
 	expect(reports).toEqual([]);
+});
+
+test('a short with its full song on the channel points search engines to the song', async ({
+	page
+}) => {
+	await page.goto('/krotka/stoj-jak-drzewo');
+	await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+		'href',
+		'http://127.0.0.1:4173/piosenka/gdy-sie-zgubie'
+	);
+	await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(0);
+	// A short without one is a page of its own
+	await page.goto('/krotka/jeden-jeden-dwa');
+	await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+		'href',
+		'http://127.0.0.1:4173/krotka/jeden-jeden-dwa'
+	);
+	await expect(page).toHaveTitle(
+		'Jeden, jeden, dwa! – piosenka dla dzieci o 112 | Bajki dla Bajtli'
+	);
+});
+
+test('every page has a description that fits in search results', async ({ page, request }) => {
+	const xml = await (await request.get('/sitemap.xml')).text();
+	const paths = [...xml.matchAll(/<loc>http:\/\/127\.0\.0\.1:4173([^<]*)<\/loc>/g)].map(
+		(m) => m[1]
+	);
+	expect(paths.length).toBe(9);
+	for (const path of paths) {
+		await page.goto(path);
+		const description =
+			(await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
+		expect(description.length, path).toBeGreaterThan(50);
+		expect(description.length, path).toBeLessThanOrEqual(160);
+		expect((await page.title()).length, path).toBeLessThanOrEqual(80);
+	}
 });
 
 test('the footer: © doner.cloud, no e-mail', async ({ page }) => {

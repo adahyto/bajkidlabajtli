@@ -9,16 +9,20 @@
 		description = SITE.description,
 		image = '/udostepnij.png',
 		type = 'website',
+		canonical: path,
 		jsonld
 	}: {
 		title: string;
 		description?: string;
 		image?: string;
 		type?: string;
-		jsonld?: JsonLd;
+		/** Another page that says the same, for search engines; this page's own address when not given */
+		canonical?: string;
+		jsonld?: JsonLd | JsonLd[];
 	} = $props();
 
-	const canonical = $derived(new URL(page.url.pathname, page.url.origin).href);
+	const canonical = $derived(new URL(path ?? page.url.pathname, page.url.origin).href);
+	const blocks = $derived(jsonld ? [jsonld].flat() : []);
 </script>
 
 <svelte:head>
@@ -33,8 +37,8 @@
 	<meta property="og:url" content={canonical} />
 	<meta property="og:image" content={new URL(image, page.url.origin).href} />
 	<meta name="twitter:card" content="summary_large_image" />
-	{#if jsonld}
+	{#each blocks as block, i (i)}
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -- JSON made by lib/jsonld.ts, with "<" escaped -->
-		{@html ldScript(jsonld)}
-	{/if}
+		{@html ldScript(block)}
+	{/each}
 </svelte:head>

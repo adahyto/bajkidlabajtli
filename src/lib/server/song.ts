@@ -1,4 +1,4 @@
-import { toCard } from '$lib/cards';
+import { pathOf, toCard } from '$lib/cards';
 import { SONGS } from '$lib/songs';
 import type { Channel, Video } from '$lib/types';
 
@@ -35,6 +35,8 @@ export function songPage(channel: Channel, video: Video) {
 		parents: about.parents,
 		extra: SONGS[about.id] ?? {},
 		full: full ? toCard(full) : null,
+		// A short with its full song on the channel says the same to parents: search engines take the song's page
+		canonical: full ? pathOf(full) : null,
 		short: (() => {
 			const short = video.short ? undefined : channel.videos.find((v) => v.fullId === video.id);
 			return short ? toCard(short) : null;

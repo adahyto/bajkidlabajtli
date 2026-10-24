@@ -3,7 +3,8 @@ import { SITE } from './site.ts';
 
 /*
  * What search engines read about a page besides its text (schema.org as JSON-LD, put in by components/Head.svelte):
- * the site and the channel on the home page, a video on the page of a song, the songs in order on a playlist.
+ * the site and the channel on the home page, a video on the page of a song, the songs in order on a playlist, and
+ * where a page is in the site (breadcrumbs).
  * Addresses are whole, with the site's origin. No imports beyond site.ts and types: tests/unit runs this file in
  * plain Node.
  */
@@ -65,7 +66,20 @@ export const videoLd = (
 	url: `${origin}${path}`,
 	inLanguage: 'pl',
 	isFamilyFriendly: true,
+	audience: { '@type': 'PeopleAudience', suggestedMinAge: 3, suggestedMaxAge: 8 },
 	author: channelOf(origin)
+});
+
+/** Where a page is in the site: the home page, then the page */
+export const breadcrumbLd = (origin: string, items: { name: string; path: string }[]): JsonLd => ({
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: items.map((item, i) => ({
+		'@type': 'ListItem',
+		position: i + 1,
+		name: item.name,
+		item: `${origin}${item.path}`
+	}))
 });
 
 /** A playlist: its songs in order, each by the address of its page here */

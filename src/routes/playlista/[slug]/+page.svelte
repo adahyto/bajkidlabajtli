@@ -3,7 +3,8 @@
 	import { page } from '$app/state';
 	import { pathOf, thumbOf } from '$lib/cards';
 	import { clock, songs } from '$lib/format';
-	import { playlistLd } from '$lib/jsonld';
+	import { breadcrumbLd, playlistLd } from '$lib/jsonld';
+	import { withSite } from '$lib/seo';
 	import { SITE } from '$lib/site';
 	import Head from '$lib/components/Head.svelte';
 	import Icon from '$lib/components/Icon.svelte';
@@ -17,14 +18,20 @@
 </script>
 
 <Head
-	title={`${data.playlist.title} — playlista | ${SITE.name}`}
+	title={withSite(`${data.playlist.title} – playlista piosenek dla dzieci`)}
 	description={`${songs(data.videos.length)} z Pikselkiem, jedna po drugiej: ${data.videos.map((v) => v.title).join(', ')}.`}
 	image={data.videos[0] ? thumbOf(data.videos[0].id, 'l') : undefined}
-	jsonld={playlistLd(
-		page.url.origin,
-		data.playlist.title,
-		data.videos.map((v) => ({ title: v.title, path: pathOf(v) }))
-	)}
+	jsonld={[
+		playlistLd(
+			page.url.origin,
+			data.playlist.title,
+			data.videos.map((v) => ({ title: v.title, path: pathOf(v) }))
+		),
+		breadcrumbLd(page.url.origin, [
+			{ name: SITE.name, path: '/' },
+			{ name: data.playlist.title, path: page.url.pathname }
+		])
+	]}
 />
 
 <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- a part of the resolved home page -->

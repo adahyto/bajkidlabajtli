@@ -14,13 +14,18 @@
 	let { data } = $props();
 </script>
 
-<Head title={`${SITE.name} — piosenki z Pikselkiem dla dzieci`} jsonld={siteLd(page.url.origin)} />
+<Head
+	title={`${SITE.name} – piosenki dla dzieci o bezpieczeństwie z Pikselkiem`}
+	jsonld={siteLd(page.url.origin)}
+/>
 
 {#if data.hero}
 	<section class="hero">
 		<div class="hero__text">
 			<span class="badge">NOWA PIOSENKA</span>
-			<h1>Śpiewaj z Pikselkiem!</h1>
+			<h1>
+				Śpiewaj z Pikselkiem! <span class="hero__about">Piosenki dla dzieci o bezpieczeństwie</span>
+			</h1>
 			<p>
 				Krótkie piosenki dla dzieci 3–8 lat. W każdej jedna prosta zasada, zaśpiewana tak, żeby
 				została w głowie.
@@ -205,6 +210,14 @@
 	.hero h1 {
 		font-size: clamp(44px, 6vw, 66px);
 		line-height: 1;
+	}
+
+	/* What the site is, for search engines too, under the call */
+	.hero__about {
+		display: block;
+		margin-top: 12px;
+		font-size: clamp(22px, 2.6vw, 28px);
+		line-height: 1.15;
 	}
 
 	.hero__text p {
