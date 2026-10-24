@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
+	fullIdByTitle,
 	fullIdOf,
 	isShort,
 	parseDescription,
@@ -43,6 +44,58 @@ test('addresses, lengths, shorts', () => {
 	assert.ok(!isShort('Gdy się zgubię', 'Piosenka'));
 	assert.equal(fullIdOf(video('9-2NMQcT1N4').description), 'nvQ1vsDZJds');
 	assert.equal(fullIdOf(video('Uo1OsJlukhM').description), undefined);
+	// As the channel wrote it on 2026-10-24, a space before the colon
+	assert.equal(
+		fullIdOf('Cały teledysk : https://www.youtube.com/watch?v=i65ad55Mk14'),
+		'i65ad55Mk14'
+	);
+});
+
+test('a short out before its song finds the song by title', () => {
+	const songs = [
+		{ id: 'i65ad55Mk14', title: 'Jeden, jeden, dwa' },
+		{ id: 'Habi9u9igtI', title: 'Złote monetki' },
+		{ id: 'nvQ1vsDZJds', title: 'Gdy się zgubię' }
+	];
+	const short = (title: string, subtitle = '', description = '') => ({
+		title,
+		subtitle,
+		description
+	});
+	// Its own title, without the "!"
+	assert.equal(
+		fullIdByTitle(short('Jeden, jeden, dwa!', 'Piosenka dla dzieci o 112'), songs),
+		'i65ad55Mk14'
+	);
+	// The song in the subtitle
+	assert.equal(
+		fullIdByTitle(short('Dzyń, dzyń, dzyń!', 'Złote monetki – piosenka dla dzieci'), songs),
+		'Habi9u9igtI'
+	);
+	// The song in the description
+	assert.equal(
+		fullIdByTitle(
+			short(
+				'Stój jak drzewo!',
+				'Piosenka dla dzieci',
+				'Refren piosenki „Gdy się zgubię” – co robić…'
+			),
+			songs
+		),
+		'nvQ1vsDZJds'
+	);
+	// No such song yet, or two with that title: none
+	assert.equal(
+		fullIdByTitle(short('Klik, klik, z głową klik!', 'Piosenka dla dzieci'), songs),
+		undefined
+	);
+	assert.equal(
+		fullIdByTitle(short('Jeden, jeden, dwa!'), [
+			...songs,
+			{ id: 'xxxxxxxxxxx', title: 'Jeden, jeden, dwa!' }
+		]),
+		undefined
+	);
 });
 
 test('a song: intro, rules, tips', () => {

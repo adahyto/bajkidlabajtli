@@ -2,7 +2,15 @@ import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { env } from '$env/dynamic/private';
 import type { Channel, Playlist, Video } from '$lib/types';
-import { fullIdOf, isShort, parseDescription, seconds, slugify, splitTitle } from './description';
+import {
+	fullIdByTitle,
+	fullIdOf,
+	isShort,
+	parseDescription,
+	seconds,
+	slugify,
+	splitTitle
+} from './description';
 import { newPages, tellSearchEngines } from './indexnow';
 
 /*
@@ -204,7 +212,15 @@ export function finish(channel: Channel): Channel {
 		v.slug = unique(slugify(v.title) || v.id.toLowerCase(), v.short ? 'krotka' : 'piosenka');
 	for (const p of channel.playlists) p.slug = unique(slugify(p.title) || p.id.toLowerCase(), 'p');
 	const ids = new Set(channel.videos.map((v) => v.id));
-	for (const v of channel.videos) if (v.fullId && !ids.has(v.fullId)) delete v.fullId;
+	const songs = channel.videos.filter((v) => !v.short);
+	for (const v of channel.videos) {
+		if (v.fullId && !ids.has(v.fullId)) delete v.fullId;
+		// A short out before its song, its description not yet linking it: the song with its title
+		if (v.short && !v.fullId) {
+			const fullId = fullIdByTitle(v, songs);
+			if (fullId) v.fullId = fullId;
+		}
+	}
 	channel.videos.sort((a, b) => b.published.localeCompare(a.published));
 	return channel;
 }
