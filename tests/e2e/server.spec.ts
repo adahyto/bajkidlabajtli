@@ -11,6 +11,7 @@ test('the sitemap lists the songs, shorts and playlist', async ({ request }) => 
 	expect(xml).toContain('/krotka/stoj-jak-drzewo</loc>');
 	expect(xml).toContain('/playlista/bezpieczny-pikselek</loc>');
 	expect(xml).toContain('/dla-rodzicow</loc>');
+	expect(xml).not.toContain('/dziecko');
 	expect(xml.match(/<url>/g)).toHaveLength(13);
 });
 
@@ -34,7 +35,12 @@ test('health tells where the songs come from', async ({ request }) => {
 });
 
 test('a page seen is counted, an unknown one is not an error', async ({ request }) => {
-	for (const path of ['/piosenka/gdy-sie-zgubie', '/dla-rodzicow', '/piosenka/nie-ma']) {
+	for (const path of [
+		'/piosenka/gdy-sie-zgubie',
+		'/dla-rodzicow',
+		'/dziecko',
+		'/piosenka/nie-ma'
+	]) {
 		const res = await request.post('/api/stats', { data: { event: 'view', path } });
 		expect(res.status()).toBe(204);
 	}

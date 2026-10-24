@@ -27,7 +27,7 @@
 </script>
 
 <script lang="ts">
-	import { onDestroy, untrack } from 'svelte';
+	import { onDestroy, onMount, untrack } from 'svelte';
 	import { thumbOf } from '$lib/cards';
 	import Icon from './Icon.svelte';
 
@@ -37,19 +37,30 @@
 	 * A video of the channel: its picture with a big button until it is clicked, then YouTube's player from
 	 * www.youtube-nocookie.com. When the video ends, the site's own two buttons cover YouTube's suggestions (which
 	 * may be of other channels): "Jeszcze raz" and the next song (`next`, a link). With `queue` (a playlist) the next
-	 * one plays by itself and `index` follows it. If YouTube's script does not load, a plain frame plays the video,
-	 * without the end screen.
+	 * one plays by itself and `index` follows it, or, with `ask`, the end screen has "Następna" for it (the mode for a
+	 * child, routes/dziecko). `autostart` plays at once, for a click that opened the player. If YouTube's script does
+	 * not load, a plain frame plays the video, without the end screen. A video that will not play here links to
+	 * YouTube, but with `closed` (the mode for a child, where nothing leads out) it only offers to try again.
+	 *
+	 * The channel's songs have their words in the picture, so YouTube's captions start off: they would cover them.
+	 * A viewer can still turn them on with the player's CC button.
 	 */
 	let {
 		queue,
 		index = $bindable(0),
 		next = null,
-		vertical = false
+		vertical = false,
+		ask = false,
+		autostart = false,
+		closed = false
 	}: {
 		queue: Item[];
 		index?: number;
 		next?: { href: string; title: string } | null;
 		vertical?: boolean;
+		ask?: boolean;
+		autostart?: boolean;
+		closed?: boolean;
 	} = $props();
 
 	const item = $derived(queue[index] ?? queue[0]);
@@ -57,6 +68,8 @@
 	let phase: 'poster' | 'loading' | 'playing' | 'ended' | 'frame' | 'error' = $state('poster');
 	let player: YT | null = null;
 	let loadedId = '';
+	// The video whose captions were turned off when it started; a later click on CC keeps them on
+	let captionsOff = '';
 	let firstButton: HTMLElement | undefined = $state();
 
 	function destroy() {
@@ -95,11 +108,15 @@
 					playsinline: 1,
 					iv_load_policy: 3,
 					hl: 'pl',
+					cc_load_policy: 0,
 					origin: location.origin
 				},
 				events: {
 					onStateChange: (e: { data: number }) => {
-						if (e.data === YT.PlayerState.PLAYING) phase = 'playing';
+						if (e.data === YT.PlayerState.PLAYING) {
+							phase = 'playing';
+							captionsOffOnce();
+						}
 						if (e.data === YT.PlayerState.ENDED) ended();
 					},
 					onError: () => (phase = 'error')
@@ -111,8 +128,20 @@
 		}
 	}
 
+	/** Captions off when a video starts (unloadModule is not in YouTube's documentation, so it may do nothing) */
+	function captionsOffOnce() {
+		if (!player || captionsOff === loadedId) return;
+		captionsOff = loadedId;
+		try {
+			player.unloadModule('captions');
+			player.unloadModule('cc');
+		} catch {
+			// the video plays on, with what YouTube shows
+		}
+	}
+
 	function ended() {
-		if (queue.length > 1 && index < queue.length - 1 && !next) {
+		if (queue.length > 1 && index < queue.length - 1 && !next && !ask) {
 			// A playlist: on to the next song
 			index += 1;
 			return;
@@ -122,7 +151,7 @@
 	}
 
 	function again() {
-		if (queue.length > 1 && !next && index === queue.length - 1) {
+		if (queue.length > 1 && !next && !ask && index === queue.length - 1) {
 			index = 0;
 			return;
 		}
@@ -146,13 +175,26 @@
 		});
 	});
 
+	/** "Następna" with `ask`: the next one in the queue, after the last the first */
+	const onward = () => (index = (index + 1) % queue.length);
+
+	function retry() {
+		destroy();
+		phase = 'poster';
+		start();
+	}
+
+	onMount(() => {
+		if (autostart) start();
+	});
+
 	onDestroy(destroy);
 </script>
 
 <div class="player" class:player--vertical={vertical}>
 	{#if phase === 'frame'}
 		<iframe
-			src={`https://www.youtube-nocookie.com/embed/${item.id}?autoplay=1&rel=0&playsinline=1&hl=pl`}
+			src={`https://www.youtube-nocookie.com/embed/${item.id}?autoplay=1&rel=0&playsinline=1&hl=pl&cc_load_policy=0`}
 			title={item.title}
 			allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
 			allowfullscreen
@@ -186,8 +228,18 @@
 			<div class="player__end-buttons">
 				<button type="button" class="player__choice" onclick={again} bind:this={firstButton}>
 					<Icon name="again" size={32} />
-					{queue.length > 1 && !next ? 'Od początku' : 'Jeszcze raz'}
+					{queue.length > 1 && !next && !ask ? 'Od początku' : 'Jeszcze raz'}
 				</button>
+				{#if ask && queue.length > 1}
+					<button type="button" class="player__choice player__choice--next" onclick={onward}>
+						<Icon name="skip" size={32} />
+						<span
+							>Następna<span class="visually-hidden"
+								>: {queue[(index + 1) % queue.length].title}</span
+							></span
+						>
+					</button>
+				{/if}
 				{#if next}
 					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- next.href is a resolved path -->
 					<a class="player__choice player__choice--next" href={next.href}>
@@ -202,10 +254,16 @@
 	{#if phase === 'error'}
 		<div class="player__end">
 			<p class="player__end-title">Ten film nie chce się tu włączyć</p>
-			<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- YouTube -->
-			<a class="player__choice" href={`https://www.youtube.com/watch?v=${item.id}`}>
-				Obejrzyj na YouTube
-			</a>
+			{#if closed}
+				<button type="button" class="player__choice" onclick={retry}>
+					<Icon name="again" size={32} /> Spróbuj jeszcze raz
+				</button>
+			{:else}
+				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- YouTube -->
+				<a class="player__choice" href={`https://www.youtube.com/watch?v=${item.id}`}>
+					Obejrzyj na YouTube
+				</a>
+			{/if}
 		</div>
 	{/if}
 </div>

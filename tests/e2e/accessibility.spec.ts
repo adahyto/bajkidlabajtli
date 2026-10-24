@@ -20,6 +20,7 @@ for (const path of [
 	'/krotka/stoj-jak-drzewo',
 	'/playlista/bezpieczny-pikselek',
 	'/dla-rodzicow',
+	'/dziecko',
 	'/prywatnosc',
 	'/nie-ma-takiej-strony'
 ]) {
@@ -28,6 +29,15 @@ for (const path of [
 		await check(page);
 	});
 }
+
+test('accessible: a song playing in the mode for a child', async ({ page }) => {
+	await fakeYouTube(page);
+	await page.goto('/dziecko');
+	await page.getByRole('button', { name: 'Włącz: Gdy się zgubię' }).click();
+	await page.evaluate(() => (window as unknown as { __ytEnd: () => void }).__ytEnd());
+	await expect(page.getByText('Koniec! Co teraz?')).toBeVisible();
+	await check(page);
+});
 
 test('accessible: the end screen of the player', async ({ page }) => {
 	await fakeYouTube(page);
