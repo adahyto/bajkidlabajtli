@@ -1,4 +1,5 @@
 import { GUIDES } from '$lib/guides';
+import { LESSONS } from '$lib/lessons';
 import { getChannel } from '$lib/server/youtube';
 import { firstSentence } from '$lib/seo';
 import type { Video } from '$lib/types';
@@ -13,7 +14,8 @@ const xml = (text: string) =>
 		.replace(/'/g, '&apos;');
 
 /*
- * The home page, every song and playlist of the channel, /dla-rodzicow, the guides and /prywatnosc. A short is here
+ * The home page, every song and playlist of the channel, /dla-rodzicow, the guides, the lesson plans and colouring
+ * pages, and /prywatnosc. A short is here
  * only when its full song is not on the channel: otherwise its page points search engines to the song's
  * (lib/server/song.ts).
  * Each video page also tells about its video (Google's video sitemap): the picture, title, what it is about, the
@@ -53,6 +55,11 @@ export const GET: RequestHandler = async ({ url }) => {
 				.at(-1)
 		},
 		...GUIDES.map((g) => ({ path: `/poradnik/${g.slug}`, lastmod: g.updated })),
+		{ path: '/dla-przedszkoli' },
+		...LESSONS.flatMap((l) => [
+			{ path: `/dla-przedszkoli/${l.slug}` },
+			{ path: `/kolorowanka/${l.slug}` }
+		]),
 		{ path: '/prywatnosc' }
 	];
 	return new Response(

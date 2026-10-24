@@ -26,6 +26,11 @@ for (const path of [
 	'/poradnik/co-zrobic-gdy-dziecko-zgubi-sie-w-sklepie',
 	'/poradnik/dobry-i-zly-sekret-jak-rozmawiac-z-dzieckiem',
 	'/poradnik/jak-zablokowac-zakupy-w-grach-na-telefonie-dziecka',
+	'/poradnik/jak-nauczyc-dziecko-dzwonic-pod-112',
+	'/poradnik/bezpieczny-internet-dla-przedszkolaka',
+	'/dla-przedszkoli',
+	'/dla-przedszkoli/niespodzianka-tak-sekret-nie',
+	'/kolorowanka/zlote-monetki',
 	'/prywatnosc',
 	'/nie-ma-takiej-strony'
 ]) {

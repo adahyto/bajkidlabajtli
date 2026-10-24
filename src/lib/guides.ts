@@ -415,6 +415,246 @@ export const GUIDES: Guide[] = [
 			},
 			{ name: 'Apple: zgłaszanie problemu z zakupem', url: 'https://reportaproblem.apple.com/' }
 		]
+	},
+	{
+		slug: 'jak-nauczyc-dziecko-dzwonic-pod-112',
+		title: 'Jak nauczyć dziecko dzwonić pod numer 112?',
+		short: 'Jak dzwonić pod 112',
+		description:
+			'Kiedy dzwonić pod 112, co powiedzieć i dlaczego się nie rozłączać. Jak przećwiczyć to z przedszkolakiem, z piosenką „Jeden, jeden, dwa!” i adresem na pamięć.',
+		songId: 'Uo1OsJlukhM',
+		published: '2026-10-24',
+		updated: '2026-10-24',
+		lead: 'Przedszkolak może być jedyną osobą obok, gdy babci zrobi się słabo albo w domu pojawi się dym. Zadzwonić pod 112 potrafi już trzylatek, trudniejsze jest co innego: wiedzieć, kiedy dzwonić, powiedzieć, co się stało i gdzie, i nie rozłączyć się ze strachu. Tego da się nauczyć zabawą, krok po kroku.',
+		sections: [
+			{
+				heading: 'Kiedy dzwonimy pod 112',
+				blocks: [
+					{
+						kind: 'p',
+						text: 'Dziecku najłatwiej zrozumieć to tak: dzwonimy, gdy ktoś potrzebuje pomocy od razu, a obok nie ma dorosłego, który może pomóc. Podajcie przykłady:'
+					},
+					{
+						kind: 'list',
+						items: [
+							'Ktoś upadł i nie odpowiada albo nie można go obudzić.',
+							'W domu jest dym albo ogień.',
+							'Ktoś bardzo krwawi albo nie może oddychać.',
+							'Ktoś zrobił komuś krzywdę albo grozi.'
+						]
+					},
+					{
+						kind: 'p',
+						text: 'I przykłady, kiedy nie dzwonimy: zgubiła się zabawka, brat zabrał tablet, nudzi mi się. Wytłumaczcie dlaczego: gdy ktoś dzwoni dla zabawy, w tym samym czasie ktoś inny może czekać na pomoc.'
+					}
+				]
+			},
+			{
+				heading: 'Co powiedzieć: plan dla dziecka',
+				blocks: [
+					{
+						kind: 'steps',
+						items: [
+							{
+								title: 'Wybierz 1, 1, 2',
+								text: 'Na telefonie mamy lub taty, także zablokowanym: na ekranie blokady jest przycisk „Połączenie alarmowe” albo „SOS”. Pokażcie dziecku, gdzie jest na Waszym telefonie.'
+							},
+							{
+								title: 'Powiedz, co się stało',
+								text: 'Krótko: „Babcia upadła i nie odpowiada”. Nie trzeba ładnie, wystarczy prawda.'
+							},
+							{
+								title: 'Powiedz, gdzie jesteś',
+								text: 'Ulica, numer domu i mieszkania, miasto. To najważniejsza rzecz do nauczenia się na pamięć.'
+							},
+							{
+								title: 'Odpowiadaj na pytania',
+								text: 'Osoba w telefonie zada kilka pytań po kolei i powie, co robić. Słuchaj jej.'
+							},
+							{
+								title: 'Nie rozłączaj się',
+								text: 'Dopóki ta osoba nie powie, że możesz. A potem nie zajmuj telefonu, bo mogą oddzwonić.'
+							}
+						]
+					},
+					{
+						kind: 'note',
+						text: 'Numer 112 jest bezpłatny i działa w całej Unii Europejskiej. Połączenie odbiera operator numerów alarmowych, który przekazuje zgłoszenie straży pożarnej, policji albo pogotowiu.'
+					}
+				]
+			},
+			{
+				heading: 'Co dziecko powinno wiedzieć o swoim domu',
+				blocks: [
+					{
+						kind: 'p',
+						text: 'Najtrudniejsze w rozmowie z operatorem jest dla dziecka pytanie „gdzie jesteś?”. Dlatego zanim nauczycie dziecko numeru, nauczcie je, gdzie mieszka. Po kolei, nie wszystkiego naraz:'
+					},
+					{
+						kind: 'list',
+						items: [
+							'Swoje imię i nazwisko, i imiona rodziców. Dla operatora „mama” to za mało.',
+							'Nazwę miejscowości, ulicę i numer domu, a w bloku także numer mieszkania i piętro.',
+							'Co widać przy domu, jeśli adresu jeszcze nie pamięta: sklep, plac zabaw, szkołę, kolor domu. To też pomaga ratownikom.',
+							'Numer telefonu mamy albo taty, gdy dziecko jest już starsze.'
+						]
+					},
+					{
+						kind: 'p',
+						text: 'Nie musi znać osobnych numerów straży pożarnej, policji i pogotowia: 112 wystarczy na wszystko. Jeśli dziecko zadzwoni przez pomyłkę, niech się nie rozłącza ze strachu, tylko powie, że to była pomyłka. Wytłumaczcie mu to spokojnie, bez krzyku, żeby następnym razem nie bało się zadzwonić, gdy naprawdę będzie trzeba.'
+					}
+				]
+			},
+			{
+				heading: 'Jak to przećwiczyć',
+				blocks: [
+					{
+						kind: 'list',
+						items: [
+							'Adres w rymowance albo piosence: łatwiej go zapamiętać, gdy się go śpiewa. Sprawdzajcie co jakiś czas, przy okazji, np. w drodze do domu.',
+							'Zabawa w telefon: rodzic jest „panią z telefonu 112”, a dziecko na zabawkowym telefonie mówi, co się stało i gdzie. Zamieniajcie się sytuacjami: dym w kuchni, dziadek nie odpowiada.',
+							'Pokażcie na prawdziwym, wyłączonym albo zablokowanym telefonie, gdzie jest przycisk połączenia alarmowego, ale umówcie się, że naprawdę dzwonimy tylko wtedy, gdy ktoś potrzebuje pomocy.',
+							'Mówcie spokojnie i rzeczowo. Dziecko nie ma się bać, ma wiedzieć, co zrobić.',
+							'Europejski Dzień Numeru Alarmowego 112 przypada 11 lutego. To dobra okazja, żeby wrócić do tematu w domu i w przedszkolu.'
+						]
+					},
+					{
+						kind: 'p',
+						text: 'W krótkiej piosence „Jeden, jeden, dwa!” Pikselek śpiewa refren, który dzieci szybko powtarzają: mówię, co się stało i gdzie, i nie rozłączam się. Posłuchajcie jej razem kilka razy, a potem przećwiczcie rozmowę.'
+					}
+				]
+			}
+		],
+		sources: [
+			{
+				name: 'gov.pl: Numer alarmowy 112, jak zgłaszać',
+				url: 'https://www.gov.pl/web/numer-alarmowy-112/jak-zglaszac'
+			},
+			{ name: 'gov.pl: Numer alarmowy 112', url: 'https://www.gov.pl/web/numer-alarmowy-112' }
+		]
+	},
+	{
+		slug: 'bezpieczny-internet-dla-przedszkolaka',
+		title: 'Bezpieczny internet dla przedszkolaka – od czego zacząć?',
+		short: 'Bezpieczny internet dla przedszkolaka',
+		description:
+			'Pierwszy tablet i bajki w internecie: zasady dla przedszkolaka, ile czasu przed ekranem, ustawienia i co zrobić, gdy dziecko zobaczy coś strasznego.',
+		songId: 'ALro8KR2sZw',
+		published: '2026-10-24',
+		updated: '2026-10-24',
+		lead: 'Przedszkolak często ogląda bajki na tablecie albo telefonie rodzica, zanim nauczy się czytać. Internet daje mu piosenki i gry, ale też reklamy, okienka „Wygrałeś!”, czaty i filmy, które wcale nie są dla dzieci. Nie trzeba od razu wiedzy informatyka: wystarczy kilka prostych zasad dla dziecka, kilka ustawień i umowa, że z każdą dziwną rzeczą przychodzi się do rodzica.',
+		sections: [
+			{
+				heading: 'Zasady dla dziecka',
+				blocks: [
+					{
+						kind: 'steps',
+						items: [
+							{
+								title: 'W sieci nie podaję, kim jestem',
+								text: 'Ani adresu, ani imienia i nazwiska, ani nazwy przedszkola.'
+							},
+							{
+								title: 'Nie każdy jest tym, za kogo się podaje',
+								text: 'Nawet słodki kotek na zdjęciu może być kimś zupełnie innym.'
+							},
+							{ title: 'Nie wysyłam zdjęć nieznajomym', text: 'Ani swoich, ani zdjęć domu.' },
+							{
+								title: 'Nie klikam w okienka „Wygrałeś!”',
+								text: 'To sztuczki, żeby kliknąć. Nic się nie wygrało.'
+							},
+							{
+								title: 'Gdy czegoś nie wiem, pytam',
+								text: 'Mamę albo tatę. Także wtedy, gdy zobaczę coś dziwnego albo strasznego.'
+							},
+							{
+								title: 'Po zabawie z tabletem czas na podwórko',
+								text: 'Ekran ma swój czas, zabawa też.'
+							}
+						]
+					}
+				]
+			},
+			{
+				heading: 'Dla rodzica: pięć prostych kroków',
+				blocks: [
+					{
+						kind: 'list',
+						items: [
+							'Bądźcie blisko. Przedszkolak korzysta z internetu przy dorosłym, w pokoju, gdzie wszyscy są, a nie sam w swoim pokoju. Najlepiej oglądać i grać razem, przynajmniej na początku.',
+							'Pilnujcie czasu. Światowa Organizacja Zdrowia (WHO) zaleca, żeby dzieci w wieku 2–4 lat spędzały przed ekranem najwyżej godzinę dziennie, a mniej znaczy lepiej. Rocznym dzieciom ekranów nie zaleca w ogóle. Czas bez ekranu z dorosłym, czytanie, opowiadanie, śpiewanie i układanki są dla rozwoju bardzo ważne.',
+							'Wybierajcie treści sami. Przygotujcie listę bajek i piosenek, które znacie, wyłączcie automatyczne odtwarzanie, po którym filmy lecą jeden za drugim, i nie dawajcie dziecku samodzielnie szukać.',
+							'Włączcie ustawienia. Na telefonie z Androidem i na iPhonie są kontrola rodzicielska i blokada zakupów: opisujemy je krok po kroku w poradniku o zakupach w grach.',
+							'Umówcie się na zasadę: z każdą dziwną albo straszną rzeczą przychodzę do mamy lub taty i nie dostanę za to kary.'
+						]
+					}
+				]
+			},
+			{
+				heading: 'Pierwsze ustawienia tabletu albo telefonu',
+				blocks: [
+					{
+						kind: 'list',
+						items: [
+							'Jedna aplikacja na raz. Android ma przypinanie aplikacji (w ustawieniach bezpieczeństwa), a iPhone i iPad Dostęp nadzorowany (w ustawieniach dostępności). Dziecko ogląda wtedy tylko to, co włączyliście, i nie wyjdzie do innych aplikacji bez Waszego kodu.',
+							'Osobne konto dziecka. Google (Family Link) i Apple (Chmura rodzinna) pozwalają założyć dziecku konto, na którym rodzic wybiera aplikacje, ustala czas i zatwierdza zakupy.',
+							'Bez komunikatorów i poczty. Telefon, który dostaje dziecko, nie powinien mieć otwartego czatu ani skrzynki rodzica, z których można przypadkiem coś wysłać.',
+							'Bajki na tej stronie w trybie dla dziecka: duże obrazki piosenek, bez linków i podpowiedzi innych filmów, a wyjście tylko po przytrzymaniu przycisku przez dorosłego.'
+						]
+					}
+				]
+			},
+			{
+				heading: 'Gdy dziecko zobaczy coś strasznego',
+				blocks: [
+					{
+						kind: 'steps',
+						items: [
+							{
+								title: 'Pochwal, że przyszło',
+								text: 'To najważniejsze: dziecko zrobiło dokładnie to, czego je uczycie.'
+							},
+							{
+								title: 'Nie zabieraj tabletu za karę',
+								text: 'Jeśli powiedzenie kończy się karą, następnym razem dziecko nic nie powie.'
+							},
+							{
+								title: 'Porozmawiajcie spokojnie',
+								text: 'Zapytaj, co widziało i jak się z tym czuje. Wytłumacz prostymi słowami.'
+							},
+							{
+								title: 'Zgłoś treść',
+								text: 'W serwisie, w którym się pojawiła, a treści szkodliwe i nielegalne, szczególnie zagrażające dzieciom, w Dyżurnet.pl, zespole ekspertów NASK. Nie szukaj takich treści sam.'
+							}
+						]
+					},
+					{
+						kind: 'note',
+						text: 'Rada specjalisty: 800 100 100 to bezpłatny telefon dla dorosłych w sprawie bezpieczeństwa dzieci, także w internecie (Fundacja Dajemy Dzieciom Siłę). Dla dzieci i młodzieży: 116 111.'
+					}
+				]
+			},
+			{
+				heading: 'Piosenka na początek rozmowy',
+				blocks: [
+					{
+						kind: 'p',
+						text: 'W piosence „Klik z głową” Pikselek gra, ogląda bajki i czatuje, ale zna zasady. Posłuchajcie jej razem, a potem porozmawiajcie: pytania są niżej. Dobrze działa też zabawa w „klikam czy pytam?”: pokazujecie dziecku sytuacje (okienko „Wygrałeś!”, ktoś w grze pyta o adres, bajka, którą znamy) i ono mówi, co zrobi.'
+					}
+				]
+			}
+		],
+		sources: [
+			{
+				name: 'WHO: zalecenia dotyczące aktywności, ekranów i snu dzieci poniżej 5 lat (2019)',
+				url: 'https://www.who.int/news/item/24-04-2019-to-grow-up-healthy-children-need-to-sit-less-and-play-more'
+			},
+			{ name: 'Dyżurnet.pl (NASK): zgłaszanie szkodliwych treści', url: 'https://dyzurnet.pl/' },
+			{
+				name: 'Fundacja Dajemy Dzieciom Siłę: telefon 800 100 100 dla dorosłych',
+				url: 'https://800100100.pl/'
+			}
+		]
 	}
 ];
 
