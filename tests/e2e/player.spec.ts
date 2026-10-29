@@ -48,13 +48,13 @@ test('the player starts on a click, from youtube-nocookie, and ends with our two
 
 test('a playlist plays one song after another', async ({ page }) => {
 	await page.goto('/playlista/bezpieczny-pikselek');
-	await expect(page.getByText('TERAZ 1 Z 4')).toBeVisible();
+	await expect(page.getByText('TERAZ 1 Z 7')).toBeVisible();
 	await page.getByRole('button', { name: /^Włącz:/ }).click();
 	await expect(page.locator('iframe')).toHaveCount(1);
 	await page.evaluate(() => (window as unknown as { __ytEnd: () => void }).__ytEnd());
-	await expect(page.getByText('TERAZ 2 Z 4')).toBeVisible();
-	await page.getByRole('button', { name: /^4\./ }).click();
-	await expect(page.getByText('TERAZ 4 Z 4')).toBeVisible();
+	await expect(page.getByText('TERAZ 2 Z 7')).toBeVisible();
+	await page.getByRole('button', { name: /^7\./ }).click();
+	await expect(page.getByText('TERAZ 7 Z 7')).toBeVisible();
 	await page.evaluate(() => (window as unknown as { __ytEnd: () => void }).__ytEnd());
 	await expect(page.getByRole('button', { name: 'Od początku' })).toBeVisible();
 });

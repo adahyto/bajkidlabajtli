@@ -20,16 +20,16 @@ test('the home page shows the songs, shorts, playlist and the part for parents',
 		'Śpiewaj z Pikselkiem! Piosenki dla dzieci o bezpieczeństwie'
 	);
 	const songs = page.locator('#piosenki a.card');
-	await expect(songs).toHaveCount(5);
-	await expect(songs.first()).toContainText('Jeden, jeden, dwa');
-	await expect(songs.first()).toContainText('2:20');
-	await expect(page.locator('#krotkie a.card')).toHaveCount(5);
+	await expect(songs).toHaveCount(8);
+	await expect(songs.first()).toContainText('Koparka Gienia - Kop, kop, kop!');
+	await expect(songs.first()).toContainText('2:18');
+	await expect(page.locator('#krotkie a.card')).toHaveCount(8);
 	await expect(page.locator('#playlisty')).toContainText('Bezpieczny Pikselek');
-	await expect(page.locator('#playlisty')).toContainText('4 PIOSENKI');
+	await expect(page.locator('#playlisty')).toContainText('7 PIOSENEK');
 	// The newest song on its picture, three ways in under it
 	await expect(
 		page.getByRole('link', {
-			name: /^Włącz: (Nowa|Najnowsza) piosenka: Jeden, jeden, dwa/
+			name: /^Włącz: (Nowa|Najnowsza) piosenka: Koparka Gienia - Kop, kop, kop!/
 		})
 	).toBeVisible();
 	const paths = page.getByRole('list', { name: 'Dla kogo' }).getByRole('link');
@@ -104,7 +104,7 @@ test('a short leads to its full song', async ({ page }) => {
 	await expect(
 		page
 			.getByRole('region', { name: 'Inne krótkie piosenki' })
-			.getByText('z piosenki: Złote monetki')
+			.getByText('z piosenki: Czytaj ze mną')
 	).toBeVisible();
 	await page.getByRole('link', { name: /CAŁA PIOSENKA/ }).click();
 	await expect(page).toHaveURL(/\/piosenka\/gdy-sie-zgubie$/);
@@ -125,7 +125,7 @@ test('for parents: every song with its rules and questions, the numbers for help
 	await (await menu(page)).getByRole('link', { name: 'Dla rodziców' }).click();
 	await expect(page).toHaveURL(/\/dla-rodzicow$/);
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Piosenka, a potem rozmowa');
-	await expect(page.locator('article.song')).toHaveCount(5);
+	await expect(page.locator('article.song')).toHaveCount(8);
 	const song = page.getByRole('article', { name: 'Gdy się zgubię' });
 	await expect(song).toContainText('Stój jak drzewo – zostań w miejscu, nie szukaj sam.');
 	await expect(song).toContainText('Kogo w sklepie możesz poprosić o pomoc?');
@@ -180,7 +180,7 @@ test('search engines read the video on a song page and the channel on the home p
 		item: 'http://127.0.0.1:4173/piosenka/gdy-sie-zgubie'
 	});
 	await page.goto('/playlista/bezpieczny-pikselek');
-	expect((await read('ItemList')).itemListElement).toHaveLength(4);
+	expect((await read('ItemList')).itemListElement).toHaveLength(7);
 	await page.goto('/');
 	expect((await read('@graph'))['@graph'][1].sameAs).toEqual([
 		'https://www.youtube.com/@BajkiDlaBajtli'
@@ -196,16 +196,14 @@ test('search engines read the video on a song page and the channel on the home p
 test('the first song of a list has no "Poprzednia", after the last it starts again', async ({
 	page
 }) => {
-	// The playlist's order: Niespodzianka tak, sekret nie … Klik z głową
-	await page.goto('/piosenka/niespodzianka-tak-sekret-nie');
+	// The playlist's order: Czytaj ze mną … Klik z głową
+	await page.goto('/piosenka/czytaj-ze-mna');
 	const steps = page.getByRole('navigation', { name: 'Inne piosenki po kolei' });
 	await expect(steps.getByRole('link')).toHaveCount(1);
 	await expect(steps.getByRole('link')).toContainText('Następna');
 	await page.goto('/piosenka/klik-z-glowa');
 	await expect(steps.getByRole('link', { name: /Poprzednia/ })).toContainText('Gdy się zgubię');
-	await expect(steps.getByRole('link', { name: /Od początku/ })).toContainText(
-		'Niespodzianka tak, sekret nie'
-	);
+	await expect(steps.getByRole('link', { name: /Od początku/ })).toContainText('Czytaj ze mną');
 	// The playlist: one way to the rules for parents, under the list
 	await page.goto('/playlista/bezpieczny-pikselek');
 	await expect(
@@ -251,7 +249,7 @@ test('every page has a description that fits in search results', async ({ page, 
 	const paths = [...xml.matchAll(/<loc>http:\/\/127\.0\.0\.1:4173([^<]*)<\/loc>/g)].map(
 		(m) => m[1]
 	);
-	expect(paths.length).toBe(26);
+	expect(paths.length).toBe(31);
 	for (const path of paths) {
 		await page.goto(path);
 		const description =
@@ -302,13 +300,17 @@ test('a guide for parents: the plan, the song with its questions, the sources; l
 	).toBeVisible();
 });
 
-test('the guides beside their songs: secrets, purchases in games', async ({ page }) => {
+test('the guides beside their songs: secrets, purchases in games, waiting, reading', async ({
+	page
+}) => {
 	for (const [song, guide] of [
 		[
 			'/piosenka/niespodzianka-tak-sekret-nie',
 			'Dobry i zły sekret – jak rozmawiać o tym z dzieckiem?'
 		],
-		['/piosenka/zlote-monetki', 'Jak zablokować zakupy w grach na telefonie dziecka?']
+		['/piosenka/zlote-monetki', 'Jak zablokować zakupy w grach na telefonie dziecka?'],
+		['/piosenka/raz-ja-raz-ty', 'Jak nauczyć dziecko czekać na swoją kolej i dzielić się?'],
+		['/piosenka/czytaj-ze-mna', 'Czytanie dziecku: jak zacząć i czytać 20 minut dziennie?']
 	]) {
 		await page.goto(song);
 		await page.getByRole('link', { name: new RegExp(guide.replace(/[?]/g, '\\?')) }).click();
@@ -317,11 +319,12 @@ test('the guides beside their songs: secrets, purchases in games', async ({ page
 			page.getByRole('region', { name: 'Źródła' }).getByRole('link').first()
 		).toBeVisible();
 	}
+	await page.goto('/poradnik/jak-zablokowac-zakupy-w-grach-na-telefonie-dziecka');
 	await expect(
 		page.getByText('Ustawienia → Czas przed ekranem → Aplikacje i witryny.')
 	).toBeVisible();
 	await page.goto('/poradnik');
-	await expect(page.locator('a.guide')).toHaveCount(5);
+	await expect(page.locator('a.guide')).toHaveCount(7);
 });
 
 test('for kindergartens: a lesson plan for every song, its colouring page to print', async ({

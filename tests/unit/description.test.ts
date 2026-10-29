@@ -11,7 +11,7 @@ import {
 	splitTitle
 } from '../../src/lib/server/description.ts';
 
-// The channel's videos as read from the YouTube API on 2026-10-24
+// The channel's videos as read from the YouTube API on 2026-10-24, with the songs of 2026-10-28 and 29
 const channel = JSON.parse(
 	readFileSync(new URL('../fixtures/channel.json', import.meta.url), 'utf8')
 );

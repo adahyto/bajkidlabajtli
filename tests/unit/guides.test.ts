@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { GUIDES, guidesForSong } from '../../src/lib/guides.ts';
 
-// The channel's videos as read from the YouTube API on 2026-10-24
+// The channel's videos as read from the YouTube API on 2026-10-24, with the songs of 2026-10-28 and 29
 const channel = JSON.parse(
 	readFileSync(new URL('../fixtures/channel.json', import.meta.url), 'utf8')
 );
@@ -38,6 +38,10 @@ test('a song finds its guides', () => {
 	assert.deepEqual(
 		guidesForSong('nvQ1vsDZJds').map((g) => g.slug),
 		['co-zrobic-gdy-dziecko-zgubi-sie-w-sklepie']
+	);
+	assert.deepEqual(
+		guidesForSong('qnCfU16epew').map((g) => g.slug),
+		['czytanie-dziecku-jak-zaczac-20-minut-dziennie']
 	);
 	assert.deepEqual(guidesForSong('nie-ma'), []);
 });

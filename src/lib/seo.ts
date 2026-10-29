@@ -46,6 +46,20 @@ export function cut(text: string, max = DESCRIPTION_MAX): string {
 	return `${clean.slice(0, max - 1).replace(/[\s,;:–-]+\S*$/, '')}…`;
 }
 
+/** "7 piosenek z Pikselkiem, jedna po drugiej: „Czytaj ze mną”, „Raz ja, raz ty” … i inne." as many titles as fit */
+export function playlistDescription(count: string, titles: string[]): string {
+	const head = `${count} z Pikselkiem, jedna po drugiej: `;
+	for (let n = titles.length; n > 0; n--) {
+		const list = titles
+			.slice(0, n)
+			.map((t) => `„${t}”`)
+			.join(', ');
+		const text = `${head}${list}${n < titles.length ? ' i inne' : ''}.`;
+		if (text.length <= DESCRIPTION_MAX) return text;
+	}
+	return cut(`${head}${titles.join(', ')}.`);
+}
+
 /**
  * A song's description: what it is about (the first sentence of its description on YouTube; a short also says what
  * its subtitle says) and, when the site has them, that the rules and questions for parents are here

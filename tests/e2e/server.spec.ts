@@ -27,9 +27,9 @@ test('the sitemap lists the songs with their videos, the playlist, not the short
 	expect(xml).toContain('/poradnik/jak-zablokowac-zakupy-w-grach-na-telefonie-dziecka</loc>');
 	expect(xml).toContain('/dla-przedszkoli/jeden-jeden-dwa</loc>');
 	expect(xml).toContain('/kolorowanka/gdy-sie-zgubie</loc>');
-	expect(xml.match(/<url>/g)).toHaveLength(26);
+	expect(xml.match(/<url>/g)).toHaveLength(31);
 	// Google's video sitemap: one video for each song and the short of its own
-	expect(xml.match(/<video:video>/g)).toHaveLength(5);
+	expect(xml.match(/<video:video>/g)).toHaveLength(8);
 	expect(xml).toContain(
 		'<video:player_loc>https://www.youtube-nocookie.com/embed/nvQ1vsDZJds</video:player_loc><video:duration>138</video:duration>'
 	);
@@ -76,7 +76,7 @@ test('the content security policy lets YouTube in only as a frame and its script
 test('health tells where the songs come from', async ({ request }) => {
 	const health = await (await request.get('/health')).json();
 	expect(health.status).toBe('ok');
-	expect(health.channel).toMatchObject({ source: 'fixture', videos: 10, playlists: 1 });
+	expect(health.channel).toMatchObject({ source: 'fixture', videos: 16, playlists: 1 });
 });
 
 test('a page seen is counted, an unknown one is not an error', async ({ request }) => {

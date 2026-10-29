@@ -1,11 +1,18 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { cut, firstSentence, songDescription, songTitle, withSite } from '../../src/lib/seo.ts';
+import {
+	cut,
+	firstSentence,
+	playlistDescription,
+	songDescription,
+	songTitle,
+	withSite
+} from '../../src/lib/seo.ts';
 import { newPages } from '../../src/lib/server/indexnow.ts';
 import { parseDescription, splitTitle } from '../../src/lib/server/description.ts';
 
-// The channel's videos as read from the YouTube API on 2026-10-24
+// The channel's videos as read from the YouTube API on 2026-10-24, with the songs of 2026-10-28 and 29
 const channel = JSON.parse(
 	readFileSync(new URL('../fixtures/channel.json', import.meta.url), 'utf8')
 );
@@ -50,6 +57,21 @@ test('descriptions end at a sentence and fit', () => {
 	assert.equal(cut(`${'a'.repeat(100)}. ${'b'.repeat(100)}.`), `${'a'.repeat(100)}.`);
 	const long = cut(`${'słowo '.repeat(60)}koniec.`);
 	assert.ok(long.length <= 158 && long.endsWith('słowo…'), long);
+	// A playlist names its songs while they fit, the rest "i inne"
+	assert.equal(
+		playlistDescription('2 piosenki', ['Raz ja, raz ty', 'Klik z głową']),
+		'2 piosenki z Pikselkiem, jedna po drugiej: „Raz ja, raz ty”, „Klik z głową”.'
+	);
+	const titles = channel.playlists[0].videoIds.map(
+		(id: string) =>
+			splitTitle(channel.videos.find((v: { id: string }) => v.id === id).fullTitle).title
+	);
+	const all = playlistDescription('7 piosenek', titles);
+	assert.ok(all.length <= 158 && all.endsWith(' i inne.'), all);
+	assert.ok(
+		all.startsWith('7 piosenek z Pikselkiem, jedna po drugiej: „Czytaj ze mną”, „Raz ja, raz ty”'),
+		all
+	);
 	for (const v of channel.videos) {
 		const { title, subtitle } = splitTitle(v.fullTitle);
 		const parents = parseDescription(v.description, v.fullTitle);
