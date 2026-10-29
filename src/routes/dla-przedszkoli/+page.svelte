@@ -18,7 +18,7 @@
 			(a, b) => (data.songs[a.songId]?.at ?? Infinity) - (data.songs[b.songId]?.at ?? Infinity)
 		)
 	);
-	// Full rows: from 900 px three in a row and the last ones in halves (3 + 2, or 3 + 2 + 2 for 7); 640–899 px two
+	// Full rows: from 900 px three in a row and the last ones in halves (3 + 2, 3 + 3 + 2, or 3 + 2 + 2 for 7); 640–899 px two
 	// in a row and an odd last one across the row, its picture beside the text
 	const n = LESSONS.length;
 	const half = (i: number) => (n % 3 === 2 && i >= n - 2) || (n % 3 === 1 && n >= 4 && i >= n - 4);
@@ -30,9 +30,9 @@
 </script>
 
 <Head
-	title="Scenariusze zajęć i kolorowanki o bezpieczeństwie dla przedszkoli"
+	title="Scenariusze zajęć z piosenkami i kolorowanki dla przedszkoli"
 	description={withDate(
-		'Bezpłatne scenariusze zajęć z piosenkami i kolorowankami, też na Dzień Bezpiecznego Internetu ({data}) i Dzień 112 (11 lutego). Do druku.',
+		'Bezpłatne scenariusze zajęć i kolorowanki do druku: bezpieczeństwo, czytanie, dzielenie się. Też na Dzień Bezpiecznego Internetu ({data}) i Dzień 112.',
 		'bezpieczny-internet'
 	)}
 	jsonld={breadcrumbLd(page.url.origin, [
@@ -43,7 +43,7 @@
 
 <section class="intro" aria-labelledby="przedszkola-h">
 	<span class="badge">DLA PRZEDSZKOLI I SZKÓŁ</span>
-	<h1 id="przedszkola-h">Zajęcia o bezpieczeństwie z Pikselkiem</h1>
+	<h1 id="przedszkola-h">Zajęcia z Pikselkiem w przedszkolu</h1>
 	<p class="intro__lead">
 		Do każdej piosenki gotowy scenariusz zajęć: rozmowa, piosenka, zabawa, kolorowanka i
 		podsumowanie.
@@ -64,8 +64,9 @@
 	<p>
 		Dobre okazje:
 		{#if saferInternet}<strong>{longDate(saferInternet)}</strong>{:else}<strong>luty</strong> (co roku
-			innego dnia, data na saferinternet.pl){/if} – Dzień Bezpiecznego Internetu i
-		<strong>{longDate(nextDate('112')!)}</strong> – Europejski Dzień Numeru Alarmowego 112.
+			innego dnia, data na saferinternet.pl){/if} – Dzień Bezpiecznego Internetu,
+		<strong>{longDate(nextDate('112')!)}</strong> – Europejski Dzień Numeru Alarmowego 112 i
+		<strong>{longDate(nextDate('ksiazka-dla-dzieci')!)}</strong> – Międzynarodowy Dzień Książki dla Dzieci.
 	</p>
 </section>
 

@@ -3,14 +3,18 @@
 
 	/*
 	 * A colouring page: Pikselek (the channel's blue square, drawn here as outlines) with what his song is about, black
-	 * lines on white, big closed shapes for small hands. One drawing, five scenes (lib/lessons.ts). The picture says
+	 * lines on white, big closed shapes for small hands. One drawing, eight scenes (lib/lessons.ts). The picture says
 	 * nothing a screen reader needs beyond its label.
 	 */
 	let { scene, label }: { scene: Scene; label: string } = $props();
 
 	// Which arm is up: towards what Pikselek holds or points at
-	const leftUp = $derived(scene === 'drzewo' || scene === 'monetki');
-	const rightUp = $derived(scene === 'tablet' || scene === 'telefon' || scene === 'prezent');
+	const leftUp = $derived(
+		scene === 'drzewo' || scene === 'monetki' || scene === 'ksiazki' || scene === 'koparka'
+	);
+	const rightUp = $derived(
+		scene === 'tablet' || scene === 'telefon' || scene === 'prezent' || scene === 'hustawka'
+	);
 </script>
 
 <svg
@@ -106,6 +110,50 @@
 			stroke-width="10"
 			paint-order="stroke">112</text
 		>
+	{:else if scene === 'hustawka'}
+		<!-- A swing to wait for, held by its rope, and the counting while one waits -->
+		<path d="M444 540 L462 196 M592 540 L574 196" fill="none" stroke-width="10" />
+		<rect x="440" y="182" width="156" height="22" rx="10" />
+		<path d="M480 204 V432 M556 204 V432" fill="none" stroke-width="4" />
+		<rect x="462" y="430" width="112" height="18" rx="8" />
+		<text
+			x="120"
+			y="200"
+			text-anchor="middle"
+			font-family="'Baloo 2', 'Nunito', sans-serif"
+			font-weight="800"
+			font-size="84"
+			fill="#fff"
+			stroke-width="8"
+			paint-order="stroke">1, 2, 3</text
+		>
+	{:else if scene === 'ksiazki'}
+		<!-- An open book held up, and a pile of books from the library -->
+		<path d="M124 150 Q84 128 34 144 V250 Q84 234 124 256 Z" />
+		<path d="M124 150 Q164 128 214 144 V250 Q164 234 124 256 Z" />
+		<path
+			d="M52 170 Q80 162 106 172 M52 196 Q80 188 106 198 M142 172 Q168 162 196 170 M142 198 Q168 188 196 196"
+			fill="none"
+			stroke-width="4"
+		/>
+		<rect x="440" y="492" width="150" height="40" rx="6" />
+		<rect x="454" y="452" width="128" height="40" rx="6" />
+		<rect x="434" y="412" width="140" height="40" rx="6" />
+		<path d="M462 492 V532 M476 452 V492 M456 412 V452" fill="none" stroke-width="4" />
+	{:else if scene === 'koparka'}
+		<!-- An excavator with its bucket up over Pikselek, who shows it too: "łyżka w górę" -->
+		<rect x="430" y="500" width="166" height="40" rx="20" />
+		{#each [454, 513, 572] as x (x)}
+			<circle cx={x} cy="520" r="11" stroke-width="4" />
+		{/each}
+		<rect x="444" y="430" width="140" height="70" rx="10" />
+		<rect x="516" y="350" width="68" height="80" rx="10" />
+		<rect x="528" y="362" width="44" height="40" rx="6" stroke-width="4" />
+		<path d="M474 436 L446 188 L476 180 L506 430 Z" />
+		<path d="M458 166 L336 150 L332 178 L456 200 Z" />
+		<circle cx="460" cy="184" r="14" />
+		<path d="M344 146 Q286 140 280 190 L300 236 L350 218 Z" />
+		<path d="M306 234 L310 250 L320 230 M324 228 L330 244 L338 223" stroke-width="4" />
 	{/if}
 
 	<!-- Pikselek: arms behind the body -->

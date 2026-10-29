@@ -9,7 +9,8 @@
 import type { DayId } from './days';
 
 /** What Pikselek holds or stands by on the colouring page */
-export type Scene = 'drzewo' | 'prezent' | 'monetki' | 'tablet' | 'telefon';
+export type Scene =
+	'drzewo' | 'prezent' | 'monetki' | 'tablet' | 'telefon' | 'hustawka' | 'ksiazki' | 'koparka';
 
 export type Lesson = {
 	/** The address: /dla-przedszkoli/<slug> and /kolorowanka/<slug> */
@@ -306,6 +307,176 @@ export const LESSONS: Lesson[] = [
 		coloring: {
 			scene: 'telefon',
 			caption: 'Dzwonię pod 112. Mówię, co się stało i gdzie, i nie rozłączam się.'
+		}
+	},
+	{
+		slug: 'raz-ja-raz-ty',
+		songId: 'H2DUlYqnVVs',
+		song: 'Raz ja, raz ty',
+		topic: 'czekanie na swoją kolej i dzielenie się',
+		description:
+			'Scenariusz zajęć dla przedszkola o czekaniu na swoją kolej i dzieleniu się: piosenka, wieża z klocków na zmianę, zabawa z minutnikiem i kolorowanka.',
+		goals: [
+			'Dziecko wie, że na huśtawce, na zjeżdżalni i w grze każdy ma swoją kolej.',
+			'Dziecko zna sposoby na czekanie: liczenie, minutnik, inna zabawa na chwilę.',
+			'Dziecko potrafi zapytać: „Mogę z tobą?” albo „Teraz ja?”, zamiast zabierać zabawkę.'
+		],
+		materials: [
+			'Teledysk „Raz ja, raz ty” (ekran i głośnik)',
+			'Kolorowanka z Pikselkiem dla każdego dziecka',
+			'Kredki',
+			'Duże klocki, po kilka dla każdej grupy',
+			'Minutnik albo klepsydra i jedna ciekawa zabawka, np. bębenek'
+		],
+		steps: [
+			{
+				title: 'Rozmowa na początek',
+				minutes: 5,
+				text: 'Pytamy: „Co robicie, gdy wszyscy chcą na jedną huśtawkę?”, „Jak się czujecie, gdy trzeba długo czekać?”. Mówimy, że czekanie bywa trudne dla wszystkich, także dla dorosłych, i że dziś poznamy sposoby, żeby było łatwiej.'
+			},
+			SONG_STEP('Raz ja, raz ty'),
+			{
+				title: 'Rozmowa o zasadach',
+				minutes: 5,
+				text: 'Dzieci odpowiadają na pytania do piosenki. Nauczyciel rysuje na tablicy pięć zasad: czekam w kolejce, liczę „raz, dwa, trzy”, pytam „Mogę z tobą?”, dzielę się na pół, a gdy mi trudno, proszę dorosłego o pomoc.'
+			},
+			{
+				title: 'Wieża na zmianę',
+				minutes: 7,
+				text: 'W grupach po 3–4 dzieci budujemy wieżę z klocków: każdy dokłada po jednym, a wszyscy mówią „raz ja, raz ty”. Gdy wieża się przewróci, zaczynamy od nowa, od następnego dziecka. Chwalimy czekanie i podawanie klocków.'
+			},
+			{
+				title: 'Zabawa z minutnikiem',
+				minutes: 5,
+				text: 'Jedna ciekawa zabawka i minutnik. Dziecko bawi się, aż minutnik zadzwoni, a potem samo podaje zabawkę następnemu i mówi: „Teraz ty”. Pozostałe dzieci w tym czasie liczą głośno albo wyklaskują rytm z piosenki, żeby czekanie szybciej mijało.'
+			},
+			COLORING_STEP,
+			{
+				title: 'Podsumowanie',
+				minutes: 3,
+				text: 'Dzieci mówią, co pomaga czekać, i jeszcze raz śpiewają refren. Rodzicom przekazujemy kolorowankę i adres bajkidlabajtli.pl/poradnik z poradnikiem o czekaniu na swoją kolej i dzieleniu się.'
+			}
+		],
+		coloring: {
+			scene: 'hustawka',
+			caption: 'Raz ja, raz ty! Gdy czekam na swoją kolej, liczę: raz, dwa, trzy.'
+		}
+	},
+	{
+		slug: 'czytaj-ze-mna',
+		songId: 'qnCfU16epew',
+		song: 'Czytaj ze mną',
+		topic: 'wspólne czytanie i biblioteka',
+		title: 'Dzień Książki dla Dzieci w przedszkolu – scenariusz zajęć',
+		description:
+			'Scenariusz zajęć na Międzynarodowy Dzień Książki dla Dzieci ({data}): piosenka, czytanie z pytaniami, zabawa w bibliotekę i kolorowanka.',
+		goals: [
+			'Dziecko wie, że książki można czytać z dorosłym codziennie, i umie o to poprosić: „Poczytasz mi?”.',
+			'Dziecko wie, czym jest biblioteka: książki się wypożycza, a potem oddaje.',
+			'Dziecko opowiada o ulubionej książce i słucha, o czym są książki innych dzieci.'
+		],
+		materials: [
+			'Teledysk „Czytaj ze mną” (ekran i głośnik)',
+			'Kolorowanka z Pikselkiem dla każdego dziecka',
+			'Kredki',
+			'Książki z obrazkami (najlepiej przyniesione przez dzieci) i jedna krótka do głośnego czytania',
+			'Do zabawy w bibliotekę: pudełko albo półka na książki, kartoniki jako karty biblioteczne, pieczątka'
+		],
+		steps: [
+			{
+				title: 'Rozmowa na początek',
+				minutes: 5,
+				text: 'Dzieci siadają w kole ze swoimi książkami. Pytamy: „Kto wam czyta w domu?”, „Jaką książkę lubicie najbardziej?”. Kilkoro dzieci pokazuje swoją książkę i mówi jednym zdaniem, o czym jest.'
+			},
+			SONG_STEP('Czytaj ze mną'),
+			{
+				title: 'Rozmowa o zasadach',
+				minutes: 5,
+				text: 'Dzieci odpowiadają na pytania do piosenki. Przypominamy, gdzie Pikselek czytał: w domu z mamą, u babci i dziadka, w przedszkolu, w bibliotece i w księgarni. Na tablicy zapisujemy: czytamy razem codziennie, prosimy „Poczytacie?”, w bibliotece książki wypożyczamy i oddajemy.'
+			},
+			{
+				title: 'Czytanie z pytaniami',
+				minutes: 8,
+				text: 'Nauczyciel czyta krótką książkę z obrazkami i zatrzymuje się przy obrazkach: „Co tu się dzieje?”, „Jak myślicie, co będzie dalej?”. Dzieci odgrywają głosy postaci, a przy przewracaniu stron mówią razem „szu, szu, szu”, jak w piosence.'
+			},
+			{
+				title: 'Zabawa w bibliotekę',
+				minutes: 5,
+				text: 'Jedno dziecko jest bibliotekarzem z pieczątką, pozostałe po kolei „wypożyczają” książkę: pokazują kartę, mówią „Poproszę tę książkę”, a bibliotekarz stawia pieczątkę: stuk! Na koniec wszyscy oddają książki na półkę i zmieniamy bibliotekarza.'
+			},
+			COLORING_STEP,
+			{
+				title: 'Podsumowanie',
+				minutes: 3,
+				text: 'Dzieci razem mówią „Codziennie czytamy razem” i śpiewają refren. Rodzicom przekazujemy kolorowankę, adres bajkidlabajtli.pl/poradnik z poradnikiem o codziennym czytaniu i, jeśli się da, adres najbliższej biblioteki dla dzieci.'
+			}
+		],
+		day: 'ksiazka-dla-dzieci',
+		coloring: {
+			scene: 'ksiazki',
+			caption: 'Codziennie czytamy razem. Proszę mamę i tatę: „Poczytacie?”'
+		}
+	},
+	{
+		slug: 'koparka-gienia-kop-kop-kop',
+		songId: '66hgC7tb7Dk',
+		song: 'Koparka Gienia',
+		topic: 'maszyny na budowie i praca razem',
+		description:
+			'Scenariusz zajęć dla przedszkola o koparce i budowie: piosenka z ruchem, zabawa w maszyny budowlane, wspólny plac zabaw z klocków i kolorowanka.',
+		goals: [
+			'Dziecko pokazuje ruchem refren piosenki: łyżka w górę, łyżka w dół.',
+			'Dziecko nazywa kilka maszyn z budowy (koparka, dźwig, wywrotka) i naśladuje ich dźwięki.',
+			'Dziecko buduje coś razem z innymi i wie, że razem praca idzie raźniej.',
+			'Dziecko wie, że na budowę się nie wchodzi, a maszyny ogląda się z daleka, z dorosłym.'
+		],
+		materials: [
+			'Teledysk „Koparka Gienia – Kop, kop, kop!” (ekran i głośnik)',
+			'Kolorowanka z koparką i Pikselkiem dla każdego dziecka',
+			'Kredki',
+			'Obrazki maszyn: koparka, dźwig, wywrotka, betoniarka',
+			'Duże klocki, pudełka albo kartony do budowania'
+		],
+		steps: [
+			{
+				title: 'Rozmowa na początek',
+				minutes: 5,
+				text: 'Pokazujemy obrazki maszyn i pytamy: „Co to za maszyna? Co robi? Jak brzmi?”. Dzieci naśladują dźwięki: brum, brum, a przy cofaniu piii, piii. Pytamy, kto widział budowę w swojej okolicy i co tam powstawało.'
+			},
+			{
+				title: 'Piosenka z ruchem',
+				minutes: 5,
+				text: 'Oglądamy teledysk „Koparka Gienia – Kop, kop, kop!”. Za drugim razem dzieci wstają i pokazują refren: ręce w górę jak łyżka koparki, potem w dół, kopiemy dół. Tekst pojawia się na ekranie, więc starsze dzieci mogą czytać.'
+			},
+			{
+				title: 'Zabawa „Maszyny na budowie”',
+				minutes: 6,
+				text: 'Dzieci chodzą po sali przy muzyce. Na hasło zmieniają się w maszynę: „Koparka!” (ręce w górę i w dół), „Dźwig!” (jedna ręka wysoko, powolny obrót), „Wywrotka!” (przysiad i wysypywanie). Na „Stop, budowa!” wszyscy stoją bez ruchu.'
+			},
+			{
+				title: 'Budujemy plac zabaw razem',
+				minutes: 8,
+				text: 'W grupach dzieci budują z klocków i pudełek plac zabaw, jak Gienia z przyjaciółmi: jedna grupa zjeżdżalnię, druga huśtawkę, trzecia piaskownicę. Na koniec łączymy wszystko w jeden plac i oglądamy, co powstało, gdy każdy dołożył swoją część.'
+			},
+			{
+				title: 'Rozmowa o bezpieczeństwie',
+				minutes: 3,
+				text: 'Mówimy krótko: na prawdziwą budowę się nie wchodzi, nawet gdy nikt nie pracuje, a maszyny oglądamy z daleka, zza płotu i z dorosłym. Operator koparki z wysokiej kabiny może nie zauważyć małego dziecka.'
+			},
+			{
+				title: 'Kolorowanka',
+				minutes: 10,
+				text: 'Dzieci kolorują koparkę i Pikselka, który pokazuje „łyżka w górę”, a nauczyciel czyta podpis z dołu karty. Starsze dzieci mogą dorysować, co koparka zbudowała.'
+			},
+			{
+				title: 'Podsumowanie',
+				minutes: 3,
+				text: 'Jeszcze raz śpiewamy refren z ruchem. Rodzicom przekazujemy kolorowankę i adres bajkidlabajtli.pl/dla-rodzicow: na spacerze obok budowy można razem nazywać maszyny i naśladować ich dźwięki.'
+			}
+		],
+		coloring: {
+			scene: 'koparka',
+			caption: 'Łyżka w górę, łyżka w dół! Razem z przyjaciółmi praca idzie raźniej.'
 		}
 	}
 ];

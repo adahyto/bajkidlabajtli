@@ -31,7 +31,7 @@ test('every lesson plan is complete, ~40 minutes, and fits in search results', (
 		assert.ok(minutes >= 30 && minutes <= 50, `${l.slug}: ${minutes} minutes`);
 		assert.ok(l.coloring.caption.length <= 100, `${l.slug}: caption too long for the sheet`);
 	}
-	assert.equal(LESSONS.length, 5);
+	assert.equal(LESSONS.length, 8);
 });
 
 test('a song finds its lesson plan', () => {
@@ -45,6 +45,8 @@ test('the days for lessons have their exact next date', async () => {
 	assert.equal(nextDate('112', at('2026-10-24T10:00:00Z')), '2027-02-11');
 	assert.equal(nextDate('112', at('2027-02-11T23:30:00Z')), '2028-02-11'); // 00:30 on 12 February in Poland
 	assert.equal(nextDate('bezpieczny-internet', at('2026-10-24T10:00:00Z')), '2027-02-09');
+	assert.equal(nextDate('ksiazka-dla-dzieci', at('2026-10-29T10:00:00Z')), '2027-04-02');
+	assert.equal(nextDate('ksiazka-dla-dzieci', at('2027-04-02T10:00:00Z')), '2027-04-02');
 	assert.equal(
 		dayText('bezpieczny-internet', at('2026-10-24T10:00:00Z')),
 		'Dzień Bezpiecznego Internetu – wtorek, 9 lutego 2027'

@@ -17,7 +17,7 @@ test('the home page shows the songs, shorts, playlist and the part for parents',
 	await page.goto('/');
 	await expect(page).toHaveTitle(/Bajki dla Bajtli/);
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-		'Śpiewaj z Pikselkiem! Piosenki dla dzieci o bezpieczeństwie'
+		'Śpiewaj z Pikselkiem! Piosenki dla dzieci o bezpieczeństwie i dobrych nawykach'
 	);
 	const songs = page.locator('#piosenki a.card');
 	await expect(songs).toHaveCount(8);
@@ -249,7 +249,7 @@ test('every page has a description that fits in search results', async ({ page, 
 	const paths = [...xml.matchAll(/<loc>http:\/\/127\.0\.0\.1:4173([^<]*)<\/loc>/g)].map(
 		(m) => m[1]
 	);
-	expect(paths.length).toBe(31);
+	expect(paths.length).toBe(37);
 	for (const path of paths) {
 		await page.goto(path);
 		const description =
@@ -333,18 +333,21 @@ test('for kindergartens: a lesson plan for every song, its colouring page to pri
 	await page.goto('/');
 	await page.getByRole('contentinfo').getByRole('link', { name: 'Dla przedszkoli' }).click();
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-		'Zajęcia o bezpieczeństwie z Pikselkiem'
+		'Zajęcia z Pikselkiem w przedszkolu'
 	);
 	// In the order of the home page, the newest first, with the topics of the songs
-	await expect(page.locator('.lessons > li')).toHaveCount(5);
+	await expect(page.locator('.lessons > li')).toHaveCount(8);
 	await expect(page.locator('.lessons h2')).toHaveText([
+		'Koparka Gienia',
+		'Czytaj ze mną',
+		'Raz ja, raz ty',
 		'Jeden, jeden, dwa',
 		'Niespodzianka tak, sekret nie',
 		'Złote monetki',
 		'Gdy się zgubię',
 		'Klik z głową'
 	]);
-	await expect(page.locator('.lessons > li').first()).toContainText('Numer 112');
+	await expect(page.locator('.lessons > li').first()).toContainText('Na budowie');
 	await expect(page.getByText('Bezpłatnie')).toBeVisible();
 	// The days with their exact dates, not "w lutym" (the dates themselves: tests/unit/lessons.test.ts)
 	// (after the last date in lib/days.ts: where to look it up)
@@ -488,6 +491,15 @@ test('lessons for a day say it to search engines, with the date', async ({ page 
 		'content',
 		/Dzień 112 \(11 lutego \d{4}\)/
 	);
+	await page.goto('/dla-przedszkoli/czytaj-ze-mna');
+	await expect(page).toHaveTitle(/^Dzień Książki dla Dzieci w przedszkolu/);
+	await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+		'content',
+		/Dzień Książki dla Dzieci \(2 kwietnia \d{4}\)/
+	);
+	await expect(
+		page.getByText(/Międzynarodowy Dzień Książki dla Dzieci – [a-zśęą]+, 2 kwietnia \d{4}/)
+	).toBeVisible();
 	await page.goto('/dla-przedszkoli/gdy-sie-zgubie');
 	await expect(page).toHaveTitle(/^Scenariusz zajęć: Gdy się zgubię/);
 });
