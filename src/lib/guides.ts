@@ -655,6 +655,230 @@ export const GUIDES: Guide[] = [
 				url: 'https://800100100.pl/'
 			}
 		]
+	},
+	{
+		slug: 'jak-nauczyc-dziecko-czekac-na-swoja-kolej-i-dzielic-sie',
+		title: 'Jak nauczyć dziecko czekać na swoją kolej i dzielić się?',
+		short: 'Czekanie na swoją kolej i dzielenie się',
+		description:
+			'Kiedy dziecko uczy się dzielić i czekać na kolej, co pomaga (minutnik, gotowe zdania, pochwała), czego nie robić i jak ćwiczyć to w domu z piosenką.',
+		songId: 'H2DUlYqnVVs',
+		published: '2026-10-29',
+		updated: '2026-10-29',
+		lead: 'Huśtawka jest jedna, a chętnych troje. Do tego klocki, ostatnie ciastko i pilot do bajki. Czekanie na swoją kolej i dzielenie się to dla przedszkolaka naprawdę trudna sztuka, której uczy się powoli, przez kilka lat. Dobra wiadomość: można mu w tym bardzo pomóc. Oto co jest normalne w jakim wieku, co działa, a czego lepiej nie robić.',
+		sections: [
+			{
+				heading: 'Czego się spodziewać w jakim wieku',
+				blocks: [
+					{
+						kind: 'p',
+						text: 'Dwulatek zwykle bawi się obok innych dzieci, a nie z nimi, i jeszcze nie umie się dzielić. To nie egoizm, tylko etap rozwoju. Żeby oddać zabawkę albo poczekać, trzeba zapanować nad „chcę teraz”, wyobrazić sobie, co czuje ktoś inny, i uwierzyć, że zabawka wróci. Te umiejętności dopiero dojrzewają.'
+					},
+					{
+						kind: 'p',
+						text: 'Organizacja ZERO TO THREE pisze, że dzielenie się i czekanie na kolej rozwijają się mniej więcej między 3,5 a 4 rokiem życia. Amerykańska Akademia Pediatrii (AAP) zauważa, że trzylatki potrafią już rozwiązać spór, ustalając kolejkę albo zamieniając się zabawkami, ale na początku potrzebują w tym pomocy dorosłego. Czterolatek coraz częściej pyta „Mogę teraz ja?”, zamiast wyrywać zabawkę. Zmęczenie, gorszy dzień albo ukochana zabawka mogą jednak wszystko zepsuć, i to też jest normalne.'
+					},
+					{
+						kind: 'note',
+						text: 'Dziecko, które nie chce się dzielić, nie jest „niegrzeczne”, a rodzic nie zrobił nic źle. Ono uczy się umiejętności, która wymaga czasu, tak jak jazda na rowerze.'
+					}
+				]
+			},
+			{
+				heading: 'Co pomaga: sześć sposobów',
+				blocks: [
+					{
+						kind: 'steps',
+						items: [
+							{
+								title: 'Pokaż, kiedy czekanie się skończy',
+								text: 'Policzcie razem do dziesięciu, nastawcie minutnik albo umówcie się: „jeszcze trzy huśnięcia i zmiana”. Przy minutniku to nie dorosły, tylko on „decyduje”, kiedy zmiana, więc jest mniej kłótni. Dla małego dziecka krótka, za to pewna kolej jest lepsza niż długa i niepewna.'
+							},
+							{
+								title: 'Daj dziecku gotowe słowa',
+								text: '„Mogę z tobą?”, „Poproszę, jak skończysz”, „Teraz ja?”. Przećwiczcie te zdania w domu, zanim będą potrzebne na placu zabaw. Amerykańskie CDC radzi uczyć właśnie takiego pytania zamiast brania zabawki z ręki.'
+							},
+							{
+								title: 'Znajdźcie zajęcie na czas czekania',
+								text: 'Liczenie, jak Pikselek w piosence, inna zabawka na chwilę, pomaganie dorosłemu. Puste czekanie dłuży się najbardziej.'
+							},
+							{
+								title: 'Nazwij uczucia',
+								text: '„Trudno czekać, bardzo chcesz już się huśtać.” Dziecko, które słyszy, że rozumiecie jego złość, szybciej się uspokaja, nawet jeśli kolej i tak przyjdzie dopiero za chwilę.'
+							},
+							{
+								title: 'Chwal od razu i konkretnie',
+								text: '„Podzieliłaś się klockami i teraz budujecie razem większą wieżę!” albo „Poczekałeś, aż zjeżdżalnia będzie wolna, brawo!”. Pochwała za konkretne zachowanie mówi dziecku, co dokładnie zrobiło dobrze.'
+							},
+							{
+								title: 'Pokazuj, jak to się robi',
+								text: 'Dzielcie się przy dziecku: „Chcesz kawałek mojego jabłka?”, „Dziś ty wybierasz bajkę, jutro ja”. Dzieci uczą się z tego, co widzą, także z tego, jak dorośli spokojnie rozwiązują spory.'
+							}
+						]
+					}
+				]
+			},
+			{
+				heading: 'Czego lepiej nie robić',
+				blocks: [
+					{
+						kind: 'list',
+						items: [
+							'Nie zabierajcie od razu zabawki, którą dziecko właśnie się bawi, żeby „dać koledze”. ZERO TO THREE radzi „długą kolej”: dziecko kończy zabawę, a drugie w tym czasie dostaje coś innego albo czeka z minutnikiem.',
+							'Nie zawstydzajcie i nie przyklejajcie etykiet („samolub”, „niedobry”). Dziecko, które często to słyszy, zaczyna w to wierzyć.',
+							'Nie tłumaczcie w środku awantury. W złości dziecko nie słyszy pouczeń: najpierw spokój, rozmowa potem.',
+							'Nie pozwalajcie na bicie i wyrywanie. Spokojnie, ale od razu: „Nie wyrywamy. Poproś”.',
+							'Nie wszystko musi być wspólne. Ukochanego misia albo nowy prezent dziecko może schować przed przyjściem gości. Ustalcie wcześniej, czym się dzielimy, a co jest tylko jego.'
+						]
+					}
+				]
+			},
+			{
+				heading: 'Przećwiczcie to w domu, jak zabawę',
+				blocks: [
+					{
+						kind: 'p',
+						text: 'Proste gry na zmianę są świetnym treningiem, bo kolej przychodzi szybko i na pewno: rzucanie piłki do siebie, budowanie wieży z klocków (raz ja, raz ty), układanka, w której każdy dokłada po jednym kawałku, pierwsze gry planszowe. Dobrze działa też teatrzyk z pluszakami: miś chce na huśtawkę, a zajączek już się huśta. Co mogą zrobić? Niech dziecko samo wymyśli rozwiązanie.'
+					},
+					{
+						kind: 'p',
+						text: 'W piosence „Raz ja, raz ty” Pikselek czeka na huśtawkę, buduje z kolegą wieżę z klocków i dzieli się z siostrą ciastkiem, a gdy czekać jest bardzo trudno, prosi o pomoc mamę albo tatę. Obejrzyjcie ją razem, a potem porozmawiajcie: pytania są niżej.'
+					}
+				]
+			}
+		],
+		sources: [
+			{
+				name: 'ZERO TO THREE: Tuning In, Sharing and Taking Turns',
+				url: 'https://www.zerotothree.org/resource/tuning-in-sharing-and-taking-turns/'
+			},
+			{
+				name: 'HealthyChildren.org (AAP): Social Development in Preschoolers',
+				url: 'https://www.healthychildren.org/English/ages-stages/preschool/Pages/Social-Development-in-Preschoolers.aspx'
+			},
+			{
+				name: 'CDC: Milestones by 4 Years (wskazówki dla rodziców)',
+				url: 'https://www.cdc.gov/act-early/milestones/4-years.html'
+			}
+		]
+	},
+	{
+		slug: 'czytanie-dziecku-jak-zaczac-20-minut-dziennie',
+		title: 'Czytanie dziecku: jak zacząć i czytać 20 minut dziennie?',
+		short: 'Czytanie dziecku 20 minut dziennie',
+		description:
+			'Dlaczego warto czytać dziecku codziennie choć 20 minut, jak wybrać porę i książki, co gdy dziecko nie chce słuchać i jak zacząć z biblioteką.',
+		songId: 'qnCfU16epew',
+		published: '2026-10-29',
+		updated: '2026-10-29',
+		lead: 'Wspólne czytanie to jedna z najprostszych rzeczy, które można zrobić dla dziecka: nie wymaga sprzętu ani pieniędzy, tylko książki i kilkunastu minut. Kampania „Cała Polska czyta dzieciom” od lat powtarza: 20 minut dziennie, codziennie. Oto dlaczego to działa i jak zrobić z czytania stały, przyjemny punkt dnia, także wtedy, gdy dziecko się wierci, a rodzic jest zmęczony.',
+		sections: [
+			{
+				heading: 'Dlaczego codziennie i dlaczego razem',
+				blocks: [
+					{
+						kind: 'p',
+						text: 'Amerykańska Akademia Pediatrii (AAP) radzi czytać dzieciom od urodzenia, co najmniej do pójścia do szkoły, a najlepiej zrobić z książek część wieczornego rytuału. Wspólne czytanie poszerza słownictwo, bo w książkach jest dużo słów, których nie używamy na co dzień. Ćwiczy uwagę i słuchanie, rozwija wyobraźnię i przygotowuje do samodzielnego czytania. Jest też coś, czego nie widać w żadnym teście: to spokojna chwila bliskości, kiedy rodzic jest tylko dla dziecka.'
+					},
+					{
+						kind: 'p',
+						text: 'Fundacja ABCXXI, która prowadzi kampanię „Cała Polska czyta dzieciom”, ujmuje to w jednym zdaniu: czytaj dziecku od urodzenia dla przyjemności, 20 minut dziennie, codziennie. Słowo „przyjemność” jest tu najważniejsze. Czytanie ma być nagrodą i wspólną zabawą, a nie lekcją.'
+					},
+					{
+						kind: 'note',
+						text: 'AAP pisze, że najlepsza jest papierowa książka z kolorowymi obrazkami, którą razem przeglądacie. Bajka na ekranie albo audiobook nie dają tej samej rozmowy między dorosłym a dzieckiem.'
+					}
+				]
+			},
+			{
+				heading: 'Jak zrobić z czytania codzienny zwyczaj',
+				blocks: [
+					{
+						kind: 'steps',
+						items: [
+							{
+								title: 'Wybierzcie stałą porę',
+								text: 'Najłatwiej wieczorem, przed snem. Czytanie staje się wtedy częścią rytuału, jak mycie zębów, i nie trzeba o nie walczyć. Może to być też chwila po obiedzie albo sobotni poranek.'
+							},
+							{
+								title: 'Odłóżcie ekrany',
+								text: 'Także telefon rodzica. Dziecko szybko wyczuje, że to jest jego czas.'
+							},
+							{
+								title: 'Niech dziecko wybiera',
+								text: 'Nawet jeśli po raz dwudziesty tę samą książkę. Powtarzanie jest dla małego dziecka przyjemne i uczy: zna już historię, może ją opowiadać razem z Wami i poprawiać, gdy coś pominiecie.'
+							},
+							{
+								title: 'Czytajcie i rozmawiajcie',
+								text: 'Zatrzymujcie się przy obrazkach: „Co tu się dzieje?”, „Jak myślisz, co będzie dalej?”, „Jak się czuje pszczółka?”. Dziecko, które mówi, uczy się więcej niż to, które tylko słucha.'
+							},
+							{
+								title: 'Bawcie się głosem',
+								text: 'Inny głos dla każdej postaci, szept, odgłosy zwierząt i maszyn. Nie trzeba umieć grać: dzieci to uwielbiają.'
+							},
+							{
+								title: 'Czytają wszyscy',
+								text: 'Babcia, dziadek, starsze rodzeństwo, pani w przedszkolu. 20 minut nie musi być zawsze z tym samym dorosłym ani w jednym kawałku: dwa razy po 10 minut też się liczy.'
+							}
+						]
+					}
+				]
+			},
+			{
+				heading: 'Gdy dziecko nie chce słuchać',
+				blocks: [
+					{
+						kind: 'list',
+						items: [
+							'Wierci się? To normalne. Maluch może słuchać, układając klocki albo leżąc do góry nogami. Nie musi siedzieć grzecznie, żeby słuchać.',
+							'Skróćcie czytanie i weźcie inną książkę: krótszą, z większymi obrazkami, o tym, co dziecko teraz kocha, na przykład o koparkach, dinozaurach albo kotach.',
+							'Nie róbcie z czytania kary ani warunku („jak nie posłuchasz, nie będzie bajki”) i nie przerywajcie na siłę ulubionej zabawy.',
+							'Pokazujcie, że sami czytacie. Dziecko, które widzi dorosłych z książką, uznaje czytanie za coś zwyczajnego i fajnego.',
+							'Audiobook albo słuchowisko w samochodzie to dobry dodatek. Porozmawiajcie potem o tym, co było w historii, a czytania razem i tak nie zastąpią.'
+						]
+					}
+				]
+			},
+			{
+				heading: 'Biblioteka i księgarnia',
+				blocks: [
+					{
+						kind: 'p',
+						text: 'Zapiszcie dziecko do biblioteki. Usługi bibliotek publicznych są bezpłatne, tak mówi ustawa o bibliotekach, a oddziały dla dzieci mają książki na każdy wiek, często też głośne czytanie i zajęcia dla maluchów. Nowa porcja książek co dwa tygodnie to najprostszy sposób, żeby czytanie się nie znudziło.'
+					},
+					{
+						kind: 'p',
+						text: 'Zapytajcie w swojej bibliotece o program Instytutu Książki „Mała książka – wielki człowiek” (edycja 2026/2027). Przedszkolak dostaje w nim wyprawkę czytelniczą i Kartę Małego Czytelnika, na której zbiera naklejki za kolejne wizyty z wypożyczeniem. Nie każda biblioteka bierze w nim udział, więc najlepiej zapytać na miejscu.'
+					},
+					{
+						kind: 'p',
+						text: 'W księgarni niech dziecko samo wybierze książkę, nawet jeśli Wam podoba się mniej. Książka wybrana samodzielnie jest „moja” i chętniej się po nią sięga.'
+					},
+					{
+						kind: 'p',
+						text: 'W piosence „Czytaj ze mną” Pikselek czyta z mamą o pszczółce, u babci i dziadka słucha o kotku, w przedszkolu wyobraża sobie smoka i rakietę, z tatą odkrywa bibliotekę, a w księgarni sam wybiera książkę. Obejrzyjcie ją razem, a potem porozmawiajcie: pytania są niżej.'
+					}
+				]
+			}
+		],
+		sources: [
+			{
+				name: 'Fundacja ABCXXI – Cała Polska czyta dzieciom: Nawyk czytania. Dzieci to kochają',
+				url: 'https://calapolskaczytadzieciom.pl/wp-content/uploads/2024/02/Nawyk_czytania_dzieci-to-kochaja.pdf'
+			},
+			{
+				name: 'HealthyChildren.org (AAP): Beyond literacy, shared reading starting in infancy (2024)',
+				url: 'https://www.healthychildren.org/English/news/Pages/beyond-literacy-shared-reading-starting-in-infancy-offers-lifelong-benefits.aspx'
+			},
+			{
+				name: 'Ustawa o bibliotekach, art. 14 (ISAP)',
+				url: 'https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU19970850539'
+			},
+			{
+				name: 'Instytut Książki: Mała książka – wielki człowiek',
+				url: 'https://wielki-czlowiek.pl/'
+			}
+		]
 	}
 ];
 

@@ -33,9 +33,9 @@
 	<span class="badge no-print">DLA RODZICÓW</span>
 	<h1 id="rodzice-h">Piosenka, a potem rozmowa</h1>
 	<p class="intro__lead">
-		Każda piosenka z Pikselkiem uczy kilku prostych zasad: jak bezpiecznie klikać, co zrobić, gdy
-		dziecko się zgubi, czym niespodzianka różni się od sekretu. Tutaj są zasady ze wszystkich
-		piosenek, pytania do rozmowy z dzieckiem i wskazówki dla dorosłych.
+		Każda piosenka uczy kilku prostych zasad: jak bezpiecznie klikać, co zrobić, gdy dziecko się
+		zgubi, czym niespodzianka różni się od sekretu, jak czekać na swoją kolej. Tutaj są zasady ze
+		wszystkich piosenek, pytania do rozmowy z dzieckiem i wskazówki dla dorosłych.
 	</p>
 	<div class="intro__buttons no-print">
 		<button type="button" class="btn btn--blue" onclick={() => print()}>

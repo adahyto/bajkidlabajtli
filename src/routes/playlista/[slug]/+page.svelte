@@ -4,7 +4,7 @@
 	import { pathOf, thumbOf } from '$lib/cards';
 	import { clock, songs } from '$lib/format';
 	import { breadcrumbLd, playlistLd } from '$lib/jsonld';
-	import { withSite } from '$lib/seo';
+	import { playlistDescription, withSite } from '$lib/seo';
 	import { SITE } from '$lib/site';
 	import Head from '$lib/components/Head.svelte';
 	import Icon from '$lib/components/Icon.svelte';
@@ -20,7 +20,10 @@
 
 <Head
 	title={withSite(`${data.playlist.title} – playlista piosenek dla dzieci`)}
-	description={`${songs(data.videos.length)} z Pikselkiem, jedna po drugiej: ${data.videos.map((v) => v.title).join(', ')}.`}
+	description={playlistDescription(
+		songs(data.videos.length),
+		data.videos.map((v) => v.title)
+	)}
 	image={data.videos[0] ? thumbOf(data.videos[0].id, 'l') : undefined}
 	jsonld={[
 		playlistLd(

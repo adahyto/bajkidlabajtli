@@ -1,6 +1,201 @@
 {
  "videos": [
   {
+   "id": "SgMDPapbiPs",
+   "title": "Łyżka w górę!",
+   "subtitle": "Kop, kop, kop! – piosenka dla dzieci",
+   "fullTitle": "Łyżka w górę! 🏗️ Kop, kop, kop! – piosenka dla dzieci #shorts #koparka #piosenkidladzieci",
+   "description": "Refren piosenki „Kop, kop, kop!” – łyżka w górę, łyżka w dół, bawimy się w koparkę Gienię!\nCały teledysk : https://youtu.be/66hgC7tb7Dk",
+   "published": "2026-10-29T07:28:40Z",
+   "seconds": 15,
+   "short": true,
+   "slug": "lyzka-w-gore",
+   "parents": {
+    "intro": "Refren piosenki „Kop, kop, kop!” – łyżka w górę, łyżka w dół, bawimy się w koparkę Gienię!",
+    "rules": [],
+    "tips": [],
+    "helpIntro": "",
+    "help": [],
+    "singAlong": false
+   },
+   "fullId": "66hgC7tb7Dk"
+  },
+  {
+   "id": "66hgC7tb7Dk",
+   "title": "Koparka Gienia - Kop, kop, kop!",
+   "subtitle": "Piosenka dla dzieci o koparce i budowie",
+   "fullTitle": "Koparka Gienia - Kop, kop, kop! 🏗️ Piosenka dla dzieci o koparce i budowie",
+   "description": "Kop, kop, kop! 🏗️ Piosenka dla dzieci o koparce i budowie\n\nWesoła piosenka dla dzieci o koparce Gieni, która w kasku jedzie na budowę i kopie wielki dół! Potem z pomocą przyjaciół, Feli i dźwigu Heniutka, buduje dla dzieci plac zabaw ze zjeżdżalnią i huśtawkami.\n\n🏗️ Łyżka w górę, łyżka w dół – bawimy się w koparkę!\n🙌 Ręce w górę jak łyżka, teraz w dół – kopiemy dół!\n🚚 Razem z przyjaciółmi praca idzie raźniej.\n🛝 Co powstało? Plac zabaw! Hop, hop!\n🎵 Kop, kop, kop i brum, brum, brum!\n\nŚpiewaj razem z nami – tekst pojawia się na ekranie.\n\nDla rodziców: piosenka zaprasza do ruchu – w refrenie podnoście i opuszczajcie ręce razem z dzieckiem jak łyżka koparki. Na spacerze obok budowy możecie potem razem nazywać maszyny i naśladować ich dźwięki.\n\nZobacz też piosenki z Pikselkiem:\n▶️ Złote monetki – o zakupach w grach\n▶️ Gdy się zgubię – co robić, gdy zgubisz się w sklepie\n\nhttps://bajkidlabajtli.pl/\n\n♥️♥️♥️  SUBSKRYBUJ  ♥️♥️♥️",
+   "published": "2026-10-29T07:26:47Z",
+   "seconds": 138,
+   "short": false,
+   "slug": "koparka-gienia-kop-kop-kop",
+   "parents": {
+    "intro": "Wesoła piosenka dla dzieci o koparce Gieni, która w kasku jedzie na budowę i kopie wielki dół! Potem z pomocą przyjaciół, Feli i dźwigu Heniutka, buduje dla dzieci plac zabaw ze zjeżdżalnią i huśtawkami.",
+    "rules": [
+     {
+      "icon": "🏗️",
+      "text": "Łyżka w górę, łyżka w dół – bawimy się w koparkę!"
+     },
+     {
+      "icon": "🙌",
+      "text": "Ręce w górę jak łyżka, teraz w dół – kopiemy dół!"
+     },
+     {
+      "icon": "🚚",
+      "text": "Razem z przyjaciółmi praca idzie raźniej."
+     },
+     {
+      "icon": "🛝",
+      "text": "Co powstało? Plac zabaw! Hop, hop!"
+     },
+     {
+      "icon": "🎵",
+      "text": "Kop, kop, kop i brum, brum, brum!"
+     }
+    ],
+    "tips": [
+     {
+      "text": "Piosenka zaprasza do ruchu – w refrenie podnoście i opuszczajcie ręce razem z dzieckiem jak łyżka koparki. Na spacerze obok budowy możecie potem razem nazywać maszyny i naśladować ich dźwięki.",
+      "point": false
+     }
+    ],
+    "helpIntro": "",
+    "help": [],
+    "singAlong": true
+   }
+  },
+  {
+   "id": "MqcNXNtoi9g",
+   "title": "Szu, szu, szu!",
+   "subtitle": "Czytaj ze mną – piosenka dla dzieci",
+   "fullTitle": "Szu, szu, szu! 📚 Czytaj ze mną – piosenka dla dzieci #shorts #pikselek #piosenkidladzieci",
+   "description": "Refren piosenki „Czytaj ze mną” – codziennie czytamy razem, choć 20 minut!\nCały teledysk: https://www.youtube.com/watch?v=qnCfU16epew",
+   "published": "2026-10-28T14:27:57Z",
+   "seconds": 19,
+   "short": true,
+   "slug": "szu-szu-szu",
+   "parents": {
+    "intro": "Refren piosenki „Czytaj ze mną” – codziennie czytamy razem, choć 20 minut!",
+    "rules": [],
+    "tips": [],
+    "helpIntro": "",
+    "help": [],
+    "singAlong": false
+   },
+   "fullId": "qnCfU16epew"
+  },
+  {
+   "id": "qnCfU16epew",
+   "title": "Czytaj ze mną",
+   "subtitle": "Piosenka dla dzieci o wspólnym czytaniu",
+   "fullTitle": "Pikselek - Czytaj ze mną 📚 Piosenka dla dzieci o wspólnym czytaniu",
+   "description": "Czytaj ze mną 📚 Piosenka dla dzieci o wspólnym czytaniu\n\nWesoła piosenka dla dzieci o tym, że razem czyta się najfajniej! Wieczorem Pikselek czyta z mamą o małej pszczółce, u babci i dziadka słucha o kotku i ogródku, a w przedszkolu wyobraża sobie smoka, rakietę i jeża. Z tatą odkrywa bibliotekę, a z mamą księgarnię, gdzie sam wybiera książkę. Pikselek zna zasady:\n\n📚 Codziennie czytamy razem – choć 20 minut.\n🙋 Proszę mamę i tatę: „Poczytacie?”\n👵 Babcia, dziadek i pani w przedszkolu też czytają.\n🏛️ W bibliotece pożyczam książki – stuk, pieczątka!\n🚀 W księgarni sam wybieram książkę.\n\nŚpiewaj razem z nami – tekst pojawia się na ekranie.\n\nDla rodziców: czytajcie dziecku codziennie choć 20 minut – najlepiej o stałej porze, na przykład przed snem. Wspólne czytanie poszerza słownictwo, ćwiczy uwagę i wyobraźnię, a do tego jest spokojną chwilą bliskości. Zabierzcie dziecko do biblioteki (karta jest bezpłatna) i do księgarni – niech samo wybiera książki, wtedy chętniej po nie sięga.\n\nZobacz też inne piosenki z Pikselkiem:\n▶️ Złote monetki – o zakupach w grach\n▶️ Klik z głową – o bezpiecznym internecie\n\nhttps://bajkidlabajtli.pl/\n\n♥️♥️♥️  SUBSKRYBUJ  ♥️♥️♥️",
+   "published": "2026-10-28T14:25:34Z",
+   "seconds": 140,
+   "short": false,
+   "slug": "czytaj-ze-mna",
+   "parents": {
+    "intro": "Wesoła piosenka dla dzieci o tym, że razem czyta się najfajniej! Wieczorem Pikselek czyta z mamą o małej pszczółce, u babci i dziadka słucha o kotku i ogródku, a w przedszkolu wyobraża sobie smoka, rakietę i jeża. Z tatą odkrywa bibliotekę, a z mamą księgarnię, gdzie sam wybiera książkę. Pikselek zna zasady:",
+    "rules": [
+     {
+      "icon": "📚",
+      "text": "Codziennie czytamy razem – choć 20 minut."
+     },
+     {
+      "icon": "🙋",
+      "text": "Proszę mamę i tatę: „Poczytacie?”"
+     },
+     {
+      "icon": "👵",
+      "text": "Babcia, dziadek i pani w przedszkolu też czytają."
+     },
+     {
+      "icon": "🏛️",
+      "text": "W bibliotece pożyczam książki – stuk, pieczątka!"
+     },
+     {
+      "icon": "🚀",
+      "text": "W księgarni sam wybieram książkę."
+     }
+    ],
+    "tips": [
+     {
+      "text": "Czytajcie dziecku codziennie choć 20 minut – najlepiej o stałej porze, na przykład przed snem. Wspólne czytanie poszerza słownictwo, ćwiczy uwagę i wyobraźnię, a do tego jest spokojną chwilą bliskości. Zabierzcie dziecko do biblioteki (karta jest bezpłatna) i do księgarni – niech samo wybiera książki, wtedy chętniej po nie sięga.",
+      "point": false
+     }
+    ],
+    "helpIntro": "",
+    "help": [],
+    "singAlong": true
+   }
+  },
+  {
+   "id": "ZtBGvxQADn4",
+   "title": "Każdy swoją kolej ma!",
+   "subtitle": "Raz ja, raz ty – piosenka dla dzieci",
+   "fullTitle": "Każdy swoją kolej ma! 🤝 Raz ja, raz ty – piosenka dla dzieci #shorts #pikselek #piosenkidladzieci",
+   "description": "Refren piosenki „Raz ja, raz ty” – każdy ma swoją kolej, a zabawą się dzielimy!\nCały teledysk : https://www.youtube.com/watch?v=H2DUlYqnVVs",
+   "published": "2026-10-28T10:14:25Z",
+   "seconds": 25,
+   "short": true,
+   "slug": "kazdy-swoja-kolej-ma",
+   "parents": {
+    "intro": "Refren piosenki „Raz ja, raz ty” – każdy ma swoją kolej, a zabawą się dzielimy!",
+    "rules": [],
+    "tips": [],
+    "helpIntro": "",
+    "help": [],
+    "singAlong": false
+   },
+   "fullId": "H2DUlYqnVVs"
+  },
+  {
+   "id": "H2DUlYqnVVs",
+   "title": "Raz ja, raz ty",
+   "subtitle": "Piosenka dla dzieci o dzieleniu się i czekaniu na swoją kolej",
+   "fullTitle": "Pikselek - Raz ja, raz ty 🤝 Piosenka dla dzieci o dzieleniu się i czekaniu na swoją kolej",
+   "description": "Raz ja, raz ty 🤝 Piosenka dla dzieci o dzieleniu się i czekaniu na swoją kolej\n\nWesoła piosenka dla dzieci o tym, że każdy ma swoją kolej! Pikselek czeka na huśtawkę na placu zabaw, buduje z kolegą wieżę z klocków w przedszkolu i dzieli się z siostrą ciastkiem. Kiedy czekanie jest trudne, Pikselek wie, co robić:\n\n🛝 Na huśtawkę i zjeżdżalnię czekam w kolejce – raz ja, raz ty.\n🔢 Gdy czekam, liczę: raz, dwa, trzy!\n🧱 Chcę się pobawić? Pytam: „Mogę z tobą?”\n🍪 Jedno ciastko? Dzielimy się na pół!\n🙋 Gdy mi trudno czekać, pytam mamę albo tatę.\n\nŚpiewaj razem z nami – tekst pojawia się na ekranie.\n\nDla rodziców: czekanie na swoją kolej to umiejętność, której dziecko dopiero się uczy. Pomaga, gdy czekanie ma koniec, który widać – policzcie razem do dziesięciu albo umówcie się „jeszcze trzy huśnięcia i zmiana”. Chwalcie każdą chwilę, gdy dziecko samo podzieli się zabawką.\n\nZobacz też inne piosenki z Pikselkiem:\n▶️ Jeden, jeden, dwa – o numerze alarmowym 112\n▶️ Złote monetki – o zakupach w grach\n▶️ Gdy się zgubię – co robić, gdy zgubisz się w sklepie\n\nhttps://bajkidlabajtli.pl/\n\n♥️♥️♥️  SUBSKRYBUJ  ♥️♥️♥️",
+   "published": "2026-10-28T10:07:26Z",
+   "seconds": 163,
+   "short": false,
+   "slug": "raz-ja-raz-ty",
+   "parents": {
+    "intro": "Wesoła piosenka dla dzieci o tym, że każdy ma swoją kolej! Pikselek czeka na huśtawkę na placu zabaw, buduje z kolegą wieżę z klocków w przedszkolu i dzieli się z siostrą ciastkiem. Kiedy czekanie jest trudne, Pikselek wie, co robić:",
+    "rules": [
+     {
+      "icon": "🛝",
+      "text": "Na huśtawkę i zjeżdżalnię czekam w kolejce – raz ja, raz ty."
+     },
+     {
+      "icon": "🔢",
+      "text": "Gdy czekam, liczę: raz, dwa, trzy!"
+     },
+     {
+      "icon": "🧱",
+      "text": "Chcę się pobawić? Pytam: „Mogę z tobą?”"
+     },
+     {
+      "icon": "🍪",
+      "text": "Jedno ciastko? Dzielimy się na pół!"
+     },
+     {
+      "icon": "🙋",
+      "text": "Gdy mi trudno czekać, pytam mamę albo tatę."
+     }
+    ],
+    "tips": [
+     {
+      "text": "Czekanie na swoją kolej to umiejętność, której dziecko dopiero się uczy. Pomaga, gdy czekanie ma koniec, który widać – policzcie razem do dziesięciu albo umówcie się „jeszcze trzy huśnięcia i zmiana”. Chwalcie każdą chwilę, gdy dziecko samo podzieli się zabawką.",
+      "point": false
+     }
+    ],
+    "helpIntro": "",
+    "help": [],
+    "singAlong": true
+   }
+  },
+  {
    "id": "i65ad55Mk14",
    "title": "Jeden, jeden, dwa",
    "subtitle": "Piosenka dla dzieci o numerze alarmowym 112",
@@ -362,6 +557,9 @@
    "description": "Bezpieczny Pikselek – piosenki dla dzieci\n\n\nWesołe piosenki z Pikselkiem, które uczą dzieci, jak być bezpiecznym w XXI wieku – w internecie, w sklepie, w grach i w relacjach z innymi ludźmi.\n\nKażda piosenka to jedna prosta zasada, którą dziecko łatwo zapamięta i zaśpiewa:\n🖱️ Klik z głową – w internecie nie podaję swoich danych, a gdy czegoś nie wiem, pytam mamę lub tatę.\n🌳 Gdy się zgubię – stoję jak drzewo, głośno wołam i proszę o pomoc panią z kasy.\n🪙 Złote monetki – monetki w grach to prawdziwe pieniądze, więc zanim coś kupię, pytam.\n🎁 Niespodzianka tak, sekret nie – smutny sekret mówię mamie lub tacie i nie ma za to kary.\n\nPikselek nie straszy: pokazuje, CO ROBIĆ, a nie czego się bać. Tekst pojawia się na ekranie, więc można śpiewać razem.\n\nDla rodziców: piosenki najlepiej działają, gdy po obejrzeniu porozmawiacie z dzieckiem i przećwiczycie zasadę w domu.\n\nNowe piosenki z Pikselkiem i jego rodziną już wkrótce!",
    "slug": "bezpieczny-pikselek",
    "videoIds": [
+    "qnCfU16epew",
+    "H2DUlYqnVVs",
+    "i65ad55Mk14",
     "x9ulnPUktvw",
     "Habi9u9igtI",
     "nvQ1vsDZJds",

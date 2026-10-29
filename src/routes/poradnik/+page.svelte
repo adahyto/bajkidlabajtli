@@ -11,8 +11,8 @@
 </script>
 
 <Head
-	title="Poradniki dla rodziców – jak uczyć dziecko bezpieczeństwa | Bajki dla Bajtli"
-	description="Krótkie poradniki dla rodziców dzieci 3–8 lat: co zrobić, gdy dziecko zgubi się w sklepie, i inne sytuacje, których uczą piosenki z Pikselkiem."
+	title="Poradniki dla rodziców dzieci 3–8 lat | Bajki dla Bajtli"
+	description="Krótkie poradniki dla rodziców dzieci 3–8 lat: co zrobić, gdy dziecko zgubi się w sklepie, jak czytać razem, jak uczyć czekania na swoją kolej i więcej."
 	jsonld={breadcrumbLd(page.url.origin, [
 		{ name: SITE.name, path: '/' },
 		{ name: 'Poradniki', path: '/poradnik' }

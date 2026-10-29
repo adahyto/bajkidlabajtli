@@ -15,6 +15,33 @@ export type SongExtra = {
 };
 
 export const SONGS: Record<string, SongExtra> = {
+	// Koparka Gienia – Kop, kop, kop!
+	'66hgC7tb7Dk': {
+		topic: 'Na budowie',
+		questions: [
+			'Jak kopie koparka? Pokażesz rękami: łyżka w górę, łyżka w dół?',
+			'Kto pomagał Gieni na budowie?',
+			'Co zbudowali przyjaciele? A jakie maszyny widzisz, gdy idziemy obok budowy?'
+		]
+	},
+	// Czytaj ze mną
+	qnCfU16epew: {
+		topic: 'Czytanie',
+		questions: [
+			'Jaką książkę lubisz najbardziej? O czym jest?',
+			'Kto Ci czyta? A kogo możesz poprosić: „Poczytasz mi?”',
+			'Co można robić w bibliotece? A w księgarni?'
+		]
+	},
+	// Raz ja, raz ty
+	H2DUlYqnVVs: {
+		topic: 'Dzielenie się',
+		questions: [
+			'Co robisz, gdy na huśtawce siedzi już ktoś inny?',
+			'Jak zapytasz, gdy chcesz pobawić się z kimś klockami?',
+			'Co możesz zrobić, gdy bardzo trudno Ci czekać na swoją kolej?'
+		]
+	},
 	// Jeden, jeden, dwa
 	i65ad55Mk14: {
 		topic: 'Numer 112',
