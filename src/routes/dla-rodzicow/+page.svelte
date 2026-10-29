@@ -22,7 +22,7 @@
 
 <Head
 	title="Jak rozmawiać z dzieckiem o bezpieczeństwie – piosenki i pytania dla rodziców"
-	description="Zasady z piosenek z Pikselkiem i pytania do rozmowy z dzieckiem: bezpieczny internet, zgubienie się w sklepie, zakupy w grach, dobre i złe sekrety."
+	description="Zasady z piosenek i pytania do rozmowy z dzieckiem: bezpieczny internet, zgubienie się w sklepie, zakupy w grach, sekrety, czekanie na kolej, czytanie."
 	jsonld={breadcrumbLd(page.url.origin, [
 		{ name: SITE.name, path: '/' },
 		{ name: 'Dla rodziców', path: '/dla-rodzicow' }

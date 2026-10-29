@@ -18,7 +18,7 @@
 </script>
 
 <Head
-	title={`${SITE.name} – piosenki dla dzieci o bezpieczeństwie z Pikselkiem`}
+	title={`${SITE.name} – piosenki dla dzieci: bezpieczeństwo i dobre nawyki`}
 	jsonld={siteLd(page.url.origin)}
 />
 
@@ -26,7 +26,9 @@
 	<section class="hero" aria-labelledby="hero-h">
 		<div class="hero__text">
 			<h1 id="hero-h">
-				Śpiewaj z Pikselkiem! <span class="hero__about">Piosenki dla dzieci o bezpieczeństwie</span>
+				Śpiewaj z Pikselkiem! <span class="hero__about"
+					>Piosenki dla dzieci o bezpieczeństwie i dobrych nawykach</span
+				>
 			</h1>
 			<p>
 				{SITE.name} to krótkie piosenki dla dzieci 3–8 lat. W każdej jedna prosta zasada, zaśpiewana tak,

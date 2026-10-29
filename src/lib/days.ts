@@ -1,17 +1,25 @@
 /*
  * Days of the year that suit the songs (lib/lessons.ts, routes/dla-przedszkoli), shown with the exact date of the
- * next one. The 112 Day is 11 February every year. Safer Internet Day moves (2024: 6 February, 2025: 11 February,
+ * next one. The 112 Day is 11 February every year, International Children's Book Day 2 April (IBBY, Andersen's
+ * birthday). Safer Internet Day moves (2024: 6 February, 2025: 11 February,
  * 2026: 10 February), so its dates are the organisers' (better-internet-for-kids.europa.eu, in Poland
  * saferinternet.pl); after the last one known the text says where to look instead of guessing. Add the next date
  * when it is announced, usually a year ahead.
  * No imports beyond types: tests/unit checks this in plain Node.
  */
 
-export type DayId = 'bezpieczny-internet' | '112';
+export type DayId = 'bezpieczny-internet' | '112' | 'ksiazka-dla-dzieci';
 
 const NAMES: Record<DayId, string> = {
 	'bezpieczny-internet': 'Dzień Bezpiecznego Internetu',
-	'112': 'Europejski Dzień Numeru Alarmowego 112'
+	'112': 'Europejski Dzień Numeru Alarmowego 112',
+	'ksiazka-dla-dzieci': 'Międzynarodowy Dzień Książki dla Dzieci'
+};
+
+/** The days on the same date every year, MM-DD */
+const EVERY_YEAR: Partial<Record<DayId, string>> = {
+	'112': '02-11',
+	'ksiazka-dla-dzieci': '04-02'
 };
 
 /** Safer Internet Day: "the global day of focus will take place on Tuesday, 9 February 2027" (BIK) */
@@ -23,9 +31,10 @@ const today = (now: Date) => now.toLocaleDateString('sv-SE', { timeZone: 'Europe
 /** The next day (today counts), YYYY-MM-DD, or null when it is not known yet */
 export function nextDate(id: DayId, now = new Date()): string | null {
 	const from = today(now);
-	if (id === '112') {
+	const day = EVERY_YEAR[id];
+	if (day) {
 		const year = Number(from.slice(0, 4));
-		return `${year}-02-11` >= from ? `${year}-02-11` : `${year + 1}-02-11`;
+		return `${year}-${day}` >= from ? `${year}-${day}` : `${year + 1}-${day}`;
 	}
 	return SAFER_INTERNET.find((d) => d >= from) ?? null;
 }

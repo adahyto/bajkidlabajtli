@@ -27,7 +27,7 @@ test('the sitemap lists the songs with their videos, the playlist, not the short
 	expect(xml).toContain('/poradnik/jak-zablokowac-zakupy-w-grach-na-telefonie-dziecka</loc>');
 	expect(xml).toContain('/dla-przedszkoli/jeden-jeden-dwa</loc>');
 	expect(xml).toContain('/kolorowanka/gdy-sie-zgubie</loc>');
-	expect(xml.match(/<url>/g)).toHaveLength(31);
+	expect(xml.match(/<url>/g)).toHaveLength(37);
 	// Google's video sitemap: one video for each song and the short of its own
 	expect(xml.match(/<video:video>/g)).toHaveLength(8);
 	expect(xml).toContain(
